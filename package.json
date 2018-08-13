@@ -1,0 +1,11 @@
+{
+  "name": "im07-cat-in-the-box-client",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/codestates/im07-cat-in-the-box-client.git",
+  "author": "cat in the box",
+  "license": "MIT",
+  "engines": {
+    "node": ">=8.0.0"
+  }
+}
