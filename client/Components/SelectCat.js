@@ -62,15 +62,15 @@ class SelectCat extends Component {
       await this.setState({
         catId
       });
-      await axios.post("http://localhost:3000/test", {
-        catId: this.state.catId
-      });
+      // await axios.post("http://localhost:3000/test", {
+      //   catId: this.state.catId
+      // });
       // url은 localhost:3000/init/3 이런식으로
-      const token = await axios.get("http://localhost:3000/test");
-      await AsyncStorage.setItem("token", JSON.stringify(token.data));
-      const tokenReturn = await AsyncStorage.getItem("token");
+      // const token = await axios.get("http://localhost:3000/test");
+      // await AsyncStorage.setItem("token", JSON.stringify(token.data));
+      // const tokenReturn = await AsyncStorage.getItem("token");
       await this.props.navigation.navigate("OpenBoxScreen");
-      await console.log(JSON.parse(tokenReturn));
+      // await console.log(JSON.parse(tokenReturn));
     } catch (err) {
       console.log(err);
     }
