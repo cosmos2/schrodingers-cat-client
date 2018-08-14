@@ -18,10 +18,9 @@ export default class Profile extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.title}>Profile</Text>
         <View style={styles.card}>
           <View style={styles.profilecat}>
-            <Image source={require("./img/cat.png")} />
+            <Image source={require("./img/catDemo.png")} />
           </View>
           <View style={styles.userinfo}>
             <Text style={styles.subtitle}>ID : #1234</Text>
@@ -38,7 +37,7 @@ export default class Profile extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: "#FCFCFC",
     alignItems: "center",
     justifyContent: "center"
   },
@@ -58,6 +57,7 @@ const styles = StyleSheet.create({
     color: "black",
     fontSize: 20,
     marginTop: 20,
+    fontFamily: "Goyang",
     fontWeight: "500",
     fontWeight: "bold"
     //marginBottom: 10

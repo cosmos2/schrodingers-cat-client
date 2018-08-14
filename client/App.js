@@ -6,7 +6,9 @@ import Profile from "./Components/Profile";
 import ChatRoom from "./Components/ChatRoom";
 import Loading from "./Components/Loading";
 import Landing from "./Components/Landing";
+import Cat from "./Components/Cat";
 import { createStackNavigator } from "react-navigation";
+import { Font } from "expo";
 
 const AppNavigator = createStackNavigator(
   {
@@ -23,8 +25,18 @@ const AppNavigator = createStackNavigator(
 );
 
 export default class App extends React.Component {
+  state = {
+    fontLoaded: false
+  };
+  async componentDidMount() {
+    await Font.loadAsync({
+      Goyang: require("./assets/fonts/Goyang.otf")
+    });
+
+    this.setState({ fontLoaded: true });
+  }
   render() {
-    return <AppNavigator />;
+    return this.state.fontLoaded ? <AppNavigator /> : null;
   }
 }
 
