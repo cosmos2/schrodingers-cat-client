@@ -20,12 +20,12 @@ export default class Loading extends Component {
       });
     });
     this.timeoutHandle = setTimeout(() => {
-      Alert.alert(
-        "위도 : " + JSON.stringify(this.state.latitude),
-        "경도 : " + JSON.stringify(this.state.longitude)
-      );
+      // Alert.alert(
+      //   "위도 : " + JSON.stringify(this.state.latitude),
+      //   "경도 : " + JSON.stringify(this.state.longitude)
+      // );
       this.props.navigation.navigate("SelectCatScreen");
-    }, 2000);
+    }, 50);
   }
 
   componentWillUnmount() {
@@ -35,7 +35,7 @@ export default class Loading extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.title}>Schrödinger's Cat</Text>
+        <Text style={styles.title}>슈뢰딩거의 고양이</Text>
         <Image
           style={{ width: 300, height: 300 }}
           source={{
@@ -68,12 +68,13 @@ export default class Loading extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#D5D5D5",
+    backgroundColor: "#FCFCFC",
     alignItems: "center",
     justifyContent: "center"
   },
   title: {
     color: "#FFAA0E",
+    fontFamily: "Goyang",
     fontSize: 30,
     marginTop: 10,
     fontWeight: "900",
