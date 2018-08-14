@@ -18,7 +18,7 @@ const AppNavigator = createStackNavigator(
     LandingScreen: { screen: Landing }
   },
   {
-    initialRouteName: "LandingScreen"
+    initialRouteName: "ChatRoomScreen"
   }
 );
 
