@@ -16,7 +16,6 @@ import CatsState from "./CatsState";
 import SocketIOClient from "socket.io-client";
 import Timer from "./Timer";
 
-
 const { width, height } = Dimensions.get("window");
 export default class ChatRoom extends React.Component {
   constructor(props) {
@@ -282,7 +281,8 @@ const styles = StyleSheet.create({
   },
   chatfont: {
     fontSize: 15,
-    fontWeight: "500"
+    fontWeight: "500",
+    fontFamily: "Goyang"
   },
   eachmychat: {
     width: width * 0.7,
