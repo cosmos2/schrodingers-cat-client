@@ -43,6 +43,7 @@ const styles = StyleSheet.create({
     fontSize: 50,
     marginTop: 10,
     fontWeight: "700",
-    marginBottom: 10
+    marginBottom: 10,
+    fontFamily: "Goyang"
   }
 });

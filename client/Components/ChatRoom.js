@@ -13,30 +13,42 @@ import {
 import { Icon } from "react-native-elements";
 import Images from "./img/catindex";
 import CatsState from "./CatsState";
+import SocketIOClient from "socket.io-client";
 import Timer from "./Timer";
 
 const { width, height } = Dimensions.get("window");
 export default class ChatRoom extends React.Component {
-  state = {
-    attackmode: true,
-    messages: [
-      { userId: 123, catId: 1, message: "fucking crazy Lotteria!!!" },
-      { userId: 87, catId: 2, message: "Umm Mcdonald is the best!!!" },
-      { userId: 10, catId: 4, message: "BurgerKing is Cool!!" },
-      { userId: 123, catId: 1, message: "Hi my name is monkey" },
-      { userId: 10, catId: 4, message: "I am Genius" },
-      { userId: 87, catId: 2, message: "oh you looks like koala" },
-      { userId: 123, catId: 1, message: "fucking crazy Lotteria!!!" },
-      { userId: 87, catId: 2, message: "Umm Mcdonald is the best!!!" },
-      { userId: 10, catId: 4, message: "BurgerKing is Cool!!" },
-      { userId: 123, catId: 1, message: "Hi my name is monkey" },
-      { userId: 10, catId: 4, message: "I am Genius" },
-      { userId: 87, catId: 2, message: "oh you looks like koala" }
-    ],
-    message: "",
-    clearInput: false,
-    myuserid: 10
-  };
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      messages: [
+        { userId: 123, catId: 1, message: "fucking crazy Lotteria!!!" },
+        { userId: 87, catId: 2, message: "Umm Mcdonald is the best!!!" },
+        { userId: 10, catId: 4, message: "BurgerKing is Cool!!" },
+        { userId: 123, catId: 1, message: "Hi my name is monkey" },
+        { userId: 10, catId: 4, message: "I am Genius" },
+        { userId: 87, catId: 2, message: "oh you looks like koala" },
+        { userId: 123, catId: 1, message: "fucking crazy Lotteria!!!" },
+        { userId: 87, catId: 2, message: "Umm Mcdonald is the best!!!" },
+        { userId: 10, catId: 4, message: "BurgerKing is Cool!!" },
+        { userId: 123, catId: 1, message: "Hi my name is monkey" },
+        { userId: 10, catId: 4, message: "I am Genius" },
+        { userId: 87, catId: 2, message: "oh you looks like koala" }
+      ],
+      message: "",
+      clearInput: false,
+      myuserid: 10,
+      chatroomcats: {
+        cat1: { userId: 123, catId: 1, hp: 7 },
+        cat2: { userId: 87, catId: 2, hp: 7 },
+        cat3: { userId: 10, catId: 4, hp: 7 }
+      },
+      muteoneminutes: false,
+      mychatroomnum: ""
+    };
+    this.socket = SocketIOClient("");
+  }
   static navigationOptions = ({ navigation }) => {
     const { params = {} } = navigation.state;
     return {
@@ -62,11 +74,16 @@ export default class ChatRoom extends React.Component {
       }
     };
   };
+  componentWillMount() {
+    this._whoamI();
+    this._amImute();
+  }
   componentDidMount() {
     this.props.navigation.setParams({
       exitChat: this._exitChat,
       explodeChatRoom: this._explodeChatRoom
     });
+
     //this._myuserinfo();
   }
   render() {
@@ -107,6 +124,7 @@ export default class ChatRoom extends React.Component {
             {/* <Text>Chat Room</Text> */}
             <TextInput
               style={styles.textInput}
+              editable={this.state.muteoneminutes ? false : true}
               multiline={false}
               value={!this.state.clearInput ? this.state.message : null}
               onChangeText={message => {
@@ -119,7 +137,11 @@ export default class ChatRoom extends React.Component {
             />
             <TouchableOpacity
               onPress={() => {
-                this._sendMessage(this.state.message);
+                {
+                  this.state.muteoneminutes
+                    ? Alert.alert("1분간 채팅 금지")
+                    : this._sendMessage(this.state.message);
+                }
               }}
             >
               <Image
@@ -135,58 +157,66 @@ export default class ChatRoom extends React.Component {
         <View style={styles.options}>
           <View style={styles.catsstate}>
             <View style={styles.statespace}>
-              <CatsState />
+              <CatsState
+                //chatRoomCats={this.state.chatroomcats}
+                myChatRoomNum={this.state.mychatroomnum}
+                // socket={this.socket}
+              />
             </View>
-          </View>
-          <View style={styles.attackspace}>
-            {!this.state.attackmode ? (
-              <View style={styles.attack}>
-                <TouchableOpacity
-                  onPress={() => {
-                    this.setState({ attackmode: true });
-                    console.log("공격 모드");
-                  }}
-                >
-                  <Image
-                    source={require("./img/pawprint5.png")}
-                    style={{
-                      marginBottom: 1
-                    }}
-                  />
-                </TouchableOpacity>
-                <Text style={styles.subtitle}>공 격!</Text>
-              </View>
-            ) : (
-              <View style={styles.attack}>
-                <TouchableOpacity
-                  onPress={() => {
-                    this.setState({ attackmode: false });
-                    console.log("공격 모드 해제");
-                  }}
-                >
-                  <Image
-                    source={require("./img/pawprint4.png")}
-                    style={{
-                      marginBottom: 1
-                    }}
-                  />
-                </TouchableOpacity>
-                <Text style={styles.subtitle}>공 격 하 기</Text>
-              </View>
-            )}
           </View>
         </View>
       </View>
     );
   }
   _sendMessage = message => {
-    this.setState({
-      clearInput: !this.state.clearInput
-    });
-    console.log("send Message");
+    Alert.alert(this.state.message);
+    if (message.length > 0) {
+      this.setState({
+        clearInput: !this.state.clearInput,
+        message: ""
+      });
+      console.log("send Message");
+    }
     //this.socket.emit("message", { message: message, userId: this.state.name });
   };
 
+  _whoamI = () => {
+    for (var key in this.state.chatroomcats) {
+      if (this.state.chatroomcats[key]["userId"] === this.state.myuserid) {
+        this.setState({
+          mychatroomnum: key
+        });
+      }
+    }
+  };
+
+  _amImute = () => {
+    console.log("fucking");
+    //console.log(this.state.chatroomcats);
+    for (var key in this.state.chatroomcats) {
+      //   console.log(this.state.chatroomcats[key]["userId"], "this is key.userID");
+      //   console.log(this.state.myuserid, "this is mine");
+      if (
+        this.state.chatroomcats[key]["userId"] === this.state.myuserid &&
+        this.state.chatroomcats[key]["hp"] === 0
+      ) {
+        Alert.alert("1분간 채팅이 금지 되었습니다.");
+        this.setState({
+          muteoneminutes: true
+          //   mychatroomnum: key
+        });
+        //console.log(this.state.muteoneminutes, "i am muted!!");
+        setTimeout(() => {
+          Alert.alert("채팅 금지가 해제되었습니다!");
+          this.setState({
+            muteoneminutes: false
+          });
+          //서버에 hp 채우기 요청 보내기
+          //console.log(this.state.muteoneminutes, "i can Chat!!!");
+        }, 15000);
+      }
+    }
+  };
   _storemessage = message => {
     const arr = this.state.messages;
     arr.push(message);
@@ -239,12 +269,8 @@ const styles = StyleSheet.create({
     width: width * 0.9,
     alignItems: "center"
   },
-  attackspace: {
-    flex: 0.5
-    //backgroundColor: "red"
-  },
   statespace: {
-    width: width * 0.95,
+    width: width * 0.96,
     flex: 1,
     margin: 5
   },
@@ -255,7 +281,8 @@ const styles = StyleSheet.create({
   },
   chatfont: {
     fontSize: 15,
-    fontWeight: "500"
+    fontWeight: "500",
+    fontFamily: "Goyang"
   },
   eachmychat: {
     width: width * 0.7,
@@ -278,11 +305,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#C4E1DE",
     flexDirection: "row"
   },
-  attack: {
-    justifyContent: "center",
-    alignItems: "center",
-    flexDirection: "row"
-  },
+
   chatroom: {
     flex: 1,
     //backgroundColor: "red",
