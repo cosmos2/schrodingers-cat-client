@@ -13,6 +13,7 @@ import {
 import { Icon } from "react-native-elements";
 import Images from "./img/catindex";
 import CatsState from "./CatsState";
+import Timer from "./Timer";
 
 const { width, height } = Dimensions.get("window");
 export default class ChatRoom extends React.Component {
@@ -44,8 +45,8 @@ export default class ChatRoom extends React.Component {
         backgroundColor: "#FFAA0E",
         height: 60
       },
-      headerLeftContainerStyle: { marginLeft: 10, backgroundColor: "yellow" },
-      headerLeft: null,
+      headerLeftContainerStyle: { marginLeft: 10 },
+      headerLeft: <Timer explodeChatRoom={params.explodeChatRoom} />,
       headerRightContainerStyle: { marginRight: 15 },
       headerRight: (
         <Icon
@@ -62,7 +63,10 @@ export default class ChatRoom extends React.Component {
     };
   };
   componentDidMount() {
-    this.props.navigation.setParams({ exitChat: this._exitChat });
+    this.props.navigation.setParams({
+      exitChat: this._exitChat,
+      explodeChatRoom: this._explodeChatRoom
+    });
     //this._myuserinfo();
   }
   render() {
@@ -217,6 +221,9 @@ export default class ChatRoom extends React.Component {
   //   _goBacktoOpenBox = () => {
 
   //   }
+  _explodeChatRoom = () => {
+    this.props.navigation.navigate("OpenBoxScreen");
+  };
 }
 
 const styles = StyleSheet.create({
