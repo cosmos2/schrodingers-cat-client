@@ -12,8 +12,6 @@ import Images from "./img/catindex";
 
 const { width, height } = Dimensions.get("window");
 
-const { width, height } = Dimensions.get("window");
-
 export default class CatsState extends Component {
   constructor(props) {
     super(props);
@@ -488,7 +486,8 @@ const styles = StyleSheet.create({
     marginTop: 7,
     marginLeft: 10,
     fontWeight: "500",
-    fontWeight: "bold"
+    fontWeight: "bold",
+    fontFamily: "Goyang"
     //marginBottom: 10
   },
   waiting: {
@@ -496,7 +495,8 @@ const styles = StyleSheet.create({
     fontSize: 15,
     fontWeight: "500",
     fontWeight: "bold",
-    marginLeft: 10
+    marginLeft: 10,
+    fontFamily: "Goyang"
     //marginBottom: 10
   }
 });
