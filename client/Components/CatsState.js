@@ -4,9 +4,6 @@ import { StyleSheet, Text, View, Dimensions } from "react-native";
 const { width, height } = Dimensions.get("window");
 
 export default class CatsState extends Component {
-  componentDidMount() {
-    console.log({ width, height });
-  }
   render() {
     return (
       <View style={styles.state}>
