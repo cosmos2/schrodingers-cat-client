@@ -12,6 +12,8 @@ import Images from "./img/catindex";
 
 const { width, height } = Dimensions.get("window");
 
+const { width, height } = Dimensions.get("window");
+
 export default class CatsState extends Component {
   constructor(props) {
     super(props);

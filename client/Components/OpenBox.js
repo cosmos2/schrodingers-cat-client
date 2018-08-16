@@ -96,7 +96,7 @@ export default class OpenBox extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: "#FCFCFC",
     alignItems: "center",
     justifyContent: "center"
   },
