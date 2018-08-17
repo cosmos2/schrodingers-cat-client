@@ -16,9 +16,6 @@ import Cat from "./Cat";
 const { width, height } = Dimensions.get("window");
 
 class SelectCat extends Component {
-  state = {
-    catId: ""
-  };
   static navigationOptions = {
     title: "슈뢰딩거의 고양이",
     headerStyle: {
@@ -59,18 +56,11 @@ class SelectCat extends Component {
   // 고양이를 누르면 고양이 정보를 보내주고 화면을 넘김
   _sendCatInfom = async catId => {
     try {
-      await this.setState({
-        catId
-      });
-      // await axios.post("http://localhost:3000/test", {
-      //   catId: this.state.catId
-      // });
-      // url은 localhost:3000/init/3 이런식으로
-      // const token = await axios.get("http://localhost:3000/test");
-      // await AsyncStorage.setItem("token", JSON.stringify(token.data));
-      // const tokenReturn = await AsyncStorage.getItem("token");
+      const response = await axios.post(`http://localhost:3000/init/${catId}`);
+      await AsyncStorage.setItem("token", JSON.stringify(response.data));
+      const tokenReturn = await AsyncStorage.getItem("token");
       await this.props.navigation.navigate("OpenBoxScreen");
-      // await console.log(JSON.parse(tokenReturn));
+      await console.log(JSON.parse(tokenReturn));
     } catch (err) {
       console.log(err);
     }
