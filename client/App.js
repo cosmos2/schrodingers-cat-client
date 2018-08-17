@@ -9,6 +9,8 @@ import Landing from "./Components/Landing";
 import Cat from "./Components/Cat";
 import { createStackNavigator } from "react-navigation";
 import { Font } from "expo";
+import Store from "./Components/store";
+import SocketIOClient from "socket.io-client";
 
 const AppNavigator = createStackNavigator(
   {
@@ -24,10 +26,22 @@ const AppNavigator = createStackNavigator(
   }
 );
 
-export default class App extends React.Component {
-  state = {
-    fontLoaded: false
-  };
+export default class Index extends React.Component {
+  constructor(props) {
+    super(props);
+    this._socket = SocketIOClient("http://localhost:3000");
+    this._socket.on("findRoom", users => {
+      console.log(users);
+    });
+    this._socket.on("info", myInfo => {
+      console.log(myInfo);
+    });
+    this.state = {
+      fontLoaded: false,
+      socket: this._socket
+    };
+  }
+
   async componentDidMount() {
     await Font.loadAsync({
       Goyang: require("./assets/fonts/Goyang.otf")
@@ -36,7 +50,11 @@ export default class App extends React.Component {
     this.setState({ fontLoaded: true });
   }
   render() {
-    return this.state.fontLoaded ? <AppNavigator /> : null;
+    return this.state.fontLoaded ? (
+      <Store.Provider value={this.state}>
+        <AppNavigator />
+      </Store.Provider>
+    ) : null;
   }
 }
 
