@@ -1,31 +1,18 @@
 import React, { Component } from "react";
-import { View, Text, Image, StyleSheet, Alert } from "react-native";
+import { View, Text, Image, StyleSheet, AsyncStorage } from "react-native";
 
-export default class Loading extends Component {
-  state = {
-    latitude: 0,
-    longitude: 0
-  };
+export default class Landing extends Component {
+  constructor(props) {
+    super(props);
+  }
+
   static navigationOptions = {
     header: null
   };
   componentDidMount() {
-    // Start counting when the page is loaded
-    navigator.geolocation.getCurrentPosition(position => {
-      var lat = parseFloat(position.coords.latitude);
-      var long = parseFloat(position.coords.longitude);
-      this.setState({
-        latitude: lat,
-        longitude: long
-      });
-    });
     this.timeoutHandle = setTimeout(() => {
-      // Alert.alert(
-      //   "위도 : " + JSON.stringify(this.state.latitude),
-      //   "경도 : " + JSON.stringify(this.state.longitude)
-      // );
-      this.props.navigation.navigate("SelectCatScreen");
-    }, 50);
+      this._userInfo();
+    }, 1500);
   }
 
   componentWillUnmount() {
@@ -46,22 +33,23 @@ export default class Loading extends Component {
     );
   }
 
-  _userInfo = () => {
-    //db로 위도, 경도, 토큰 보내주기
-    if (this.state.latitude === "" || this.state.longitude === "") {
-      return;
+  _userInfo = async () => {
+    //위도, 경도, 토큰 보내주기
+    await AsyncStorage.setItem("token", "");
+    try {
+      const token = await AsyncStorage.getItem("token");
+      if (!token) {
+        this.props.navigation.navigate("SelectCatScreen");
+      } else {
+        // this.socket.emit("", token);
+        // this.socket.on("", userinfo=>{
+        //     await AsyncStorage.setItem("userInfo", JSON.stringify(userinfo));
+        // })
+        this.props.navigation.navigate("OpenBoxScreen");
+      }
+    } catch (err) {
+      console.log(err);
     }
-    fetch("link", {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        latitude: this.state.latitude,
-        longitude: this.state.longitude
-      })
-    });
   };
 }
 

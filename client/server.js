@@ -1,21 +1,17 @@
-const express = require("express");
-const bodyParser = require("body-parser");
+var express = require("express");
+var http = require("http");
+var socketio = require("socket.io");
 
-const app = express();
+var app = express();
+var server = http.Server(app);
+var websocket = socketio(server);
+server.listen(3000, () => console.log("listening on *:3000"));
 
-app.set("port", process.env.PORT || 3000);
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
-
-app.post("/test", (req, res) => {
-  console.log(req.body);
-  res.json("done");
-});
-
-app.get("/test", (req, res) => {
-  res.json({ token: "asldfkjasldfjalsdfjeij239402938skdjssflkajlk" });
-});
-
-app.listen(app.get("port"), () => {
-  console.log("listening on " + app.get("port"));
+// The event will be called when a client is connected.
+websocket.on("connection", socket => {
+  console.log("A client just joined on", socket.id);
+  socket.on("findRoom", msg => {
+    console.log(msg);
+    socket.emit("msg", "from server");
+  });
 });

@@ -1,15 +1,12 @@
 import React from "react";
 import {
   StyleSheet,
-  Text,
   View,
-  Button,
   Image,
   Dimensions,
-  Alert,
   TouchableOpacity
 } from "react-native";
-import { Icon } from "react-native-elements";
+import Store from "./store";
 
 const { width, height } = Dimensions.get("window");
 export default class OpenBox extends React.Component {
@@ -31,20 +28,22 @@ export default class OpenBox extends React.Component {
       },
       headerRightContainerStyle: { marginRight: 15 },
       headerRight: (
-        <TouchableOpacity onPress={() => params.openProfile()}>
-          <Image
-            source={require("./img/chartreux.png")}
-            style={{
-              marginBottom: 1
-            }}
-          />
-        </TouchableOpacity>
-        // <Icon
-        //   onPress={() => params.openProfile()}
-        //   type="ionicon"
-        //   name="logo-octocat"
-        //   color="white"
-        // />
+        <Store.Consumer>
+          {store => {
+            return (
+              <TouchableOpacity
+                onPress={() => params.openProfile(store.socket)}
+              >
+                <Image
+                  source={require("./img/chartreux.png")}
+                  style={{
+                    marginBottom: 1
+                  }}
+                />
+              </TouchableOpacity>
+            );
+          }}
+        </Store.Consumer>
       )
     };
   };
@@ -63,33 +62,45 @@ export default class OpenBox extends React.Component {
     return (
       <View style={styles.container}>
         <View style={styles.card}>
-          <TouchableOpacity onPress={this._findRoom}>
-            <Image
-              style={{ width: 300, height: 300 }}
-              source={{
-                uri:
-                  "https://media1.tenor.com/images/2bbbd5be81fe0265103bfe25d16c7c8e/tenor.gif?itemid=12215186"
-              }}
-            />
-          </TouchableOpacity>
-          {/* <Button
-            title="Open Box"
-            onPress={() => this.props.navigation.navigate("LoadingScreen")}
-          /> */}
+          <Store.Consumer>
+            {store => {
+              return (
+                <TouchableOpacity
+                  onPress={() => {
+                    this._findRoom(store.socket);
+                  }}
+                >
+                  <Image
+                    style={{ width: 300, height: 300 }}
+                    source={{
+                      uri:
+                        "https://media1.tenor.com/images/2bbbd5be81fe0265103bfe25d16c7c8e/tenor.gif?itemid=12215186"
+                    }}
+                  />
+                </TouchableOpacity>
+              );
+            }}
+          </Store.Consumer>
         </View>
       </View>
     );
   }
-  _findRoom = () => {
-    Alert.alert(
-      "위도 : " + JSON.stringify(this.state.latitude),
-      "경도 : " + JSON.stringify(this.state.longitude)
-    );
-    this.props.navigation.navigate("LoadingScreen");
+  _findRoom = async socket => {
+    const { latitude, longitude } = this.state;
+    try {
+      await socket.emit("findRoom", { latitude, longitude });
+      await this.props.navigation.navigate("LoadingScreen");
+    } catch (err) {
+      console.log(err);
+    }
   };
-  _openProfile = () => {
-    //Alert.alert("fuck");
-    this.props.navigation.navigate("ProfileScreen");
+  _openProfile = async socket => {
+    try {
+      await socket.emit("info");
+      await this.props.navigation.navigate("ProfileScreen");
+    } catch (err) {
+      console.log(err);
+    }
   };
 }
 
@@ -103,9 +114,6 @@ const styles = StyleSheet.create({
   card: {
     paddingLeft: 20,
     flex: 0.6,
-    //backgroundColor: "yellow",
-    // borderWidth: 1,
-    // borderColor: "black",
     width: width * 0.9
   }
 });
