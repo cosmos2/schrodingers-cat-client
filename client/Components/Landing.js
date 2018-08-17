@@ -1,43 +1,19 @@
 import React, { Component } from "react";
-import {
-  View,
-  Text,
-  Image,
-  StyleSheet,
-  Alert,
-  AsyncStorage,
-  Button
-} from "react-native";
-import SocketIOClient from "socket.io-client";
-import Store from "./store";
+
+import { View, Text, Image, StyleSheet, AsyncStorage } from "react-native";
 
 export default class Landing extends Component {
   constructor(props) {
     super(props);
-    //this.socket = SocketIOClient("http://localhost:3000");
   }
 
   static navigationOptions = {
     header: null
   };
   componentDidMount() {
-    // Start counting when the page is loaded
-    //this._what();
-    // navigator.geolocation.getCurrentPosition(position => {
-    //   var lat = parseFloat(position.coords.latitude);
-    //   var long = parseFloat(position.coords.longitude);
-    //   this.setState({
-    //     latitude: lat,
-    //     longitude: long
-    //   });
-    // });
     this.timeoutHandle = setTimeout(() => {
-      // Alert.alert(
-      //   "위도 : " + JSON.stringify(this.state.latitude),
-      //   "경도 : " + JSON.stringify(this.state.longitude)
-      // );
       this._userInfo();
-    }, 5000);
+    }, 1500);
   }
 
   componentWillUnmount() {
@@ -68,14 +44,6 @@ export default class Landing extends Component {
       </View>
     );
   }
-
-  //   _what = async () => {
-  //     const token = await AsyncStorage.getItem("token");
-  //     console.log(token);
-  //   };
-  _monkey = something => {
-    something.emit("msg", "fucking");
-  };
   _userInfo = async () => {
     //위도, 경도, 토큰 보내주기
     await AsyncStorage.setItem("token", "");

@@ -1,9 +1,20 @@
 import React from "react";
-import { StyleSheet, Text, View, Dimensions, Image } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Dimensions,
+  Image,
+  AsyncStorage
+} from "react-native";
+import Loading from "./Loading";
 
 const { width, height } = Dimensions.get("window");
 
 export default class Profile extends React.Component {
+  state = {
+    loading: false
+  };
   static navigationOptions = {
     title: "고양이 프로필",
     headerStyle: {
@@ -15,8 +26,17 @@ export default class Profile extends React.Component {
       fontWeight: "bold"
     }
   };
+  async componentDidMount() {
+    try {
+      const userInfo = await AsyncStorage.getItem("userInfo");
+      await console.log(userInfo);
+      await this.setState({ loading: true });
+    } catch (err) {
+      console.log(err);
+    }
+  }
   render() {
-    return (
+    return this.state.loading ? (
       <View style={styles.container}>
         <View style={styles.card}>
           <View style={styles.profilecat}>
@@ -30,6 +50,8 @@ export default class Profile extends React.Component {
           </View>
         </View>
       </View>
+    ) : (
+      <Loading />
     );
   }
 }

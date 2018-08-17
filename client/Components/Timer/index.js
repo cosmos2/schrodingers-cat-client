@@ -18,6 +18,9 @@ export default class Timer extends Component {
       this.setState({ timer });
     }
   }
+  componentWillUnmount() {
+    clearInterval(this.state.timer);
+  }
   render() {
     return (
       <View style={styles.container}>

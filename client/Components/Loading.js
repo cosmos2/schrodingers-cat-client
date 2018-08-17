@@ -19,7 +19,7 @@ export default class Loading extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.title}>Finding Room</Text>
+        <Text style={styles.title}>Loading</Text>
         <Image
           style={{ width: 300, height: 300 }}
           source={{
