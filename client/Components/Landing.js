@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+
 import { View, Text, Image, StyleSheet, AsyncStorage } from "react-native";
 
 export default class Landing extends Component {
@@ -22,6 +23,17 @@ export default class Landing extends Component {
   render() {
     return (
       <View style={styles.container}>
+        <Store.Consumer>
+          {store => (
+            <Button
+              onPress={() => {
+                this._monkey(store);
+              }}
+              title="see store"
+              color="#841584"
+            />
+          )}
+        </Store.Consumer>
         <Text style={styles.title}>슈뢰딩거의 고양이</Text>
         <Image
           style={{ width: 300, height: 300 }}
@@ -32,7 +44,6 @@ export default class Landing extends Component {
       </View>
     );
   }
-
   _userInfo = async () => {
     //위도, 경도, 토큰 보내주기
     await AsyncStorage.setItem("token", "");
