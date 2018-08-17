@@ -15,7 +15,6 @@ export default class Cat extends Component {
     return (
       <View>
         <TouchableOpacity onPress={() => sendCatInfom(catId)}>
-          {/* <Icon type="ionicon" name="logo-octocat" color="purple" size={50} /> */}
           <Image source={require("./img/catDemo.png")} />
         </TouchableOpacity>
       </View>

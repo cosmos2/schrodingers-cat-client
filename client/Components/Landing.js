@@ -35,7 +35,6 @@ export default class Landing extends Component {
 
   _userInfo = async () => {
     //위도, 경도, 토큰 보내주기
-    await AsyncStorage.setItem("token", "");
     try {
       const token = await AsyncStorage.getItem("token");
       if (!token) {
