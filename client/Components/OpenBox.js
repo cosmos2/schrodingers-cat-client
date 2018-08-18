@@ -12,7 +12,8 @@ const { width, height } = Dimensions.get("window");
 export default class OpenBox extends React.Component {
   state = {
     latitude: 0,
-    longitude: 0
+    longitude: 0,
+    roomusers: []
   };
   static navigationOptions = ({ navigation }) => {
     const { params = {} } = navigation.state;

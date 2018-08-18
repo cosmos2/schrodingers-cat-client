@@ -28,8 +28,8 @@ class SelectCat extends Component {
     }
   };
   render() {
-    const upperCats = [1, 2, 3];
-    const lowerCats = [4, 5, 6];
+    const upperCats = [dummyCat_1, dummyCat_2, dummyCat_3];
+    const lowerCats = [dummyCat_4, dummyCat_5, dummyCat_6];
     return (
       <View style={styles.body}>
         <View style={styles.container}>
