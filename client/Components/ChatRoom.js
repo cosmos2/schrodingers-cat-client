@@ -20,6 +20,7 @@ export default class ChatRoom extends React.Component {
   constructor(props) {
     super(props);
     this.socket = this.props.navigation.state.params.socket;
+    this.roomusers = this.props.navigation.state.params.roomusers;
     this.state = {
       messages: [
         { userId: 123, catId: 1, message: "fucking crazy Lotteria!!!" },
@@ -92,6 +93,7 @@ export default class ChatRoom extends React.Component {
     });
   }
   render() {
+    console.log("render");
     return (
       <View style={styles.container}>
         <View style={styles.chatroom}>
@@ -166,6 +168,7 @@ export default class ChatRoom extends React.Component {
                 //chatRoomCats={this.state.chatroomcats}
                 myChatRoomNum={this.state.mychatroomnum}
                 socket={this.socket}
+                roomusers={this.roomusers}
               />
             </View>
           </View>
@@ -244,6 +247,7 @@ export default class ChatRoom extends React.Component {
         {
           text: "나가기",
           onPress: () => {
+            this.socket.emit("leaveRoom");
             this.props.navigation.navigate("OpenBoxScreen");
           }
         },
@@ -253,6 +257,7 @@ export default class ChatRoom extends React.Component {
     );
   };
   _explodeChatRoom = () => {
+    this.socket.emit("leaveRoom");
     this.props.navigation.navigate("OpenBoxScreen");
   };
   // <--- Timer에서 쓰임

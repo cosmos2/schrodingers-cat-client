@@ -12,7 +12,8 @@ const { width, height } = Dimensions.get("window");
 export default class OpenBox extends React.Component {
   state = {
     latitude: 0,
-    longitude: 0
+    longitude: 0,
+    roomusers: []
   };
   static navigationOptions = ({ navigation }) => {
     const { params = {} } = navigation.state;
@@ -89,7 +90,17 @@ export default class OpenBox extends React.Component {
     const { latitude, longitude } = this.state;
     try {
       await socket.emit("findRoom", { latitude, longitude });
-      await this.props.navigation.navigate("LoadingScreen", { socket: socket });
+      await socket.on("findRoom", users => {
+        console.log(users, "openbox user information!!!!!!!!!");
+        this.props.navigation.navigate("LoadingScreen", {
+          socket: socket,
+          roomusers: users
+        });
+      });
+      // await this.props.navigation.navigate("LoadingScreen", {
+      //   socket: socket,
+      //   roomusers: this.state.roomusers
+      // });
     } catch (err) {
       console.log(err);
     }
