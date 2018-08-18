@@ -244,6 +244,7 @@ export default class ChatRoom extends React.Component {
         {
           text: "나가기",
           onPress: () => {
+            this.socket.emit("leaveRoom");
             this.props.navigation.navigate("OpenBoxScreen");
           }
         },
@@ -253,6 +254,7 @@ export default class ChatRoom extends React.Component {
     );
   };
   _explodeChatRoom = () => {
+    this.socket.emit("leaveRoom");
     this.props.navigation.navigate("OpenBoxScreen");
   };
   // <--- Timer에서 쓰임

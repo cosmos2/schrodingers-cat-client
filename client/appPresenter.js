@@ -30,16 +30,23 @@ const AppNavigator = createStackNavigator(
 export default class AppPresenter extends React.Component {
   constructor(props) {
     super(props);
-    // if (this.props.token === "noToken") {
-    //   this._socket = SocketIOClient("http://52.79.251.45:8080");
-    // }
 
-    this._afterFirstTokenConnection = token => {
-      console.log(token);
+    this._afterFirstTokenConnection = async token => {
+      try {
+        const newSocket = await SocketIOClient("http://52.79.251.45:8080", {
+          query: token
+        });
+        this.setState({ socket: newSocket });
+      } catch (err) {
+        console.log(err);
+      }
     };
-    this._socket = SocketIOClient("http://52.79.251.45:8080", {
-      query: this.props.token
-    });
+
+    if (this.props.token !== "noToken") {
+      this._socket = SocketIOClient("http://52.79.251.45:8080", {
+        query: this.props.token
+      });
+    }
 
     this.state = {
       fontLoaded: false,
@@ -47,13 +54,6 @@ export default class AppPresenter extends React.Component {
       afterFirstTokenConnection: this._afterFirstTokenConnection,
       token: this.props.token
     };
-
-    this._socket.on("findRoom", users => {
-      console.log(users);
-    });
-    this._socket.on("info", myInfo => {
-      console.log(myInfo);
-    });
   }
 
   async componentDidMount() {

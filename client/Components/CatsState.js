@@ -34,10 +34,10 @@ export default class CatsState extends Component {
     //Alert.alert(this.props.myChatRoomNum);
     //Alert.alert(this.props.socket);
     //this.socket.on("", attackedinfo => {});
-    await setTimeout(() => {
-      this._storeUser({ userId: 123, catId: 1, hp: 7, socketId: "" });
-      console.log(this.state.chatroomcats);
-    }, 3000);
+    // await setTimeout(() => {
+    //   this._storeUser({ userId: 123, catId: 1, hp: 7, socketId: "" });
+    //   console.log(this.state.chatroomcats);
+    // }, 3000);
     this.socket.on("findRoom", data => {
       this._storeUser({
         userId: data.userId,
