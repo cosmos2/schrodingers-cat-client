@@ -58,7 +58,12 @@ class SelectCat extends Component {
       const response = await axios.post(
         `http://52.79.251.45:8080/init/${catId}`
       );
+      const myInfo = {
+        userId: response.data.userId,
+        catId: response.data.userImage
+      };
       await AsyncStorage.setItem("token", JSON.stringify(response.data));
+      await AsyncStorage.setItem("myUserId", JSON.stringify(myInfo));
       const token = response.data.query;
       await afterFirstTokenConnection(token);
       await this.props.navigation.navigate("OpenBoxScreen");

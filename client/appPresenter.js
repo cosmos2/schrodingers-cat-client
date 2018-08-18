@@ -52,9 +52,6 @@ export default class AppPresenter extends React.Component {
       this._socket = SocketIOClient("http://52.79.251.45:8080", {
         query: this.props.token
       });
-      this._socket.on("connect", userInfo => {
-        // console.log(userInfo, "userInfo");
-      });
     }
 
     this.state = {
