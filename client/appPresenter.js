@@ -42,9 +42,18 @@ export default class AppPresenter extends React.Component {
       }
     };
 
+    this._GetInfo = myInfo => {
+      this.setState({
+        myInfo
+      });
+    };
+
     if (this.props.token !== "noToken") {
       this._socket = SocketIOClient("http://52.79.251.45:8080", {
         query: this.props.token
+      });
+      this._socket.on("connect", userInfo => {
+        // console.log(userInfo, "userInfo");
       });
     }
 
@@ -53,7 +62,9 @@ export default class AppPresenter extends React.Component {
       socket: this._socket,
       afterFirstTokenConnection: this._afterFirstTokenConnection,
       token: this.props.token,
-      roomusers: []
+      roomusers: [],
+      GetInfo: this._GetInfo,
+      myInfo: {}
     };
   }
 
