@@ -8,13 +8,22 @@ import {
   AsyncStorage
 } from "react-native";
 import Loading from "./Loading";
+import Store from "./store";
 
 const { width, height } = Dimensions.get("window");
 
 export default class Profile extends React.Component {
-  state = {
-    loading: false
-  };
+  constructor(props) {
+    super(props);
+    this.images = {
+      1: require("./img/dummyCat_1.png"),
+      2: require("./img/dummyCat_2.png"),
+      3: require("./img/dummyCat_3.png"),
+      4: require("./img/dummyCat_4.png"),
+      5: require("./img/dummyCat_5.png"),
+      6: require("./img/dummyCat_6.png")
+    };
+  }
   static navigationOptions = {
     title: "고양이 프로필",
     headerStyle: {
@@ -26,32 +35,36 @@ export default class Profile extends React.Component {
       fontWeight: "bold"
     }
   };
-  async componentDidMount() {
-    try {
-      const userInfo = await AsyncStorage.getItem("userInfo");
-      await console.log(userInfo);
-      await this.setState({ loading: true });
-    } catch (err) {
-      console.log(err);
-    }
-  }
+
   render() {
-    return this.state.loading ? (
+    return (
       <View style={styles.container}>
-        <View style={styles.card}>
-          <View style={styles.profilecat}>
-            <Image source={require("./img/catDemo.png")} />
-          </View>
-          <View style={styles.userinfo}>
-            <Text style={styles.subtitle}>ID : #1234</Text>
-            <Text style={styles.subtitle}>맞은 횟수 : 67</Text>
-            <Text style={styles.subtitle}>채팅 입장 횟수 : 145</Text>
-            <Text style={styles.subtitle}>뮤트된 횟수 : 12</Text>
-          </View>
-        </View>
+        <Store.Consumer>
+          {store => {
+            return (
+              <View style={styles.card}>
+                <View style={styles.profilecat}>
+                  <Image source={this.images[store.myInfo.catImage]} />
+                </View>
+                <View style={styles.userinfo}>
+                  <Text style={styles.subtitle}>
+                    ID : {store.myInfo.userId}
+                  </Text>
+                  <Text style={styles.subtitle}>
+                    맞은 횟수 : {store.myInfo._hittenCount}
+                  </Text>
+                  <Text style={styles.subtitle}>
+                    채팅 입장 횟수 : {store.myInfo._enterCount}
+                  </Text>
+                  <Text style={styles.subtitle}>
+                    뮤트된 횟수 : {store.myInfo._muteCount}
+                  </Text>
+                </View>
+              </View>
+            );
+          }}
+        </Store.Consumer>
       </View>
-    ) : (
-      <Loading />
     );
   }
 }

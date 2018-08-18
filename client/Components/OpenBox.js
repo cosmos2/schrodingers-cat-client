@@ -32,9 +32,7 @@ export default class OpenBox extends React.Component {
         <Store.Consumer>
           {store => {
             return (
-              <TouchableOpacity
-                onPress={() => params.openProfile(store.socket)}
-              >
+              <TouchableOpacity onPress={() => params.openProfile(store)}>
                 <Image
                   source={require("./img/chartreux.png")}
                   style={{
@@ -99,11 +97,11 @@ export default class OpenBox extends React.Component {
       console.log(err);
     }
   };
-  _openProfile = async socket => {
+  _openProfile = async store => {
     try {
-      await socket.emit("info");
-      await socket.on("info", myInfo => {
-        console.log(myInfo);
+      await store.socket.emit("info");
+      await store.socket.on("info", myInfo => {
+        store.GetInfo(myInfo);
       });
       await this.props.navigation.navigate("ProfileScreen");
     } catch (err) {
