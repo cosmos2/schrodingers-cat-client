@@ -6,6 +6,7 @@ import Profile from "./Components/Profile";
 import ChatRoom from "./Components/ChatRoom";
 import Loading from "./Components/Loading";
 import Landing from "./Components/Landing";
+import Cat from "./Components/Cat";
 import { createStackNavigator } from "react-navigation";
 import { Font } from "expo";
 import Store from "./Components/store";
@@ -18,7 +19,8 @@ const AppNavigator = createStackNavigator(
     OpenBoxScreen: { screen: OpenBox },
     ProfileScreen: { screen: Profile },
     ChatRoomScreen: { screen: ChatRoom },
-    LandingScreen: { screen: Landing }
+    LandingScreen: { screen: Landing },
+    CatComponent: { screen: Cat }
   },
   {
     initialRouteName: "LandingScreen"
@@ -28,28 +30,41 @@ const AppNavigator = createStackNavigator(
 export default class AppPresenter extends React.Component {
   constructor(props) {
     super(props);
-    this._socket = SocketIOClient("http://localhost:3000", {
-      query: "token=" + this.props.token
+    // if (this.props.token === "noToken") {
+    //   this._socket = SocketIOClient("http://52.79.251.45:8080");
+    // }
+
+    this._socket = SocketIOClient("http://52.79.251.45:8080", {
+      query: this.props.token
     });
+
     this._socket.on("findRoom", users => {
       console.log(users);
     });
     this._socket.on("info", myInfo => {
       console.log(myInfo);
     });
+
+    this._afterFirstTokenConnection = token => {
+      console.log(token);
+    };
+
     this.state = {
       fontLoaded: false,
       socket: this._socket,
-      token: ""
+      afterFirstTokenConnection: this._afterFirstTokenConnection,
+      token: this.props.token
     };
   }
 
   async componentDidMount() {
+    console.log(this.props.token);
     await Font.loadAsync({
       Goyang: require("./assets/fonts/Goyang.otf")
     });
     this.setState({ fontLoaded: true });
   }
+
   render() {
     return this.state.fontLoaded ? (
       <Store.Provider value={this.state}>

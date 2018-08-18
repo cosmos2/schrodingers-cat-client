@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { View, TouchableOpacity, Image } from "react-native";
 import { Icon } from "react-native-elements";
+import Store from "./store";
 
 export default class Cat extends Component {
   constructor(props) {
@@ -14,9 +15,19 @@ export default class Cat extends Component {
     const { catId } = this.state;
     return (
       <View>
-        <TouchableOpacity onPress={() => sendCatInfom(catId)}>
-          <Image source={require("./img/catDemo.png")} />
-        </TouchableOpacity>
+        <Store.Consumer>
+          {store => {
+            return (
+              <TouchableOpacity
+                onPress={() =>
+                  sendCatInfom(catId, store.afterFirstTokenConnection)
+                }
+              >
+                <Image source={require("./img/catDemo.png")} />
+              </TouchableOpacity>
+            );
+          }}
+        </Store.Consumer>
       </View>
     );
   }
