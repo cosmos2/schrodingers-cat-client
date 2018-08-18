@@ -8,7 +8,9 @@ export default class Loading extends Component {
   componentDidMount() {
     // Start counting when the page is loaded
     this.timeoutHandle = setTimeout(() => {
-      this.props.navigation.navigate("ChatRoomScreen");
+      this.props.navigation.navigate("ChatRoomScreen", {
+        socket: this.props.navigation.state.params.socket
+      });
     }, 2000);
   }
 

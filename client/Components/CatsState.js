@@ -22,18 +22,30 @@ export default class CatsState extends Component {
       mychatroomnum: this.props.myChatRoomNum,
       myattacknum: 5,
       chatroomcats: {
-        cat1: { userId: 123, catId: 1, hp: 7 },
-        cat2: { userId: 87, catId: 2, hp: 7 },
-        cat3: { userId: 10, catId: 4, hp: 7 }
+        //cat1: { userId: 123, catId: 1, hp: 7 },
+        cat2: { userId: 87, catId: 2, hp: 7, socketId: "" },
+        cat3: { userId: 10, catId: 4, hp: 7, socketId: "" }
       }
     };
     this.socket = this.props.socket;
   }
 
-  componentDidMount = () => {
+  componentDidMount = async () => {
     //Alert.alert(this.props.myChatRoomNum);
     //Alert.alert(this.props.socket);
     //this.socket.on("", attackedinfo => {});
+    // await setTimeout(() => {
+    //   this._storeUser({ userId: 123, catId: 1, hp: 7, socketId: "" });
+    //   console.log(this.state.chatroomcats);
+    // }, 3000);
+    this.socket.on("findRoom", data => {
+      this._storeUser({
+        userId: data.userId,
+        catId: data.catImage,
+        hp: data.hp,
+        socketId: data.socketId
+      });
+    });
   };
 
   render() {
@@ -46,53 +58,64 @@ export default class CatsState extends Component {
                 this.state.mychatroomnum === "cat1" ? styles.mycat : styles.cat1
               }
             >
-              <TouchableOpacity
-                disabled={
-                  this.state.mychatroomnum === "cat1" ||
-                  (this.state.myattacknum <= 0 &&
-                    this.state.chatroomcats[this.state.mychatroomnum].hp <= 0)
-                    ? true
-                    : this.state.attackmode || this.state.healingmode
-                      ? false
-                      : true
-                }
-                onPress={
-                  this.state.attackmode && !this.state.healingmode
-                    ? () => {
-                        this._thiscatattacked(
-                          this.state.chatroomcats.cat1.catId
-                        );
-                        this.setState({
-                          myattacknum: this.state.myattacknum - 1
-                        });
-                      }
-                    : !this.state.attackmode && this.state.healingmode
-                      ? () => {
-                          this._thiscathealed(
-                            this.state.chatroomcats.cat1.catId
-                          );
-                        }
-                      : null
-                }
-              >
-                <Image
-                  source={Images[this.state.chatroomcats.cat1.catId]}
-                  style={{
-                    marginTop: 8,
-                    marginLeft: 10,
-                    width: 50,
-                    height: 50
-                  }}
-                />
-              </TouchableOpacity>
-              <View style={{ flexDirection: "column" }}>
-                <Text style={styles.subtitle}>
-                  ID : {this.state.chatroomcats.cat1.userId}
-                </Text>
-                <Text style={styles.subtitle}>
-                  HP : {this.state.chatroomcats.cat1.hp} / 7
-                </Text>
-              </View>
+              {this.state.chatroomcats.cat1 ? (
+                <View style={{ flexDirection: "row" }}>
+                  <TouchableOpacity
+                    disabled={
+                      this.state.mychatroomnum === "cat1" ||
+                      (this.state.myattacknum <= 0 &&
+                        this.state.chatroomcats[this.state.mychatroomnum].hp <=
+                          0)
+                        ? true
+                        : this.state.attackmode || this.state.healingmode
+                          ? false
+                          : true
+                    }
+                    onPress={
+                      this.state.attackmode && !this.state.healingmode
+                        ? () => {
+                            this._thiscatattacked(
+                              this.state.chatroomcats.cat1.catId
+                            );
+                            this.setState({
+                              myattacknum: this.state.myattacknum - 1
+                            });
+                          }
+                        : !this.state.attackmode && this.state.healingmode
+                          ? () => {
+                              this._thiscathealed(
+                                this.state.chatroomcats.cat1.catId
+                              );
+                            }
+                          : null
+                    }
+                  >
+                    <Image
+                      source={Images[this.state.chatroomcats.cat1.catId]}
+                      style={{
+                        marginTop: 8,
+                        marginLeft: 10,
+                        width: 50,
+                        height: 50
+                      }}
+                    />
+                  </TouchableOpacity>
+                  <View style={{ flexDirection: "column" }}>
+                    <Text style={styles.subtitle}>
+                      ID : {this.state.chatroomcats.cat1.userId}
+                    </Text>
+                    <Text style={styles.subtitle}>
+                      HP : {this.state.chatroomcats.cat1.hp} / 7
+                    </Text>
+                  </View>
+                </View>
+              ) : (
+                <View
+                  style={{ justifyContent: "center", alignItems: "center" }}
+                >
+                  <Text style={styles.waiting}>고양이를 기다리는 중..</Text>
+                </View>
+              )}
             </View>
             <View
               style={
@@ -403,6 +426,14 @@ export default class CatsState extends Component {
   };
   _thiscathealed = catnum => {
     //this.socket.emit("", {});
+  };
+  _storeUser = userobj => {
+    for (var i = 1; i <= 4; i++) {
+      if (!this.state.chatroomcats.hasOwnProperty("cat" + i)) {
+        this.state.chatroomcats["cat" + i] = userobj;
+        return;
+      }
+    }
   };
 }
 

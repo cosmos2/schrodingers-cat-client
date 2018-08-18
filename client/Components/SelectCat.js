@@ -59,11 +59,8 @@ class SelectCat extends Component {
         `http://52.79.251.45:8080/init/${catId}`
       );
       await AsyncStorage.setItem("token", JSON.stringify(response.data));
-      const tokenReturn = await AsyncStorage.getItem("token");
-      await console.log(JSON.parse(tokenReturn));
-      const token = await JSON.parse(tokenReturn).query;
-      // await console.log(token);
-      await afterFirstTokenConnection("token");
+      const token = response.data.query;
+      await afterFirstTokenConnection(token);
       await this.props.navigation.navigate("OpenBoxScreen");
     } catch (err) {
       console.log(err);

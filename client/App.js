@@ -1,7 +1,6 @@
 import React from "react";
 import { AsyncStorage } from "react-native";
 import AppPresenter from "./appPresenter";
-import SelectCat from "./Components/Landing";
 
 export default class Index extends React.Component {
   constructor(props) {
