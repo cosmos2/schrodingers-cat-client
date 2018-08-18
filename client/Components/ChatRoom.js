@@ -19,7 +19,7 @@ const { width, height } = Dimensions.get("window");
 export default class ChatRoom extends React.Component {
   constructor(props) {
     super(props);
-
+    this.socket = this.props.navigation.state.params.socket;
     this.state = {
       messages: [
         { userId: 123, catId: 1, message: "fucking crazy Lotteria!!!" },
@@ -74,7 +74,6 @@ export default class ChatRoom extends React.Component {
   };
   componentWillMount() {
     this._whoamI();
-    this._amImute();
   }
   componentDidMount() {
     this.props.navigation.setParams({
@@ -82,8 +81,15 @@ export default class ChatRoom extends React.Component {
       explodeChatRoom: this._explodeChatRoom
       // <-- I think explodeChatRoom is useless
     });
-
     //this._myuserinfo();
+    this._amImute();
+    this.socket.on("chat", data => {
+      this._storemessage({
+        userId: data.userId,
+        catId: data.catId,
+        message: data.message
+      });
+    });
   }
   render() {
     return (
@@ -159,7 +165,7 @@ export default class ChatRoom extends React.Component {
               <CatsState
                 //chatRoomCats={this.state.chatroomcats}
                 myChatRoomNum={this.state.mychatroomnum}
-                // socket={this.socket}
+                socket={this.socket}
               />
             </View>
           </View>
@@ -176,7 +182,7 @@ export default class ChatRoom extends React.Component {
       });
       console.log("send Message");
     }
-    //this.socket.emit("message", { message: message, userId: this.state.name });
+    this.socket.emit("chat", { message: message, id: this.state.myuserid });
   };
 
   _whoamI = () => {
@@ -190,7 +196,6 @@ export default class ChatRoom extends React.Component {
   };
 
   _amImute = () => {
-    console.log("fucking");
     //console.log(this.state.chatroomcats);
     for (var key in this.state.chatroomcats) {
       //   console.log(this.state.chatroomcats[key]["userId"], "this is key.userID");
