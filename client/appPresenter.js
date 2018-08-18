@@ -38,9 +38,6 @@ export default class AppPresenter extends React.Component {
       query: this.props.token
     });
 
-    this._socket.on("findRoom", users => {
-      console.log(users);
-    });
     this._socket.on("info", myInfo => {
       console.log(myInfo);
     });
@@ -53,7 +50,8 @@ export default class AppPresenter extends React.Component {
       fontLoaded: false,
       socket: this._socket,
       afterFirstTokenConnection: this._afterFirstTokenConnection,
-      token: this.props.token
+      token: this.props.token,
+      roomusers: []
     };
   }
 

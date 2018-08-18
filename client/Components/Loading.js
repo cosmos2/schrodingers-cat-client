@@ -9,7 +9,8 @@ export default class Loading extends Component {
     // Start counting when the page is loaded
     this.timeoutHandle = setTimeout(() => {
       this.props.navigation.navigate("ChatRoomScreen", {
-        socket: this.props.navigation.state.params.socket
+        socket: this.props.navigation.state.params.socket,
+        roomusers: this.props.navigation.state.params.roomusers
       });
     }, 2000);
   }
