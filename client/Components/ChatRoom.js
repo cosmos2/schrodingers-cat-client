@@ -13,7 +13,6 @@ import {
 import { Icon } from "react-native-elements";
 import Images from "./img/catindex";
 import CatsState from "./CatsState";
-import SocketIOClient from "socket.io-client";
 import Timer from "./Timer";
 
 const { width, height } = Dimensions.get("window");
@@ -80,6 +79,7 @@ export default class ChatRoom extends React.Component {
     this.props.navigation.setParams({
       exitChat: this._exitChat,
       explodeChatRoom: this._explodeChatRoom
+      // <-- I think explodeChatRoom is useless
     });
     //this._myuserinfo();
     this._amImute();
@@ -252,12 +252,10 @@ export default class ChatRoom extends React.Component {
       { cancelable: false }
     );
   };
-  //   _goBacktoOpenBox = () => {
-
-  //   }
   _explodeChatRoom = () => {
     this.props.navigation.navigate("OpenBoxScreen");
   };
+  // <--- Timer에서 쓰임
 }
 
 const styles = StyleSheet.create({
