@@ -34,20 +34,12 @@ export default class AppPresenter extends React.Component {
     //   this._socket = SocketIOClient("http://52.79.251.45:8080");
     // }
 
-    this._socket = SocketIOClient("http://52.79.251.45:8080", {
-      query: this.props.token
-    });
-
-    this._socket.on("findRoom", users => {
-      console.log(users);
-    });
-    this._socket.on("info", myInfo => {
-      console.log(myInfo);
-    });
-
     this._afterFirstTokenConnection = token => {
       console.log(token);
     };
+    this._socket = SocketIOClient("http://52.79.251.45:8080", {
+      query: this.props.token
+    });
 
     this.state = {
       fontLoaded: false,
@@ -55,6 +47,13 @@ export default class AppPresenter extends React.Component {
       afterFirstTokenConnection: this._afterFirstTokenConnection,
       token: this.props.token
     };
+
+    this._socket.on("findRoom", users => {
+      console.log(users);
+    });
+    this._socket.on("info", myInfo => {
+      console.log(myInfo);
+    });
   }
 
   async componentDidMount() {

@@ -63,7 +63,7 @@ class SelectCat extends Component {
       await console.log(JSON.parse(tokenReturn));
       const token = await JSON.parse(tokenReturn).query;
       // await console.log(token);
-      await afterFirstTokenConnection("token");
+      await afterFirstTokenConnection(token);
       await this.props.navigation.navigate("OpenBoxScreen");
     } catch (err) {
       console.log(err);
