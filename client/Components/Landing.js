@@ -23,17 +23,6 @@ export default class Landing extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Store.Consumer>
-          {store => (
-            <Button
-              onPress={() => {
-                this._monkey(store);
-              }}
-              title="see store"
-              color="#841584"
-            />
-          )}
-        </Store.Consumer>
         <Text style={styles.title}>슈뢰딩거의 고양이</Text>
         <Image
           style={{ width: 300, height: 300 }}
