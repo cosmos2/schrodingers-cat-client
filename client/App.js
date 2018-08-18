@@ -1,6 +1,7 @@
 import React from "react";
 import { AsyncStorage } from "react-native";
 import AppPresenter from "./appPresenter";
+import SelectCat from "./Components/Landing";
 
 export default class Index extends React.Component {
   constructor(props) {
@@ -10,10 +11,16 @@ export default class Index extends React.Component {
     };
   }
   async componentDidMount() {
+    console.log("app did mount");
     try {
+      // await AsyncStorage.removeItem("token");
       const response = await AsyncStorage.getItem("token");
-      const token = await JSON.parse(response);
-      this.setState({ token: token.token });
+      if (response !== null) {
+        const token = JSON.parse(response).query;
+        this.setState({ token });
+      } else {
+        this.setState({ token: "noToken" });
+      }
     } catch (err) {
       console.log(err);
     }
