@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+
 import { View, Text, Image, StyleSheet, AsyncStorage } from "react-native";
 
 export default class Landing extends Component {
@@ -32,7 +33,6 @@ export default class Landing extends Component {
       </View>
     );
   }
-
   _userInfo = async () => {
     //위도, 경도, 토큰 보내주기
     try {

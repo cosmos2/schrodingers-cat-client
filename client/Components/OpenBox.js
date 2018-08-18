@@ -89,7 +89,7 @@ export default class OpenBox extends React.Component {
     const { latitude, longitude } = this.state;
     try {
       await socket.emit("findRoom", { latitude, longitude });
-      await this.props.navigation.navigate("LoadingScreen");
+      await this.props.navigation.navigate("LoadingScreen", { socket: socket });
     } catch (err) {
       console.log(err);
     }
