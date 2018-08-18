@@ -90,17 +90,11 @@ export default class OpenBox extends React.Component {
     const { latitude, longitude } = this.state;
     try {
       await socket.emit("findRoom", { latitude, longitude });
-      await socket.on("findRoom", users => {
-        console.log(users, "openbox user information!!!!!!!!!");
-        this.props.navigation.navigate("LoadingScreen", {
-          socket: socket,
-          roomusers: users
-        });
+      await socket.on("findRoom", (users, leftTime) => {
+        console.log(users);
+        console.log(leftTime);
       });
-      // await this.props.navigation.navigate("LoadingScreen", {
-      //   socket: socket,
-      //   roomusers: this.state.roomusers
-      // });
+      await this.props.navigation.navigate("LoadingScreen", { socket: socket });
     } catch (err) {
       console.log(err);
     }
@@ -108,6 +102,9 @@ export default class OpenBox extends React.Component {
   _openProfile = async socket => {
     try {
       await socket.emit("info");
+      await socket.on("info", myInfo => {
+        console.log(myInfo);
+      });
       await this.props.navigation.navigate("ProfileScreen");
     } catch (err) {
       console.log(err);
