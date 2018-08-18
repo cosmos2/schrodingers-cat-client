@@ -9,6 +9,7 @@ import {
   Alert
 } from "react-native";
 import Images from "./img/catindex";
+import Store from "./store";
 
 const { width, height } = Dimensions.get("window");
 
@@ -28,6 +29,15 @@ export default class CatsState extends Component {
       }
     };
     this.socket = this.props.socket;
+    // this.socket.on("findRoom", usinfo => {
+    //   //console.log(usinfo, "====================================");
+    //   // this._storeUser({
+    //   //   userId: data.userId,
+    //   //   catId: data.catImage,
+    //   //   hp: data.hp,
+    //   //   socketId: data.socketId
+    //   // });
+    // });
   }
 
   componentDidMount = async () => {
@@ -37,20 +47,20 @@ export default class CatsState extends Component {
     // await setTimeout(() => {
     //   this._storeUser({ userId: 123, catId: 1, hp: 7, socketId: "" });
     //   console.log(this.state.chatroomcats);
-    // }, 3000);
-    this.socket.on("findRoom", data => {
-      this._storeUser({
-        userId: data.userId,
-        catId: data.catImage,
-        hp: data.hp,
-        socketId: data.socketId
-      });
+    // }, 1000);
+    this.socket.on("leaveRoom", data => {
+      this._deleteUser(data.userId);
     });
   };
 
   render() {
+    console.log(this.props.roomusers, "왜 이게 렌더를 두번 하냐고");
     return (
       <View style={styles.container}>
+        {/* <Store.Consumer>
+          {store => {
+            console.log(store.roomusers, "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+            return ( */}
         <View style={styles.state}>
           <View style={styles.uppercat}>
             <View
@@ -111,7 +121,10 @@ export default class CatsState extends Component {
                 </View>
               ) : (
                 <View
-                  style={{ justifyContent: "center", alignItems: "center" }}
+                  style={{
+                    justifyContent: "center",
+                    alignItems: "center"
+                  }}
                 >
                   <Text style={styles.waiting}>고양이를 기다리는 중..</Text>
                 </View>
@@ -175,7 +188,10 @@ export default class CatsState extends Component {
                 </View>
               ) : (
                 <View
-                  style={{ justifyContent: "center", alignItems: "center" }}
+                  style={{
+                    justifyContent: "center",
+                    alignItems: "center"
+                  }}
                 >
                   <Text style={styles.waiting}>고양이를 기다리는 중..</Text>
                 </View>
@@ -242,7 +258,10 @@ export default class CatsState extends Component {
                 </View>
               ) : (
                 <View
-                  style={{ justifyContent: "center", alignItems: "center" }}
+                  style={{
+                    justifyContent: "center",
+                    alignItems: "center"
+                  }}
                 >
                   <Text style={styles.waiting}>고양이를 기다리는 중..</Text>
                 </View>
@@ -306,7 +325,10 @@ export default class CatsState extends Component {
                 </View>
               ) : (
                 <View
-                  style={{ justifyContent: "center", alignItems: "center" }}
+                  style={{
+                    justifyContent: "center",
+                    alignItems: "center"
+                  }}
                 >
                   <Text style={styles.waiting}>고양이를 기다리는 중..</Text>
                 </View>
@@ -314,6 +336,9 @@ export default class CatsState extends Component {
             </View>
           </View>
         </View>
+        );
+        {/* }}
+        </Store.Consumer> */}
         <View style={styles.attackspace}>
           {this.state.myattacknum > 0 ? (
             this.state.attackmode ? (
@@ -428,10 +453,20 @@ export default class CatsState extends Component {
     //this.socket.emit("", {});
   };
   _storeUser = userobj => {
+    //console.log(userobj, "====================================");
     for (var i = 1; i <= 4; i++) {
       if (!this.state.chatroomcats.hasOwnProperty("cat" + i)) {
         this.state.chatroomcats["cat" + i] = userobj;
         return;
+      }
+    }
+  };
+  _deleteUser = leaveuser => {
+    for (var key in this.state.chatroomcats) {
+      if (this.state.chatroomcats[key]["userId"] === this.state.myuserid) {
+        this.setState({
+          mychatroomnum: key
+        });
       }
     }
   };

@@ -52,7 +52,8 @@ export default class AppPresenter extends React.Component {
       fontLoaded: false,
       socket: this._socket,
       afterFirstTokenConnection: this._afterFirstTokenConnection,
-      token: this.props.token
+      token: this.props.token,
+      roomusers: []
     };
   }
 
