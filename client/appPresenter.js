@@ -40,19 +40,26 @@ export default class AppPresenter extends React.Component {
       });
     });
     this._socket.on("findRoom", (users, leftTime) => {
-      this.setState({
-        roomusers: users,
-        leftTime
-      });
+      if (this.state.leftTime === 600) {
+        this.setState({
+          roomusers: users,
+          leftTime
+        });
+      }
       console.log(users);
       console.log(leftTime);
     });
+
     this._socket.on("leaveRoom", users => {
-      this.setState({ roomusers: users });
+      this.setState({
+        roomusers: users
+      });
+      console.log(users);
     });
 
     //"chat"으로 들어온 정보를 messages 라는 배열에 저장하기 위함
     this._socket.on("chat", data => {
+      console.log(data, "this is message");
       this._storemessage({
         userId: data.userId,
         catId: data.catImage,
@@ -68,6 +75,21 @@ export default class AppPresenter extends React.Component {
         messages: arr
       });
     };
+
+    this._socket.on("hit", data => {
+      console.log(data, "this is hit");
+      var arr = this.state.roomusers;
+      for (var i = 0; i < arr.length; i++) {
+        if (data === arr[i].socketId) {
+          console.log("event");
+          arr[i].hp -= 1;
+        }
+      }
+      console.log(arr);
+      this.setState({
+        roomusers: arr
+      });
+    });
 
     this.state = {
       fontLoaded: false,

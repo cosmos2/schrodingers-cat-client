@@ -255,14 +255,6 @@ export default class ChatRoom extends React.Component {
     }
   };
 
-  // _storemessage = message => {
-  //   const arr = this.state.messages;
-  //   arr.push(message);
-  //   this.setState({
-  //     messages: arr
-  //   });
-  // };
-
   _myuserinfo = async () => {
     var myuserid = await AsyncStorage.getItem("myUserId");
     myuserid = JSON.parse(myuserid);
