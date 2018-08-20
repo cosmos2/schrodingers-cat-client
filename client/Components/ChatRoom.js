@@ -125,7 +125,7 @@ export default class ChatRoom extends React.Component {
               {store => {
                 //console.log(store.messages, "coming message");
                 return store.messages.map((item, i) => {
-                  console.log(item.message, "just message");
+                  //console.log(item.message, "just message");
                   const catId =
                     "./img/cat" + JSON.stringify(item.catId) + ".png";
                   return this.state.myuserid !== item.userId ? (
