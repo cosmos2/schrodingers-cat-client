@@ -55,17 +55,20 @@ class SelectCat extends Component {
   // 고양이를 누르면 고양이 정보를 보내주고 화면을 넘김
   _sendCatInfom = async (catId, afterFirstTokenConnection) => {
     try {
-      const response = await axios.post(
-        `http://52.79.251.45:8080/init/${catId}`
+      const data = await AsyncStorage.getItem("token");
+      const token = JSON.parse(data).query.slice(6);
+      const response = await axios.put(
+        `http://52.79.251.45:8080/init/${catId}`,
+        {},
+        { headers: { Authorization: "Bearer " + token } }
       );
+      console.log(response.data);
       const myInfo = {
         userId: response.data.userId,
         catId: response.data.userImage
       };
-      await AsyncStorage.setItem("token", JSON.stringify(response.data));
       await AsyncStorage.setItem("myUserId", JSON.stringify(myInfo));
-      const token = response.data.query;
-      await afterFirstTokenConnection(token);
+      await AsyncStorage.removeItem("firstTime");
       await this.props.navigation.navigate("OpenBoxScreen");
     } catch (err) {
       console.log(err);

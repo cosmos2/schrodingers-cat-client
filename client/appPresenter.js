@@ -31,16 +31,18 @@ export default class AppPresenter extends React.Component {
   constructor(props) {
     super(props);
 
-    this._afterFirstTokenConnection = async token => {
-      try {
-        const newSocket = await SocketIOClient("http://52.79.251.45:8080", {
-          query: token
-        });
-        this.setState({ socket: newSocket });
-      } catch (err) {
-        console.log(err);
-      }
-    };
+    this._socket = SocketIOClient("http://52.79.251.45:8080", {
+      query: this.props.token
+    });
+    this._socket.on("info", myInfo => {
+      this.setState({
+        myInfo
+      });
+    });
+    this._socket.on("findRoom", (users, leftTime) => {
+      console.log(users);
+      console.log(leftTime);
+    });
 
     //"chat"으로 들어온 정보를 messages 라는 배열에 저장하기 위함
     // this._socket.on("chat", data => {
@@ -60,25 +62,11 @@ export default class AppPresenter extends React.Component {
       });
     };
 
-    this._GetInfo = myInfo => {
-      this.setState({
-        myInfo
-      });
-    };
-
-    if (this.props.token !== "noToken") {
-      this._socket = SocketIOClient("http://52.79.251.45:8080", {
-        query: this.props.token
-      });
-    }
-
     this.state = {
       fontLoaded: false,
       socket: this._socket,
-      afterFirstTokenConnection: this._afterFirstTokenConnection,
       token: this.props.token,
       roomusers: [],
-      GetInfo: this._GetInfo,
       myInfo: {},
       messages: []
     };
