@@ -13,7 +13,7 @@ export default class Index extends React.Component {
   async componentDidMount() {
     console.log("app did mount");
     try {
-      //await AsyncStorage.removeItem("token");
+      // await AsyncStorage.removeItem("token");
       const getToken = await AsyncStorage.getItem("token");
       if (getToken !== null) {
         const token = JSON.parse(getToken).query;

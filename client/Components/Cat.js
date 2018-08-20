@@ -10,12 +10,12 @@ export default class Cat extends Component {
       catId: this.props.id
     };
     this.images = {
-      1: require("./img/dummyCat_1.png"),
-      2: require("./img/dummyCat_2.png"),
-      3: require("./img/dummyCat_3.png"),
-      4: require("./img/dummyCat_4.png"),
-      5: require("./img/dummyCat_5.png"),
-      6: require("./img/dummyCat_6.png")
+      1: require("./img/cat1.png"),
+      2: require("./img/cat2.png"),
+      3: require("./img/cat3.png"),
+      4: require("./img/cat4.png"),
+      5: require("./img/cat5.png"),
+      6: require("./img/cat6.png")
     };
   }
 
