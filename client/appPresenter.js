@@ -87,6 +87,13 @@ export default class AppPresenter extends React.Component {
       });
     });
 
+    this._resetchat = () => {
+      this.setState({
+        roomusers: [],
+        messages: []
+      });
+    };
+
     this.state = {
       fontLoaded: false,
       socket: this._socket,
@@ -94,7 +101,8 @@ export default class AppPresenter extends React.Component {
       roomusers: [],
       myInfo: {},
       messages: [],
-      leftTime: 600
+      leftTime: 600,
+      resetchat: this._resetchat
     };
   }
 
