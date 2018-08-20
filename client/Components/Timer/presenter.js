@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { View, Text } from "react-native";
 import styles from "./styles";
+import Store from "../store";
 
 export default class TimePicker extends Component {
   componentWillReceiveProps() {
@@ -11,7 +12,15 @@ export default class TimePicker extends Component {
   render() {
     return (
       <View style={styles.timer}>
-        <Text style={styles.text}>{this.props.time}</Text>
+        <Store.Consumer>
+          {store => {
+            return (
+              <Text style={styles.text}>
+                {store.leftTime + this.props.time}
+              </Text>
+            );
+          }}
+        </Store.Consumer>
       </View>
     );
   }

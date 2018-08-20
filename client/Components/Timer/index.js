@@ -6,7 +6,7 @@ import styles from "./styles";
 export default class Timer extends Component {
   state = {
     timeOver: false,
-    time: 100
+    time: 0
   };
   componentDidMount() {
     if (this.state.timeOver === false) {
