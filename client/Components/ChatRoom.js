@@ -61,7 +61,18 @@ export default class ChatRoom extends React.Component {
         height: 60
       },
       headerLeftContainerStyle: { marginLeft: 10 },
-      headerLeft: <Timer explodeChatRoom={params.explodeChatRoom} />,
+      headerLeft: (
+        <Store.Consumer>
+          {store => {
+            return (
+              <Timer
+                leftTime={store.leftTime}
+                explodeChatRoom={params.explodeChatRoom}
+              />
+            );
+          }}
+        </Store.Consumer>
+      ),
       headerRightContainerStyle: { marginRight: 15 },
       headerRight: (
         <Store.Consumer>

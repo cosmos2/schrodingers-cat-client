@@ -40,12 +40,10 @@ export default class AppPresenter extends React.Component {
       });
     });
     this._socket.on("findRoom", (users, leftTime) => {
-      if (this.state.leftTime === 600) {
-        this.setState({
-          roomusers: JSON.parse(users),
-          leftTime
-        });
-      }
+      this.setState({
+        roomusers: JSON.parse(users),
+        leftTime
+      });
       console.log(users);
       console.log(leftTime);
     });
