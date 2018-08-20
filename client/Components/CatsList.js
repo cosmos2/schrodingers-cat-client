@@ -36,7 +36,7 @@ export default class CatsList extends Component {
           return (
             <View style={styles.container}>
               <View style={styles.state}>
-                {JSON.parse(store.roomusers).map((item, i) => {
+                {store.roomusers.map((item, i) => {
                   return (
                     <View
                       key={i}
@@ -60,6 +60,7 @@ export default class CatsList extends Component {
                           this.state.attackmode && !this.state.healingmode
                             ? () => {
                                 console.log(item.userId);
+                                store.socket.emit("hit", item.socketId);
                                 this.setState({
                                   myattacknum: this.state.myattacknum - 1
                                 });

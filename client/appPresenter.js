@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, Text, View, AsyncStorage } from "react-native";
+import { StyleSheet, Text, View, AsyncStorage, Alert } from "react-native";
 import SelectCat from "./Components/SelectCat";
 import OpenBox from "./Components/OpenBox";
 import Profile from "./Components/Profile";
@@ -41,18 +41,23 @@ export default class AppPresenter extends React.Component {
     });
     this._socket.on("findRoom", (users, leftTime) => {
       this.setState({
-        roomusers: users,
+        roomusers: JSON.parse(users),
         leftTime
       });
       console.log(users);
       console.log(leftTime);
     });
+
     this._socket.on("leaveRoom", users => {
-      this.setState({ roomusers: users });
+      this.setState({
+        roomusers: JSON.parse(users)
+      });
+      console.log(users);
     });
 
     //"chat"으로 들어온 정보를 messages 라는 배열에 저장하기 위함
     this._socket.on("chat", data => {
+      console.log(data, "this is message");
       this._storemessage({
         userId: data.userId,
         catId: data.catImage,
@@ -68,6 +73,19 @@ export default class AppPresenter extends React.Component {
         messages: arr
       });
     };
+
+    this._socket.on("hit", data => {
+      var arr = this.state.roomusers.slice();
+      var arr2 = [...arr];
+      for (var i = 0; i < arr2.length; i++) {
+        if (data === arr2[i].socketId) {
+          arr2[i].hp -= 1;
+        }
+      }
+      this.setState({
+        roomusers: arr2
+      });
+    });
 
     this.state = {
       fontLoaded: false,

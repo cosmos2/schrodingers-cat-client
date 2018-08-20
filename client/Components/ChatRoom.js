@@ -61,7 +61,18 @@ export default class ChatRoom extends React.Component {
         height: 60
       },
       headerLeftContainerStyle: { marginLeft: 10 },
-      headerLeft: <Timer explodeChatRoom={params.explodeChatRoom} />,
+      headerLeft: (
+        <Store.Consumer>
+          {store => {
+            return (
+              <Timer
+                leftTime={store.leftTime}
+                explodeChatRoom={params.explodeChatRoom}
+              />
+            );
+          }}
+        </Store.Consumer>
+      ),
       headerRightContainerStyle: { marginRight: 15 },
       headerRight: (
         <Store.Consumer>
@@ -254,14 +265,6 @@ export default class ChatRoom extends React.Component {
       }
     }
   };
-
-  // _storemessage = message => {
-  //   const arr = this.state.messages;
-  //   arr.push(message);
-  //   this.setState({
-  //     messages: arr
-  //   });
-  // };
 
   _myuserinfo = async () => {
     var myuserid = await AsyncStorage.getItem("myUserId");
