@@ -36,14 +36,10 @@ export default class Landing extends Component {
   _userInfo = async () => {
     //위도, 경도, 토큰 보내주기
     try {
-      const token = await AsyncStorage.getItem("token");
-      if (!token) {
+      const firstTime = await AsyncStorage.getItem("firstTime");
+      if (firstTime === "firstTime") {
         this.props.navigation.navigate("SelectCatScreen");
       } else {
-        // this.socket.emit("", token);
-        // this.socket.on("", userinfo=>{
-        //     await AsyncStorage.setItem("userInfo", JSON.stringify(userinfo));
-        // })
         this.props.navigation.navigate("OpenBoxScreen");
       }
     } catch (err) {
