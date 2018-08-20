@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, Text, View, AsyncStorage } from "react-native";
+import { StyleSheet, Text, View, AsyncStorage, Alert } from "react-native";
 import SelectCat from "./Components/SelectCat";
 import OpenBox from "./Components/OpenBox";
 import Profile from "./Components/Profile";
@@ -42,7 +42,7 @@ export default class AppPresenter extends React.Component {
     this._socket.on("findRoom", (users, leftTime) => {
       if (this.state.leftTime === 600) {
         this.setState({
-          roomusers: users,
+          roomusers: JSON.parse(users),
           leftTime
         });
       }
@@ -52,7 +52,7 @@ export default class AppPresenter extends React.Component {
 
     this._socket.on("leaveRoom", users => {
       this.setState({
-        roomusers: users
+        roomusers: JSON.parse(users)
       });
       console.log(users);
     });
@@ -77,17 +77,15 @@ export default class AppPresenter extends React.Component {
     };
 
     this._socket.on("hit", data => {
-      console.log(data, "this is hit");
-      var arr = this.state.roomusers;
-      for (var i = 0; i < arr.length; i++) {
-        if (data === arr[i].socketId) {
-          console.log("event");
-          arr[i].hp -= 1;
+      var arr = this.state.roomusers.slice();
+      var arr2 = [...arr];
+      for (var i = 0; i < arr2.length; i++) {
+        if (data === arr2[i].socketId) {
+          arr2[i].hp -= 1;
         }
       }
-      console.log(arr);
       this.setState({
-        roomusers: arr
+        roomusers: arr2
       });
     });
 
