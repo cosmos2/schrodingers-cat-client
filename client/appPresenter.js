@@ -40,16 +40,43 @@ export default class AppPresenter extends React.Component {
       });
     });
     this._socket.on("findRoom", (users, leftTime) => {
+      this.setState({
+        roomusers: users,
+        leftTime
+      });
       console.log(users);
       console.log(leftTime);
     });
+    this._socket.on("leaveRoom", users => {
+      this.setState({ roomusers: users });
+    });
+
+    //"chat"으로 들어온 정보를 messages 라는 배열에 저장하기 위함
+    this._socket.on("chat", data => {
+      this._storemessage({
+        userId: data.userId,
+        catId: data.catImage,
+        message: data.message
+      });
+    });
+
+    //새로 들어온 채팅을 추가해 messages라는 state에 저장하기 위함
+    this._storemessage = chat => {
+      const arr = this.state.messages;
+      arr.push(chat);
+      this.setState({
+        messages: arr
+      });
+    };
 
     this.state = {
       fontLoaded: false,
       socket: this._socket,
       token: this.props.token,
       roomusers: [],
-      myInfo: {}
+      myInfo: {},
+      messages: [],
+      leftTime: 600
     };
   }
 

@@ -8,41 +8,45 @@ import {
   Image,
   Dimensions,
   TextInput,
-  ScrollView
+  ScrollView,
+  AsyncStorage
 } from "react-native";
 import { Icon } from "react-native-elements";
 import Images from "./img/catindex";
 import CatsState from "./CatsState";
 import Timer from "./Timer";
+import Store from "./store";
+import CatsList from "./CatsList";
 
 const { width, height } = Dimensions.get("window");
 export default class ChatRoom extends React.Component {
   constructor(props) {
     super(props);
-    this.socket = this.props.navigation.state.params.socket;
-    this.roomusers = this.props.navigation.state.params.roomusers;
+    //this.socket = this.props.navigation.state.params.socket;
+    //this.roomusers = this.props.navigation.state.params.roomusers;
     this.state = {
       messages: [
-        { userId: 123, catId: 1, message: "fucking crazy Lotteria!!!" },
-        { userId: 87, catId: 2, message: "Umm Mcdonald is the best!!!" },
-        { userId: 10, catId: 4, message: "BurgerKing is Cool!!" },
-        { userId: 123, catId: 1, message: "Hi my name is monkey" },
-        { userId: 10, catId: 4, message: "I am Genius" },
-        { userId: 87, catId: 2, message: "oh you looks like koala" },
-        { userId: 123, catId: 1, message: "fucking crazy Lotteria!!!" },
-        { userId: 87, catId: 2, message: "Umm Mcdonald is the best!!!" },
-        { userId: 10, catId: 4, message: "BurgerKing is Cool!!" },
-        { userId: 123, catId: 1, message: "Hi my name is monkey" },
-        { userId: 10, catId: 4, message: "I am Genius" },
-        { userId: 87, catId: 2, message: "oh you looks like koala" }
+        // { userId: 215, catId: 1, message: "fucking crazy Lotteria!!!" },
+        // { userId: 123, catId: 1, message: "Umm Mcdonald is the best!!!" },
+        // { userId: 87, catId: 1, message: "BurgerKing is Cool!!" },
+        // { userId: 123, catId: 1, message: "Hi my name is monkey" },
+        // { userId: 215, catId: 1, message: "I am Genius" },
+        // { userId: 87, catId: 2, message: "oh you looks like koala" },
+        // { userId: 123, catId: 1, message: "fucking crazy Lotteria!!!" },
+        // { userId: 87, catId: 2, message: "Umm Mcdonald is the best!!!" },
+        // { userId: 215, catId: 1, message: "BurgerKing is Cool!!" },
+        // { userId: 123, catId: 1, message: "Hi my name is monkey" },
+        // { userId: 215, catId: 1, message: "I am Genius" },
+        // { userId: 87, catId: 2, message: "oh you looks like koala" }
       ],
       message: "",
       clearInput: false,
       myuserid: 10,
+      mycatid: 0,
       chatroomcats: {
         cat1: { userId: 123, catId: 1, hp: 7 },
         cat2: { userId: 87, catId: 2, hp: 7 },
-        cat3: { userId: 10, catId: 4, hp: 7 }
+        cat3: { userId: 215, catId: 1, hp: 7 }
       },
       muteoneminutes: false,
       mychatroomnum: ""
@@ -60,12 +64,18 @@ export default class ChatRoom extends React.Component {
       headerLeft: <Timer explodeChatRoom={params.explodeChatRoom} />,
       headerRightContainerStyle: { marginRight: 15 },
       headerRight: (
-        <Icon
-          onPress={() => params.exitChat()}
-          type="ionicon"
-          name="md-exit"
-          color="white"
-        />
+        <Store.Consumer>
+          {store => {
+            return (
+              <Icon
+                onPress={() => params.exitChat(store.socket)}
+                type="ionicon"
+                name="md-exit"
+                color="white"
+              />
+            );
+          }}
+        </Store.Consumer>
       ),
       headerTintColor: "#fff",
       headerTitleStyle: {
@@ -75,6 +85,7 @@ export default class ChatRoom extends React.Component {
   };
   componentWillMount() {
     this._whoamI();
+    this._myuserinfo();
   }
   componentDidMount() {
     this.props.navigation.setParams({
@@ -82,50 +93,57 @@ export default class ChatRoom extends React.Component {
       explodeChatRoom: this._explodeChatRoom
       // <-- I think explodeChatRoom is useless
     });
-    //this._myuserinfo();
+
     this._amImute();
-    this.socket.on("chat", data => {
-      this._storemessage({
-        userId: data.userId,
-        catId: data.catId,
-        message: data.message
-      });
-    });
+    // this.socket.on("chat", data => {
+    //   this._storemessage({
+    //     userId: data.userId,
+    //     catId: data.catImage,
+    //     message: data.message
+    //   });
+    // });
   }
   render() {
-    console.log("render");
+    // console.log("render");
+    // console.log(this.state.myuserid, "myuserid");
     return (
       <View style={styles.container}>
         <View style={styles.chatroom}>
           <ScrollView style={styles.chats}>
-            {/* <Text>{JSON.stringify(this.state.clearInput)}</Text> */}
-            {this.state.messages.map((item, i) => {
-              const catId = "./img/cat" + JSON.stringify(item.catId) + ".png";
-              return this.state.myuserid !== item.userId ? (
-                <View style={{ flexDirection: "row" }} key={i}>
-                  <Image
-                    source={Images[item.catId]}
-                    style={{
-                      marginTop: 5,
-                      marginLeft: 5
-                    }}
-                  />
-                  <View style={styles.eachotherschat}>
-                    <Text style={styles.chatfont}>
-                      {item.userId} : {item.message}
-                    </Text>
-                  </View>
-                </View>
-              ) : (
-                <View style={styles.mychat} key={i}>
-                  <View style={styles.eachmychat}>
-                    <Text style={styles.chatfont}>
-                      {item.userId} : {item.message}
-                    </Text>
-                  </View>
-                </View>
-              );
-            })}
+            <Store.Consumer>
+              {store => {
+                //console.log(store.messages, "coming message");
+                return store.messages.map((item, i) => {
+                  console.log(item.message, "just message");
+                  const catId =
+                    "./img/cat" + JSON.stringify(item.catId) + ".png";
+                  return this.state.myuserid !== item.userId ? (
+                    <View style={{ flexDirection: "row" }} key={i}>
+                      <Image
+                        source={Images[item.catId]}
+                        style={{
+                          marginTop: 5,
+                          marginLeft: 5
+                        }}
+                      />
+                      <View style={styles.eachotherschat}>
+                        <Text style={styles.chatfont}>
+                          {item.userId} : {item.message}
+                        </Text>
+                      </View>
+                    </View>
+                  ) : (
+                    <View style={styles.mychat} key={i}>
+                      <View style={styles.eachmychat}>
+                        <Text style={styles.chatfont}>
+                          {item.userId} : {item.message}
+                        </Text>
+                      </View>
+                    </View>
+                  );
+                });
+              }}
+            </Store.Consumer>
           </ScrollView>
           <View style={styles.chatinput}>
             {/* <Text>Chat Room</Text> */}
@@ -142,42 +160,50 @@ export default class ChatRoom extends React.Component {
                 //this._sendMessage(this.state.message);
               }}
             />
-            <TouchableOpacity
-              onPress={() => {
-                {
-                  this.state.muteoneminutes
-                    ? Alert.alert("1분간 채팅 금지")
-                    : this._sendMessage(this.state.message);
-                }
+            <Store.Consumer>
+              {store => {
+                return (
+                  <TouchableOpacity
+                    onPress={() => {
+                      {
+                        this.state.muteoneminutes
+                          ? Alert.alert("1분간 채팅 금지")
+                          : this._sendMessage(store.socket, this.state.message);
+                      }
+                    }}
+                  >
+                    <Image
+                      source={require("./img/sendprint.png")}
+                      style={{
+                        marginBottom: 10,
+                        marginLeft: 10
+                      }}
+                    />
+                  </TouchableOpacity>
+                );
               }}
-            >
-              <Image
-                source={require("./img/sendprint.png")}
-                style={{
-                  marginBottom: 10,
-                  marginLeft: 10
-                }}
-              />
-            </TouchableOpacity>
+            </Store.Consumer>
           </View>
         </View>
         <View style={styles.options}>
           <View style={styles.catsstate}>
             <View style={styles.statespace}>
-              <CatsState
+              <CatsList myuserid={this.state.myuserid} />
+              {/* <CatsState
                 //chatRoomCats={this.state.chatroomcats}
                 myChatRoomNum={this.state.mychatroomnum}
                 socket={this.socket}
                 roomusers={this.roomusers}
-              />
+              /> */}
             </View>
           </View>
         </View>
       </View>
     );
   }
-  _sendMessage = message => {
-    Alert.alert(this.state.message);
+
+  _sendMessage = (socket, message) => {
+    //Alert.alert(this.state.message);
     if (message.length > 0) {
       this.setState({
         clearInput: !this.state.clearInput,
@@ -185,7 +211,11 @@ export default class ChatRoom extends React.Component {
       });
       console.log("send Message");
     }
-    this.socket.emit("chat", { message: message, id: this.state.myuserid });
+    socket.emit("chat", {
+      message: message,
+      userId: this.state.myuserid,
+      catImage: this.state.mycatid
+    });
   };
 
   _whoamI = () => {
@@ -224,22 +254,25 @@ export default class ChatRoom extends React.Component {
       }
     }
   };
-  _storemessage = message => {
-    const arr = this.state.messages;
-    arr.push(message);
-    this.setState({
-      messages: arr
-    });
-  };
+
+  // _storemessage = message => {
+  //   const arr = this.state.messages;
+  //   arr.push(message);
+  //   this.setState({
+  //     messages: arr
+  //   });
+  // };
 
   _myuserinfo = async () => {
-    const myuserid = await AsyncStorage.getItem("myUserId");
+    var myuserid = await AsyncStorage.getItem("myUserId");
+    myuserid = JSON.parse(myuserid);
     this.setState({
-      myuserid: myuserid
+      myuserid: myuserid["userId"],
+      mycatid: myuserid["catId"]
     });
   };
 
-  _exitChat = () => {
+  _exitChat = socket => {
     Alert.alert(
       "채팅방을 나가시겠습니까?",
       "",
@@ -247,7 +280,7 @@ export default class ChatRoom extends React.Component {
         {
           text: "나가기",
           onPress: () => {
-            this.socket.emit("leaveRoom");
+            socket.emit("leaveRoom");
             this.props.navigation.navigate("OpenBoxScreen");
           }
         },
@@ -283,7 +316,6 @@ const styles = StyleSheet.create({
   },
   mychat: {
     //justifyContent: "flex-end"
-
     alignItems: "flex-end"
   },
   chatfont: {
