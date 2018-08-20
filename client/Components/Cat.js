@@ -27,11 +27,7 @@ export default class Cat extends Component {
         <Store.Consumer>
           {store => {
             return (
-              <TouchableOpacity
-                onPress={() =>
-                  sendCatInfom(catId, store.afterFirstTokenConnection)
-                }
-              >
+              <TouchableOpacity onPress={() => sendCatInfom(catId, store)}>
                 <Image source={this.images[catId]} />
               </TouchableOpacity>
             );

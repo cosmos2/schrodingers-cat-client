@@ -74,6 +74,22 @@ export default class AppPresenter extends React.Component {
       });
     };
 
+    this._socket.on("selectCat", userInfo => {
+      this._getUserInfo(userInfo);
+    });
+
+    this._getUserInfo = async userInfo => {
+      try {
+        const myInfo = {
+          userId: userInfo.userId,
+          catId: userInfo.catImage
+        };
+        await AsyncStorage.setItem("selectCat", JSON.stringify(myInfo));
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
     this._socket.on("hit", data => {
       var arr = this.state.roomusers.slice();
       var arr2 = [...arr];

@@ -9,7 +9,6 @@ import {
   TouchableOpacity,
   AsyncStorage
 } from "react-native";
-import axios from "axios";
 import Cat from "./Cat";
 
 const { width, height } = Dimensions.get("window");
@@ -53,21 +52,9 @@ class SelectCat extends Component {
     );
   }
   // 고양이를 누르면 고양이 정보를 보내주고 화면을 넘김
-  _sendCatInfom = async (catId, afterFirstTokenConnection) => {
+  _sendCatInfom = async (catId, store) => {
     try {
-      const data = await AsyncStorage.getItem("token");
-      const token = JSON.parse(data).query.slice(6);
-      const response = await axios.put(
-        `http://52.79.251.45:8080/init/${catId}`,
-        {},
-        { headers: { Authorization: "Bearer " + token } }
-      );
-      console.log(response.data);
-      const myInfo = {
-        userId: response.data.userId,
-        catId: response.data.userImage
-      };
-      await AsyncStorage.setItem("myUserId", JSON.stringify(myInfo));
+      await store.socket.emit("info", catId);
       await AsyncStorage.removeItem("firstTime");
       await this.props.navigation.navigate("OpenBoxScreen");
     } catch (err) {
