@@ -36,7 +36,7 @@ export default class CatsList extends Component {
           return (
             <View style={styles.container}>
               <View style={styles.state}>
-                {JSON.parse(store.roomusers).map((item, i) => {
+                {store.roomusers.map((item, i) => {
                   return (
                     <View
                       key={i}
