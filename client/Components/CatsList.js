@@ -17,12 +17,12 @@ export default class CatsList extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      chatroomcats: [
-        { userId: 123, catId: 1, hp: 7 },
-        { userId: 87, catId: 2, hp: 7, socketId: "" },
-        { userId: 10, catId: 4, hp: 7, socketId: "" },
-        { userId: 11, catId: 3, hp: 7, socketId: "" }
-      ],
+      //   chatroomcats: [
+      //     { userId: 123, catId: 1, hp: 7 },
+      //     { userId: 87, catId: 2, hp: 7, socketId: "" },
+      //     { userId: 10, catId: 4, hp: 7, socketId: "" },
+      //     { userId: 11, catId: 3, hp: 7, socketId: "" }
+      //   ],
       attackmode: false,
       healingmode: false,
       myattacknum: 5
@@ -32,10 +32,11 @@ export default class CatsList extends Component {
     return (
       <Store.Consumer>
         {store => {
+          //console.log(store.roomusers);
           return (
             <View style={styles.container}>
               <View style={styles.state}>
-                {this.state.chatroomcats.map((item, i) => {
+                {JSON.parse(store.roomusers).map((item, i) => {
                   return (
                     <View
                       key={i}
@@ -71,7 +72,7 @@ export default class CatsList extends Component {
                         }
                       >
                         <Image
-                          source={Images[item.catId]}
+                          source={Images[item.catImage]}
                           style={{
                             marginTop: 8,
                             marginLeft: 10,

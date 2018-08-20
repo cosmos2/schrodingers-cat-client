@@ -54,7 +54,6 @@ export default class CatsState extends Component {
   };
 
   render() {
-    console.log(this.props.roomusers, "왜 이게 렌더를 두번 하냐고");
     return (
       <View style={styles.container}>
         {/* <Store.Consumer>

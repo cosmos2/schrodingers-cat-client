@@ -160,18 +160,7 @@ export default class ChatRoom extends React.Component {
                       {
                         this.state.muteoneminutes
                           ? Alert.alert("1분간 채팅 금지")
-                          : Alert.alert(this.state.message);
-                        if (this.state.message.length > 0) {
-                          this.setState({
-                            clearInput: !this.state.clearInput,
-                            message: ""
-                          });
-                          console.log("send Message");
-                        }
-                        store.socket.emit("chat", {
-                          message: this.state.message,
-                          id: this.state.myuserid
-                        });
+                          : this._sendMessage(store.socket, this.state.message);
                       }
                     }}
                   >
@@ -205,17 +194,17 @@ export default class ChatRoom extends React.Component {
     );
   }
 
-  // _sendMessage = message => {
-  //   Alert.alert(this.state.message);
-  //   if (message.length > 0) {
-  //     this.setState({
-  //       clearInput: !this.state.clearInput,
-  //       message: ""
-  //     });
-  //     console.log("send Message");
-  //   }
-  //   this.socket.emit("chat", { message: message, id: this.state.myuserid });
-  // };
+  _sendMessage = (socket, message) => {
+    Alert.alert(this.state.message);
+    if (message.length > 0) {
+      this.setState({
+        clearInput: !this.state.clearInput,
+        message: ""
+      });
+      console.log("send Message");
+    }
+    socket.emit("chat", { message: message, id: this.state.myuserid });
+  };
 
   _whoamI = () => {
     for (var key in this.state.chatroomcats) {
