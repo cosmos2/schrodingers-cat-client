@@ -41,10 +41,14 @@ export default class AppPresenter extends React.Component {
     });
     this._socket.on("findRoom", (users, leftTime) => {
       this.setState({
-        roomusers: users
+        roomusers: users,
+        leftTime
       });
       console.log(users);
       console.log(leftTime);
+    });
+    this._socket.on("leaveRoom", users => {
+      this.setState({ roomusers: users });
     });
 
     this._socket.on("leaveRoom", users => {
@@ -56,7 +60,6 @@ export default class AppPresenter extends React.Component {
 
     //"chat"으로 들어온 정보를 messages 라는 배열에 저장하기 위함
     this._socket.on("chat", data => {
-      console.log(data, "this is message");
       this._storemessage({
         userId: data.userId,
         catId: data.catImage,
@@ -79,7 +82,8 @@ export default class AppPresenter extends React.Component {
       token: this.props.token,
       roomusers: [],
       myInfo: {},
-      messages: []
+      messages: [],
+      leftTime: 600
     };
   }
 
