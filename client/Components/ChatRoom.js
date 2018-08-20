@@ -66,6 +66,7 @@ export default class ChatRoom extends React.Component {
           {store => {
             return (
               <Timer
+                resetchat={store.resetchat}
                 socket={store.socket}
                 leftTime={store.leftTime}
                 explodeChatRoom={params.explodeChatRoom}
@@ -80,7 +81,7 @@ export default class ChatRoom extends React.Component {
           {store => {
             return (
               <Icon
-                onPress={() => params.exitChat(store.socket)}
+                onPress={() => params.exitChat(store.socket, store.resetchat)}
                 type="ionicon"
                 name="md-exit"
                 color="white"
@@ -276,7 +277,7 @@ export default class ChatRoom extends React.Component {
     });
   };
 
-  _exitChat = socket => {
+  _exitChat = (socket, resetchat) => {
     Alert.alert(
       "채팅방을 나가시겠습니까?",
       "",
@@ -285,6 +286,7 @@ export default class ChatRoom extends React.Component {
           text: "나가기",
           onPress: () => {
             socket.emit("leaveRoom");
+            resetchat();
             this.props.navigation.navigate("OpenBoxScreen");
           }
         },
