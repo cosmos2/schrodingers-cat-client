@@ -23,7 +23,7 @@ const AppNavigator = createStackNavigator(
     CatComponent: { screen: Cat }
   },
   {
-    initialRouteName: "LandingScreen"
+    initialRouteName: "ChatRoomScreen"
   }
 );
 
@@ -40,6 +40,24 @@ export default class AppPresenter extends React.Component {
       } catch (err) {
         console.log(err);
       }
+    };
+
+    //"chat"으로 들어온 정보를 messages 라는 배열에 저장하기 위함
+    // this._socket.on("chat", data => {
+    //   this._storemessage({
+    //     userId: data.userId,
+    //     catId: data.catImage,
+    //     message: data.message
+    //   });
+    // });
+
+    //새로 들어온 채팅을 추가해 messages라는 state에 저장하기 위함
+    _storemessage = chat => {
+      const arr = this.state.messages;
+      arr.push(chat);
+      this.setState({
+        messages: arr
+      });
     };
 
     this._GetInfo = myInfo => {
@@ -61,7 +79,8 @@ export default class AppPresenter extends React.Component {
       token: this.props.token,
       roomusers: [],
       GetInfo: this._GetInfo,
-      myInfo: {}
+      myInfo: {},
+      messages: []
     };
   }
 
