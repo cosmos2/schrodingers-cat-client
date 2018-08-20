@@ -26,9 +26,7 @@ export default class Landing extends Component {
         <Text style={styles.title}>슈뢰딩거의 고양이</Text>
         <Image
           style={{ width: 300, height: 300 }}
-          source={{
-            uri: "https://i.gifer.com/1Kto.gif"
-          }}
+          source={require("./img/firstImg.png")}
         />
       </View>
     );

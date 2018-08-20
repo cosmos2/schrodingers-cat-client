@@ -10,14 +10,16 @@ export default (styles = StyleSheet.create({
     justifyContent: "center"
   },
   timer: {
-    width: width * 0.3,
+    flexDirection: "row",
+    width: width * 0.2,
     height: height * 0.05,
-    backgroundColor: "pink",
+    // backgroundColor: "pink",
     borderRadius: 10,
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "space-around"
   },
   text: {
-    fontWeight: "bold"
+    // fontWeight: "bold",
+    fontSize: 18
   }
 }));
