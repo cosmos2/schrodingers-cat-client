@@ -43,11 +43,7 @@ export default class ChatRoom extends React.Component {
       clearInput: false,
       myuserid: 10,
       mycatid: 0,
-      chatroomcats: {
-        cat1: { userId: 123, catId: 1, hp: 7 },
-        cat2: { userId: 87, catId: 2, hp: 7 },
-        cat3: { userId: 215, catId: 1, hp: 7 }
-      },
+      chatroomcats: [],
       muteoneminutes: false,
       mychatroomnum: ""
     };
@@ -108,13 +104,6 @@ export default class ChatRoom extends React.Component {
     });
 
     this._amImute();
-    // this.socket.on("chat", data => {
-    //   this._storemessage({
-    //     userId: data.userId,
-    //     catId: data.catImage,
-    //     message: data.message
-    //   });
-    // });
   }
   render() {
     // console.log("render");
@@ -223,12 +212,13 @@ export default class ChatRoom extends React.Component {
         message: ""
       });
       console.log("send Message");
+
+      socket.emit("chat", {
+        message: message,
+        userId: this.state.myuserid,
+        catImage: this.state.mycatid
+      });
     }
-    socket.emit("chat", {
-      message: message,
-      userId: this.state.myuserid,
-      catImage: this.state.mycatid
-    });
   };
 
   _whoamI = () => {

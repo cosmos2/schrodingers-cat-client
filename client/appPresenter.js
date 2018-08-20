@@ -79,7 +79,7 @@ export default class AppPresenter extends React.Component {
       var arr2 = [...arr];
       for (var i = 0; i < arr2.length; i++) {
         if (data === arr2[i].socketId) {
-          arr2[i].hp -= 1;
+          arr2[i].hp > 0 ? (arr2[i].hp -= 1) : null;
         }
       }
       this.setState({
