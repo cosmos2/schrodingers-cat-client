@@ -22,11 +22,7 @@ export default class Timer extends Component {
     clearInterval(this.state.timer);
   }
   render() {
-    return (
-      <View style={styles.container}>
-        <TimePicker time={this.state.time} stopTimer={this._stopTimer} />
-      </View>
-    );
+    return <TimePicker time={this.state.time} stopTimer={this._stopTimer} />;
   }
   _stopTimer = async () => {
     try {
