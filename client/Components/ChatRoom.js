@@ -64,12 +64,18 @@ export default class ChatRoom extends React.Component {
       headerLeft: <Timer explodeChatRoom={params.explodeChatRoom} />,
       headerRightContainerStyle: { marginRight: 15 },
       headerRight: (
-        <Icon
-          onPress={() => params.exitChat()}
-          type="ionicon"
-          name="md-exit"
-          color="white"
-        />
+        <Store.Consumer>
+          {store => {
+            return (
+              <Icon
+                onPress={() => params.exitChat(store.socket)}
+                type="ionicon"
+                name="md-exit"
+                color="white"
+              />
+            );
+          }}
+        </Store.Consumer>
       ),
       headerTintColor: "#fff",
       headerTitleStyle: {
@@ -79,7 +85,7 @@ export default class ChatRoom extends React.Component {
   };
   componentWillMount() {
     this._whoamI();
-    //this._myuserinfo();
+    this._myuserinfo();
   }
   componentDidMount() {
     this.props.navigation.setParams({
@@ -98,7 +104,7 @@ export default class ChatRoom extends React.Component {
     // });
   }
   render() {
-    console.log("render");
+    // console.log("render");
     // console.log(this.state.myuserid, "myuserid");
     return (
       <View style={styles.container}>
@@ -106,7 +112,9 @@ export default class ChatRoom extends React.Component {
           <ScrollView style={styles.chats}>
             <Store.Consumer>
               {store => {
-                store.messages.map((item, i) => {
+                //console.log(store.messages, "coming message");
+                return store.messages.map((item, i) => {
+                  console.log(item.message, "just message");
                   const catId =
                     "./img/cat" + JSON.stringify(item.catId) + ".png";
                   return this.state.myuserid !== item.userId ? (
@@ -195,7 +203,7 @@ export default class ChatRoom extends React.Component {
   }
 
   _sendMessage = (socket, message) => {
-    Alert.alert(this.state.message);
+    //Alert.alert(this.state.message);
     if (message.length > 0) {
       this.setState({
         clearInput: !this.state.clearInput,
@@ -203,7 +211,11 @@ export default class ChatRoom extends React.Component {
       });
       console.log("send Message");
     }
-    socket.emit("chat", { message: message, id: this.state.myuserid });
+    socket.emit("chat", {
+      message: message,
+      userId: this.state.myuserid,
+      catImage: this.state.mycatid
+    });
   };
 
   _whoamI = () => {
@@ -260,7 +272,7 @@ export default class ChatRoom extends React.Component {
     });
   };
 
-  _exitChat = () => {
+  _exitChat = socket => {
     Alert.alert(
       "채팅방을 나가시겠습니까?",
       "",
@@ -268,7 +280,7 @@ export default class ChatRoom extends React.Component {
         {
           text: "나가기",
           onPress: () => {
-            this.socket.emit("leaveRoom");
+            socket.emit("leaveRoom");
             this.props.navigation.navigate("OpenBoxScreen");
           }
         },
