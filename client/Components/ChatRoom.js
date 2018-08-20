@@ -66,6 +66,7 @@ export default class ChatRoom extends React.Component {
           {store => {
             return (
               <Timer
+                socket={store.socket}
                 leftTime={store.leftTime}
                 explodeChatRoom={params.explodeChatRoom}
               />
@@ -293,7 +294,6 @@ export default class ChatRoom extends React.Component {
     );
   };
   _explodeChatRoom = () => {
-    this.socket.emit("leaveRoom");
     this.props.navigation.navigate("OpenBoxScreen");
   };
   // <--- Timer에서 쓰임

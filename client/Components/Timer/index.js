@@ -32,6 +32,7 @@ export default class Timer extends Component {
     try {
       await clearInterval(this.state.timer);
       await this.setState({ timeOver: true });
+      await this.props.socket.emit("leaveRoom");
       await this.props.explodeChatRoom();
       await console.log(
         `if timeOver is ${this.state.timeOver} send to server time's up`
