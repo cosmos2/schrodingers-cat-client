@@ -52,7 +52,7 @@ export default class AppPresenter extends React.Component {
       this.setState({
         roomusers: JSON.parse(users)
       });
-      console.log(users);
+      console.log(users, "<----------이건 리브룸");
     });
 
     //"chat"으로 들어온 정보를 messages 라는 배열에 저장하기 위함
