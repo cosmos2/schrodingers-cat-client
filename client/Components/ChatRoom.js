@@ -12,6 +12,7 @@ import {
   AsyncStorage
 } from "react-native";
 import { Icon } from "react-native-elements";
+import AutoScroll from "react-native-auto-scroll";
 import Images from "./img/catindex";
 import CatsState from "./CatsState";
 import Timer from "./Timer";
@@ -111,7 +112,7 @@ export default class ChatRoom extends React.Component {
     return (
       <View style={styles.container}>
         <View style={styles.chatroom}>
-          <ScrollView style={styles.chats}>
+          <AutoScroll style={styles.chats}>
             <Store.Consumer>
               {store => {
                 //console.log(store.messages, "coming message");
@@ -146,7 +147,7 @@ export default class ChatRoom extends React.Component {
                 });
               }}
             </Store.Consumer>
-          </ScrollView>
+          </AutoScroll>
           <View style={styles.chatinput}>
             {/* <Text>Chat Room</Text> */}
             <TextInput
