@@ -11,6 +11,7 @@ import { createStackNavigator } from "react-navigation";
 import { Font } from "expo";
 import Store from "./Components/store";
 import SocketIOClient from "socket.io-client";
+import EditProfile from "./Components/EditProfile";
 
 const AppNavigator = createStackNavigator(
   {
@@ -20,7 +21,8 @@ const AppNavigator = createStackNavigator(
     ProfileScreen: { screen: Profile },
     ChatRoomScreen: { screen: ChatRoom },
     LandingScreen: { screen: Landing },
-    CatComponent: { screen: Cat }
+    CatComponent: { screen: Cat },
+    EditProfileScreen: { screen: EditProfile }
   },
   {
     initialRouteName: "LandingScreen"

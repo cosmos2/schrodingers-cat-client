@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import Loading from "./Loading";
 import Store from "./store";
+import { Icon } from "react-native-elements";
 
 const { width, height } = Dimensions.get("window");
 
@@ -24,17 +25,44 @@ export default class Profile extends React.Component {
       6: require("./img/cat6.png")
     };
   }
-  static navigationOptions = {
-    title: "고양이 프로필",
-    headerStyle: {
-      backgroundColor: "#FFAA0E",
-      height: 60
-    },
-    headerTintColor: "#fff",
-    headerTitleStyle: {
-      fontWeight: "bold"
-    }
+  static navigationOptions = ({ navigation }) => {
+    const { params = {} } = navigation.state;
+    return {
+      title: "고양이 프로필",
+      headerStyle: {
+        backgroundColor: "#FFAA0E",
+        height: 60
+      },
+      headerTintColor: "#fff",
+      headerTitleStyle: {
+        fontWeight: "bold"
+      },
+      headerRightContainerStyle: { marginRight: 20, paddingLeft: 10 },
+      headerRight: (
+        <Store.Consumer>
+          {store => {
+            return (
+              <Icon
+                name="pencil"
+                type="font-awesome"
+                color="white"
+                onPress={() =>
+                  params.navigation.navigate("EditProfileScreen", {
+                    socket: store.socket
+                  })
+                }
+              />
+            );
+          }}
+        </Store.Consumer>
+      )
+    };
   };
+
+  componentDidMount() {
+    // console.log(this.props);
+    this.props.navigation.setParams({ navigation: this.props.navigation });
+  }
 
   render() {
     return (
