@@ -7,7 +7,8 @@ export default class Index extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      token: "nothing"
+      token: "nothing",
+      myUserId: 0
     };
   }
   async componentDidMount() {
@@ -15,6 +16,10 @@ export default class Index extends React.Component {
     try {
       // await AsyncStorage.removeItem("token");
       const getToken = await AsyncStorage.getItem("token");
+      const myUserId = await AsyncStorage.getItem("myUserId");
+      this.setState({
+        myUserId: JSON.parse(myUserId).userId
+      });
       if (getToken !== null) {
         const token = JSON.parse(getToken).query;
         this.setState({ token });
@@ -35,6 +40,7 @@ export default class Index extends React.Component {
       <AppPresenter
         token={this.state.token}
         firstStart={this.state.firstStart}
+        myUserId={this.state.myUserId}
       />
     );
   }

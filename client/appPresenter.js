@@ -76,6 +76,7 @@ export default class AppPresenter extends React.Component {
       });
     };
 
+
     this._socket.on("selectCat", userInfo => {
       this._getUserInfo(userInfo);
     });
@@ -91,6 +92,7 @@ export default class AppPresenter extends React.Component {
         console.log(err);
       }
     };
+
 
     this._socket.on("hit", data => {
       var arr = this.state.roomusers.slice();
@@ -112,6 +114,23 @@ export default class AppPresenter extends React.Component {
       });
     };
 
+    // this._muted = () => {
+    //   Alert.alert("what");
+    // };
+
+    this._muteControl = () => {
+      console.log("mute control");
+      // console.log(this.props.myUserId, "this is my userId");
+      for (var i = 0; i < this.state.roomusers.length; i++) {
+        if (
+          this.state.roomusers[i].userId === this.props.myUserId &&
+          this.state.roomusers[i].hp <= 2
+        ) {
+          return true;
+        }
+      }
+    };
+
     this.state = {
       fontLoaded: false,
       socket: this._socket,
@@ -120,7 +139,10 @@ export default class AppPresenter extends React.Component {
       myInfo: {},
       messages: [],
       leftTime: 600,
-      resetchat: this._resetchat
+      resetchat: this._resetchat,
+      muteornot: false,
+      mutecontrol: this._muteControl,
+      test: this._test
     };
   }
 
@@ -133,6 +155,7 @@ export default class AppPresenter extends React.Component {
   }
 
   render() {
+    //this._muteControl();
     return this.state.fontLoaded ? (
       <Store.Provider value={this.state}>
         <AppNavigator />
