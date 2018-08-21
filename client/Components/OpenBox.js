@@ -8,13 +8,13 @@ import {
   AsyncStorage
 } from "react-native";
 import Store from "./store";
+import { Icon } from "react-native-elements";
 
 const { width, height } = Dimensions.get("window");
 export default class OpenBox extends React.Component {
   state = {
     latitude: 0,
-    longitude: 0,
-    roomusers: []
+    longitude: 0
   };
   static navigationOptions = ({ navigation }) => {
     const { params = {} } = navigation.state;
@@ -37,12 +37,7 @@ export default class OpenBox extends React.Component {
               <TouchableOpacity
                 onPress={() => params.openProfile(store.socket)}
               >
-                <Image
-                  source={require("./img/chartreux.png")}
-                  style={{
-                    marginBottom: 1
-                  }}
-                />
+                <Icon name="user" type="font-awesome" color="white" />
               </TouchableOpacity>
             );
           }}
