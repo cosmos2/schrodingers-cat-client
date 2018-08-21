@@ -98,7 +98,6 @@ export default class ChatRoom extends React.Component {
     this._myuserinfo();
   }
   componentDidMount() {
-    this.setState({ roomUsers: context.roomUsers });
     this.props.navigation.setParams({
       exitChat: this._exitChat,
       explodeChatRoom: this._explodeChatRoom
@@ -108,7 +107,6 @@ export default class ChatRoom extends React.Component {
     //this._amImute();
   }
   componentWillReceiveProps() {
-    console.log(this.state.roomUsers, "  receive props!!");
     if (context.mutecontrol()) {
       this.setState({
         muteoneminutes: true
