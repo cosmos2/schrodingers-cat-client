@@ -11,6 +11,7 @@ import { createStackNavigator } from "react-navigation";
 import { Font } from "expo";
 import Store from "./Components/store";
 import SocketIOClient from "socket.io-client";
+import EditProfile from "./Components/EditProfile";
 
 const AppNavigator = createStackNavigator(
   {
@@ -20,7 +21,8 @@ const AppNavigator = createStackNavigator(
     ProfileScreen: { screen: Profile },
     ChatRoomScreen: { screen: ChatRoom },
     LandingScreen: { screen: Landing },
-    CatComponent: { screen: Cat }
+    CatComponent: { screen: Cat },
+    EditProfileScreen: { screen: EditProfile }
   },
   {
     initialRouteName: "LandingScreen"
@@ -74,13 +76,23 @@ export default class AppPresenter extends React.Component {
       });
     };
 
-    // this._myuserId = async () => {
-    //   console.log("my user id");
-    //   const myuserId = await AsyncStorage.getItem("myUserId");
-    //   this.setState({
-    //     myuserId: JSON.parse(myuserId).myuserId
-    //   });
-    // };
+
+    this._socket.on("selectCat", userInfo => {
+      this._getUserInfo(userInfo);
+    });
+
+    this._getUserInfo = async userInfo => {
+      try {
+        const myInfo = {
+          userId: userInfo.userId,
+          catId: userInfo.catImage
+        };
+        await AsyncStorage.setItem("myUserId", JSON.stringify(myInfo));
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
 
     this._socket.on("hit", data => {
       var arr = this.state.roomusers.slice();

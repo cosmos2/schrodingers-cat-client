@@ -1,31 +1,46 @@
-import React, { Component } from "react";
+import React from "react";
 import {
   StyleSheet,
   Text,
   View,
-  Alert,
-  StatusBar,
   Dimensions,
-  TouchableOpacity,
+  Image,
+  TextInput,
   AsyncStorage
 } from "react-native";
+import Store from "./store";
 import Cat from "./Cat";
 
 const { width, height } = Dimensions.get("window");
 
-class SelectCat extends Component {
+export default class EditProfile extends React.Component {
+  constructor(props) {
+    super(props);
+    this.images = {
+      1: require("./img/cat1.png"),
+      2: require("./img/cat2.png"),
+      3: require("./img/cat3.png"),
+      4: require("./img/cat4.png"),
+      5: require("./img/cat5.png"),
+      6: require("./img/cat6.png")
+    };
+    this.state = {
+      socket: this.props.navigation.state.params.socket
+    };
+  }
   static navigationOptions = {
-    title: "슈뢰딩거의 고양이",
+    title: "프로필 편집",
     headerStyle: {
       backgroundColor: "#FFAA0E",
       height: 60
     },
-    headerLeft: null,
     headerTintColor: "#fff",
     headerTitleStyle: {
       fontWeight: "bold"
     }
   };
+  componentDidMount() {}
+
   render() {
     const upperCats = [1, 2, 3];
     const lowerCats = [4, 5, 6];
@@ -33,7 +48,7 @@ class SelectCat extends Component {
       <View style={styles.body}>
         <View style={styles.container}>
           <View style={styles.title}>
-            <Text style={styles.text}>고양이를 골라보자</Text>
+            <Text style={styles.text}>고양이를 바꿀꺼야?</Text>
           </View>
           <View style={styles.catContainer}>
             <View style={styles.cats}>
@@ -51,11 +66,9 @@ class SelectCat extends Component {
       </View>
     );
   }
-  // 고양이를 누르면 고양이 정보를 보내주고 화면을 넘김
   _sendCatInfom = async (catId, store) => {
     try {
       await store.socket.emit("info", catId);
-      await AsyncStorage.removeItem("firstTime");
       await this.props.navigation.navigate("OpenBoxScreen");
     } catch (err) {
       console.log(err);
@@ -95,5 +108,3 @@ const styles = StyleSheet.create({
     // backgroundColor: "pink"
   }
 });
-
-export default SelectCat;
