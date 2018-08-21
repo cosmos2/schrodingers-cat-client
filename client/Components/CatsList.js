@@ -17,6 +17,7 @@ export default class CatsList extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      muteornot: false,
       //   chatroomcats: [
       //     { userId: 123, catId: 1, hp: 7 },
       //     { userId: 87, catId: 2, hp: 7, socketId: "" },
@@ -57,7 +58,7 @@ export default class CatsList extends Component {
       myattacknum: 5
     };
   }
-
+  componentWillReceiveProps = () => {};
   render() {
     return (
       <Store.Consumer>
@@ -78,17 +79,20 @@ export default class CatsList extends Component {
                     >
                       <TouchableOpacity
                         disabled={
-                          !!(
-                            this.props.myuserid === item.userId ||
-                            this.state.myattacknum <= 0
-                          )
-                            ? // && (this.props.myuserid === item.userId && item.hp <= 0)
-                              true
+                          store.muteornot
+                            ? true
                             : !!(
-                                this.state.attackmode || this.state.healingmode
+                                this.props.myuserid === item.userId ||
+                                this.state.myattacknum <= 0
                               )
-                              ? false
-                              : true
+                              ? // && (this.props.myuserid === item.userId && item.hp <= 0)
+                                true
+                              : !!(
+                                  this.state.attackmode ||
+                                  this.state.healingmode
+                                )
+                                ? false
+                                : true
                         }
                         onPress={
                           !!(this.state.attackmode && !this.state.healingmode)
@@ -127,59 +131,65 @@ export default class CatsList extends Component {
                 })}
               </View>
               <View style={styles.attackspace}>
-                {this.state.myattacknum > 0 ? (
-                  this.state.attackmode ? (
-                    <View style={styles.attack}>
-                      <TouchableOpacity
-                        disabled={this.state.attackmode ? false : true}
-                        onPress={() => {
-                          this.setState({ attackmode: false });
-                          console.log("공격 모드");
-                        }}
-                      >
-                        <Image
-                          source={require("./img/pawprint5.png")}
-                          style={{
-                            marginBottom: 1
+                {!store.muteornot ? (
+                  this.state.myattacknum > 0 ? (
+                    this.state.attackmode ? (
+                      <View style={styles.attack}>
+                        <TouchableOpacity
+                          disabled={this.state.attackmode ? false : true}
+                          onPress={() => {
+                            this.setState({ attackmode: false });
+                            console.log("공격 모드");
                           }}
-                        />
-                      </TouchableOpacity>
-                      <Text style={styles.subtitle}>
-                        공 격 중 ( {this.state.myattacknum} / 5 )
-                      </Text>
-                    </View>
+                        >
+                          <Image
+                            source={require("./img/pawprint5.png")}
+                            style={{
+                              marginBottom: 1
+                            }}
+                          />
+                        </TouchableOpacity>
+                        <Text style={styles.subtitle}>
+                          공 격 중 ( {this.state.myattacknum} / 5 )
+                        </Text>
+                      </View>
+                    ) : (
+                      <View style={styles.attack}>
+                        <TouchableOpacity
+                          onPress={() => {
+                            this.setState({
+                              attackmode: true,
+                              healingmode: false
+                            });
+                            console.log("공격 모드 해제");
+                          }}
+                        >
+                          <Image
+                            source={require("./img/pawprint4.png")}
+                            style={{
+                              marginBottom: 1
+                            }}
+                          />
+                        </TouchableOpacity>
+                        <Text style={styles.subtitle}>
+                          공 격 력 ( {this.state.myattacknum} / 5 )
+                        </Text>
+                      </View>
+                    )
                   ) : (
                     <View style={styles.attack}>
-                      <TouchableOpacity
-                        onPress={() => {
-                          this.setState({
-                            attackmode: true,
-                            healingmode: false
-                          });
-                          console.log("공격 모드 해제");
+                      <Image
+                        source={require("./img/catcup.png")}
+                        style={{
+                          marginBottom: 1
                         }}
-                      >
-                        <Image
-                          source={require("./img/pawprint4.png")}
-                          style={{
-                            marginBottom: 1
-                          }}
-                        />
-                      </TouchableOpacity>
-                      <Text style={styles.subtitle}>
-                        공 격 력 ( {this.state.myattacknum} / 5 )
-                      </Text>
+                      />
+                      <Text style={styles.subtitle}>공 격 력 0</Text>
                     </View>
                   )
                 ) : (
                   <View style={styles.attack}>
-                    <Image
-                      source={require("./img/catcup.png")}
-                      style={{
-                        marginBottom: 1
-                      }}
-                    />
-                    <Text style={styles.subtitle}>공 격 력 0</Text>
+                    <Text>뮤트 시 공격 불가</Text>
                   </View>
                 )}
                 {/* ----------------------------- Healing Button ---------------------------------------- */}
