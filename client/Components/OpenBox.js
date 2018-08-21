@@ -28,6 +28,7 @@ export default class OpenBox extends React.Component {
       headerTitleStyle: {
         fontWeight: "bold"
       },
+      headerLeft: null,
       headerRightContainerStyle: { marginRight: 15 },
       headerRight: (
         <Store.Consumer>
