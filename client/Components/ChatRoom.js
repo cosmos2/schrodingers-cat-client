@@ -165,6 +165,7 @@ export default class ChatRoom extends React.Component {
                       this.setState({ message: message, clearInput: false });
                     }}
                     returnKeyType="done"
+                    autoCorrect={false}
                     onSubmitEditing={() => {
                       //this._sendMessage(this.state.message);
                     }}
