@@ -74,12 +74,28 @@ export default class AppPresenter extends React.Component {
       });
     };
 
+    this._socket.on("selectCat", userInfo => {
+      this._getUserInfo(userInfo);
+    });
+
+    this._getUserInfo = async userInfo => {
+      try {
+        const myInfo = {
+          userId: userInfo.userId,
+          catId: userInfo.catImage
+        };
+        await AsyncStorage.setItem("myUserId", JSON.stringify(myInfo));
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
     this._socket.on("hit", data => {
       var arr = this.state.roomusers.slice();
       var arr2 = [...arr];
       for (var i = 0; i < arr2.length; i++) {
         if (data === arr2[i].socketId) {
-          arr2[i].hp -= 1;
+          arr2[i].hp > 0 ? (arr2[i].hp -= 1) : null;
         }
       }
       this.setState({
