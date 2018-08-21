@@ -84,7 +84,7 @@ export default class AppPresenter extends React.Component {
           userId: userInfo.userId,
           catId: userInfo.catImage
         };
-        await AsyncStorage.setItem("selectCat", JSON.stringify(myInfo));
+        await AsyncStorage.setItem("myUserId", JSON.stringify(myInfo));
       } catch (err) {
         console.log(err);
       }
