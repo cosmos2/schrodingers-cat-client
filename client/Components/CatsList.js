@@ -57,6 +57,7 @@ export default class CatsList extends Component {
       myattacknum: 5
     };
   }
+
   render() {
     return (
       <Store.Consumer>
@@ -77,16 +78,20 @@ export default class CatsList extends Component {
                     >
                       <TouchableOpacity
                         disabled={
-                          this.props.myuserid === item.userId ||
-                          this.state.myattacknum <= 0
+                          !!(
+                            this.props.myuserid === item.userId ||
+                            this.state.myattacknum <= 0
+                          )
                             ? // && (this.props.myuserid === item.userId && item.hp <= 0)
                               true
-                            : this.state.attackmode || this.state.healingmode
+                            : !!(
+                                this.state.attackmode || this.state.healingmode
+                              )
                               ? false
                               : true
                         }
                         onPress={
-                          this.state.attackmode && !this.state.healingmode
+                          !!(this.state.attackmode && !this.state.healingmode)
                             ? () => {
                                 console.log(item.userId);
                                 store.socket.emit("hit", item.socketId);
@@ -94,7 +99,9 @@ export default class CatsList extends Component {
                                   myattacknum: this.state.myattacknum - 1
                                 });
                               }
-                            : !this.state.attackmode && this.state.healingmode
+                            : !!(
+                                !this.state.attackmode && this.state.healingmode
+                              )
                               ? () => {
                                   console.log(item.userId);
                                 }

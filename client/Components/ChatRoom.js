@@ -103,8 +103,15 @@ export default class ChatRoom extends React.Component {
       explodeChatRoom: this._explodeChatRoom
       // <-- I think explodeChatRoom is useless
     });
-
-    this._amImute();
+    context.mutecontrol();
+    //this._amImute();
+  }
+  componentWillReceiveProps() {
+    if (context.mutecontrol()) {
+      this.setState({
+        muteoneminutes: true
+      });
+    }
   }
   render() {
     // console.log("render");
@@ -113,63 +120,72 @@ export default class ChatRoom extends React.Component {
       <View style={styles.container}>
         <View style={styles.chatroom}>
           <AutoScroll style={styles.chats}>
-            <Store.Consumer>
-              {store => {
-                //console.log(store.messages, "coming message");
-                return store.messages.map((item, i) => {
-                  //console.log(item.message, "just message");
-                  const catId =
-                    "./img/cat" + JSON.stringify(item.catId) + ".png";
-                  return this.state.myuserid !== item.userId ? (
-                    <View style={{ flexDirection: "row" }} key={i}>
-                      <Image
-                        source={Images[item.catId]}
-                        style={{
-                          marginTop: 5,
-                          marginLeft: 5
-                        }}
-                      />
-                      <View style={styles.eachotherschat}>
-                        <Text style={styles.chatfont}>
-                          {item.userId} : {item.message}
-                        </Text>
+            <View>
+              <Store.Consumer>
+                {store => {
+                  context = store;
+                  //console.log(store.messages, "coming message");
+                  return store.messages.map((item, i) => {
+                    //console.log(item.message, "just message");
+                    // const catId =
+                    //   "./img/cat" + JSON.stringify(item.catId) + ".png";
+                    return this.state.myuserid !== item.userId ? (
+                      <View style={{ flexDirection: "row" }} key={i}>
+                        <Image
+                          source={Images[item.catId]}
+                          style={{
+                            marginTop: 5,
+                            marginLeft: 5
+                          }}
+                        />
+                        <View style={styles.eachotherschat}>
+                          <Text style={styles.chatfont}>
+                            {item.userId} : {item.message}
+                          </Text>
+                        </View>
                       </View>
-                    </View>
-                  ) : (
-                    <View style={styles.mychat} key={i}>
-                      <View style={styles.eachmychat}>
-                        <Text style={styles.chatfont}>
-                          {item.userId} : {item.message}
-                        </Text>
+                    ) : (
+                      <View style={styles.mychat} key={i}>
+                        <View style={styles.eachmychat}>
+                          <Text style={styles.chatfont}>
+                            {item.userId} : {item.message}
+                          </Text>
+                        </View>
                       </View>
-                    </View>
-                  );
-                });
-              }}
-            </Store.Consumer>
+                    );
+                  });
+                }}
+              </Store.Consumer>
+            </View>
           </AutoScroll>
           <View style={styles.chatinput}>
             {/* <Text>Chat Room</Text> */}
-            <TextInput
-              style={styles.textInput}
-              editable={this.state.muteoneminutes ? false : true}
-              multiline={false}
-              value={!this.state.clearInput ? this.state.message : null}
-              onChangeText={message => {
-                this.setState({ message: message, clearInput: false });
+            <Store.Consumer>
+              {store => {
+                return (
+                  <TextInput
+                    style={styles.textInput}
+                    editable={store.muteornot ? false : true}
+                    multiline={false}
+                    value={!this.state.clearInput ? this.state.message : null}
+                    onChangeText={message => {
+                      this.setState({ message: message, clearInput: false });
+                    }}
+                    returnKeyType="done"
+                    onSubmitEditing={() => {
+                      //this._sendMessage(this.state.message);
+                    }}
+                  />
+                );
               }}
-              returnKeyType="done"
-              onSubmitEditing={() => {
-                //this._sendMessage(this.state.message);
-              }}
-            />
+            </Store.Consumer>
             <Store.Consumer>
               {store => {
                 return (
                   <TouchableOpacity
                     onPress={() => {
                       {
-                        this.state.muteoneminutes
+                        store.muteornot
                           ? Alert.alert("1분간 채팅 금지")
                           : this._sendMessage(store.socket, this.state.message);
                       }
@@ -232,32 +248,27 @@ export default class ChatRoom extends React.Component {
     }
   };
 
-  _amImute = () => {
-    //console.log(this.state.chatroomcats);
-    for (var key in this.state.chatroomcats) {
-      //   console.log(this.state.chatroomcats[key]["userId"], "this is key.userID");
-      //   console.log(this.state.myuserid, "this is mine");
-      if (
-        this.state.chatroomcats[key]["userId"] === this.state.myuserid &&
-        this.state.chatroomcats[key]["hp"] === 0
-      ) {
-        Alert.alert("1분간 채팅이 금지 되었습니다.");
-        this.setState({
-          muteoneminutes: true
-          //   mychatroomnum: key
-        });
-        //console.log(this.state.muteoneminutes, "i am muted!!");
-        setTimeout(() => {
-          Alert.alert("채팅 금지가 해제되었습니다!");
-          this.setState({
-            muteoneminutes: false
-          });
-          //서버에 hp 채우기 요청 보내기
-          //console.log(this.state.muteoneminutes, "i can Chat!!!");
-        }, 15000);
-      }
-    }
-  };
+  // _amImute = () => {
+
+  //   for (var key in this.state.chatroomcats) {
+  //     if (
+  //       this.state.chatroomcats[key]["userId"] === this.state.myuserid &&
+  //       this.state.chatroomcats[key]["hp"] === 0
+  //     ) {
+  //       Alert.alert("1분간 채팅이 금지 되었습니다.");
+  //       this.setState({
+  //         muteoneminutes: true
+  //       });
+  //       setTimeout(() => {
+  //         Alert.alert("채팅 금지가 해제되었습니다!");
+  //         this.setState({
+  //           muteoneminutes: false
+  //         });
+  //         //서버에 hp 채우기 요청 보내기
+  //       }, 15000);
+  //     }
+  //   }
+  // };
 
   _myuserinfo = async () => {
     var myuserid = await AsyncStorage.getItem("myUserId");
