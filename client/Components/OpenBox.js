@@ -88,13 +88,12 @@ export default class OpenBox extends React.Component {
       </View>
     );
   }
-  _findRoom = async (socket, muteornot) => {
+  _findRoom = async socket => {
     const { latitude, longitude } = this.state;
     try {
       await socket.emit("findRoom", { latitude, longitude });
       await this.props.navigation.navigate("LoadingScreen", {
-        socket: socket,
-        muteornot: muteornot
+        socket: socket
       });
     } catch (err) {
       console.log(err);

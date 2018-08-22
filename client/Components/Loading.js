@@ -13,7 +13,7 @@ export default class Loading extends Component {
         roomusers: this.props.navigation.state.params.roomusers,
         muteornot: this.props.navigation.state.params.muteornot
       });
-    }, 2000);
+    }, 1500);
   }
 
   componentWillUnmount() {

@@ -113,9 +113,11 @@ export default class CatsList extends Component {
                         }
                       >
                         <Image
-                          source={Images[item.catImage]}
+                          source={
+                            item.hp === 4 ? Images[7] : Images[item.catImage]
+                          }
                           style={{
-                            marginTop: 8,
+                            marginTop: 6,
                             marginLeft: 10,
                             width: 50,
                             height: 50
@@ -220,7 +222,7 @@ const styles = StyleSheet.create({
     flexWrap: "wrap"
   },
   attackspace: {
-    flex: 0.4,
+    flex: 0.3,
     //backgroundColor: "skyblue",
     width: width,
     flexDirection: "row",
@@ -236,7 +238,7 @@ const styles = StyleSheet.create({
   subtitle: {
     color: "black",
     fontSize: 15,
-    marginTop: 7,
+    marginTop: 5,
     marginLeft: 10,
     fontWeight: "500",
     fontWeight: "bold",

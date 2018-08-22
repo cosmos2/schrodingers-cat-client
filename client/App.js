@@ -17,9 +17,11 @@ export default class Index extends React.Component {
       // await AsyncStorage.removeItem("token");
       const getToken = await AsyncStorage.getItem("token");
       const myUserId = await AsyncStorage.getItem("myUserId");
-      this.setState({
-        myUserId: JSON.parse(myUserId).userId
-      });
+      if (myUserId !== null) {
+        this.setState({
+          myUserId: JSON.parse(myUserId).userId
+        });
+      }
       if (getToken !== null) {
         const token = JSON.parse(getToken).query;
         this.setState({ token });
