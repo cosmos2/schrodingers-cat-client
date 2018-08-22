@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { View, TouchableOpacity, Image } from "react-native";
-import { Icon } from "react-native-elements";
 import Store from "./store";
 
 export default class Cat extends Component {

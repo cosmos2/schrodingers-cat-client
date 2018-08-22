@@ -12,7 +12,6 @@ export default class Index extends React.Component {
     };
   }
   async componentDidMount() {
-    console.log("app did mount");
     try {
       // await AsyncStorage.removeItem("token");
       // await AsyncStorage.removeItem("myUserId");

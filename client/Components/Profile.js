@@ -1,17 +1,9 @@
 import React from "react";
-import {
-  StyleSheet,
-  Text,
-  View,
-  Dimensions,
-  Image,
-  AsyncStorage
-} from "react-native";
-import Loading from "./Loading";
+import { StyleSheet, Text, View, Dimensions, Image } from "react-native";
 import Store from "./store";
 import { Icon } from "react-native-elements";
 
-const { width, height } = Dimensions.get("window");
+const { width } = Dimensions.get("window");
 
 export default class Profile extends React.Component {
   constructor(props) {
@@ -62,7 +54,6 @@ export default class Profile extends React.Component {
   };
 
   componentDidMount() {
-    // console.log(this.props);
     this.props.navigation.setParams({ navigation: this.props.navigation });
   }
 
@@ -109,12 +100,10 @@ const styles = StyleSheet.create({
   profilecat: {
     marginTop: 40,
     marginBottom: 30,
-    //backgroundColor: "red",
     alignItems: "center",
     justifyContent: "center"
   },
   userinfo: {
-    //backgroundColor: "red",
     alignItems: "center",
     justifyContent: "center"
   },
@@ -125,7 +114,6 @@ const styles = StyleSheet.create({
     fontFamily: "Goyang",
     fontWeight: "500",
     fontWeight: "bold"
-    //marginBottom: 10
   },
   title: {
     color: "black",
@@ -136,9 +124,6 @@ const styles = StyleSheet.create({
   },
   card: {
     flex: 1,
-    //backgroundColor: "yellow",
-    // borderWidth: 1,
-    // borderColor: "black",
     width: width * 0.9
   }
 });
