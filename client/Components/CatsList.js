@@ -58,7 +58,6 @@ export default class CatsList extends Component {
       myattacknum: 5
     };
   }
-  componentWillReceiveProps = () => {};
   render() {
     return (
       <Store.Consumer>

@@ -86,7 +86,13 @@ export default class AppPresenter extends React.Component {
           userId: userInfo.userId,
           catId: userInfo.catImage
         };
-        await AsyncStorage.setItem("myUserId", JSON.stringify(myInfo));
+        const myUserId = await AsyncStorage.setItem(
+          "myUserId",
+          JSON.stringify(myInfo)
+        );
+        await this.setState({
+          myUserId: JSON.parse(myUserId).userId
+        });
       } catch (err) {
         console.log(err);
       }
@@ -118,10 +124,6 @@ export default class AppPresenter extends React.Component {
         messages: []
       });
     };
-
-    // this._muted = () => {
-    //   Alert.alert("what");
-    // };
 
     this._muteControl = socketId => {
       for (var i = 0; i < this.state.roomusers.length; i++) {
