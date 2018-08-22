@@ -9,7 +9,8 @@ import {
   Dimensions,
   TextInput,
   ScrollView,
-  AsyncStorage
+  AsyncStorage,
+  KeyboardAvoidingView
 } from "react-native";
 import { Icon } from "react-native-elements";
 import AutoScroll from "react-native-auto-scroll";
@@ -46,7 +47,8 @@ export default class ChatRoom extends React.Component {
       mycatid: 0,
       chatroomcats: [],
       muteoneminutes: false,
-      mychatroomnum: ""
+      mychatroomnum: "",
+      muteTime: 10
     };
   }
   static navigationOptions = ({ navigation }) => {
@@ -82,6 +84,7 @@ export default class ChatRoom extends React.Component {
                 type="ionicon"
                 name="md-exit"
                 color="white"
+                iconStyle={{ paddingLeft: 10 }}
               />
             );
           }}
@@ -201,7 +204,19 @@ export default class ChatRoom extends React.Component {
         <View style={styles.options}>
           <View style={styles.catsstate}>
             <View style={styles.statespace}>
-              <CatsList myuserid={this.state.myuserid} />
+              <Store.Consumer>
+                {store => {
+                  console.log(store.muteTime, "this. is upper mute time");
+                  return (
+                    <CatsList
+                      myuserid={this.state.myuserid}
+                      // muteTime={store.muteTime}
+                      // stopTimer={this._stopTimer}
+                      // muteTimer={this._muteTimer}
+                    />
+                  );
+                }}
+              </Store.Consumer>
             </View>
           </View>
         </View>

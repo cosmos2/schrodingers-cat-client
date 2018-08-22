@@ -46,6 +46,7 @@ export default class Profile extends React.Component {
                 name="pencil"
                 type="font-awesome"
                 color="white"
+                iconStyle={{ paddingLeft: 10 }}
                 onPress={() =>
                   params.navigation.navigate("EditProfileScreen", {
                     socket: store.socket
