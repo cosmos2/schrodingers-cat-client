@@ -27,7 +27,7 @@ export default class OpenBox extends React.Component {
         fontWeight: "bold"
       },
       headerLeft: null,
-      headerRightContainerStyle: { marginRight: 15 },
+      headerRightContainerStyle: { marginRight: 5 },
       headerRight: (
         <Store.Consumer>
           {store => {
@@ -39,7 +39,12 @@ export default class OpenBox extends React.Component {
                   name="user"
                   type="font-awesome"
                   color="white"
-                  iconStyle={{ paddingLeft: 10 }}
+                  iconStyle={{
+                    paddingRight: 10,
+                    paddingLeft: 20,
+                    paddingTop: 10,
+                    paddingBottom: 10
+                  }}
                 />
               </TouchableOpacity>
             );
