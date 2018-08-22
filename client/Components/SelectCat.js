@@ -1,14 +1,5 @@
 import React, { Component } from "react";
-import {
-  StyleSheet,
-  Text,
-  View,
-  Alert,
-  StatusBar,
-  Dimensions,
-  TouchableOpacity,
-  AsyncStorage
-} from "react-native";
+import { StyleSheet, Text, View, Dimensions, AsyncStorage } from "react-native";
 import Cat from "./Cat";
 
 const { width, height } = Dimensions.get("window");
@@ -33,7 +24,7 @@ class SelectCat extends Component {
       <View style={styles.body}>
         <View style={styles.container}>
           <View style={styles.title}>
-            <Text style={styles.text}>고양이를 골라보자</Text>
+            <Text style={styles.text}>고양이를 고를고양</Text>
           </View>
           <View style={styles.catContainer}>
             <View style={styles.cats}>
@@ -92,7 +83,6 @@ const styles = StyleSheet.create({
     flex: 0.4,
     flexDirection: "row",
     justifyContent: "space-around"
-    // backgroundColor: "pink"
   }
 });
 

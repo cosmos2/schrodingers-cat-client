@@ -5,25 +5,18 @@ import {
   View,
   Dimensions,
   Image,
-  TouchableOpacity,
-  Alert
+  TouchableOpacity
 } from "react-native";
 import Images from "./img/catindex";
 import Store from "./store";
 
-const { width, height } = Dimensions.get("window");
+const { width } = Dimensions.get("window");
 
 export default class CatsList extends Component {
   constructor(props) {
     super(props);
     this.state = {
       muteornot: false,
-      //   chatroomcats: [
-      //     { userId: 123, catId: 1, hp: 7 },
-      //     { userId: 87, catId: 2, hp: 7, socketId: "" },
-      //     { userId: 10, catId: 4, hp: 7, socketId: "" },
-      //     { userId: 11, catId: 3, hp: 7, socketId: "" }
-      //   ],
       chatroomcats: [
         {
           hp: 7,
@@ -62,7 +55,6 @@ export default class CatsList extends Component {
     return (
       <Store.Consumer>
         {store => {
-          //console.log(store.roomusers);
           return (
             <View style={styles.container}>
               <View style={styles.state}>
@@ -193,7 +185,6 @@ export default class CatsList extends Component {
                     <Text>뮤트 시 공격 불가</Text>
                   </View>
                 )}
-                {/* ----------------------------- Healing Button ---------------------------------------- */}
               </View>
             </View>
           );
@@ -206,7 +197,6 @@ export default class CatsList extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    //backgroundColor: "blue",
     alignItems: "center",
     justifyContent: "center"
   },
@@ -214,15 +204,11 @@ const styles = StyleSheet.create({
     flex: 0.65,
     width: width * 0.96,
     flexDirection: "row",
-    //backgroundColor: "red",
-    // borderWidth: 1,
-    // borderColor: "black",
     borderRadius: 10,
     flexWrap: "wrap"
   },
   attackspace: {
     flex: 0.3,
-    //backgroundColor: "skyblue",
     width: width,
     flexDirection: "row",
     justifyContent: "space-around"
@@ -242,13 +228,11 @@ const styles = StyleSheet.create({
     fontWeight: "500",
     fontWeight: "bold",
     fontFamily: "Goyang"
-    //marginBottom: 10
   },
   attack: {
     justifyContent: "center",
     alignItems: "center",
     flexDirection: "row",
-    //backgroundColor: "red",
     flex: 1
   },
   mycat: {

@@ -27,20 +27,7 @@ export default class ChatRoom extends React.Component {
     //this.socket = this.props.navigation.state.params.socket;
     //this.roomusers = this.props.navigation.state.params.roomusers;
     this.state = {
-      messages: [
-        // { userId: 215, catId: 1, message: "fucking crazy Lotteria!!!" },
-        // { userId: 123, catId: 1, message: "Umm Mcdonald is the best!!!" },
-        // { userId: 87, catId: 1, message: "BurgerKing is Cool!!" },
-        // { userId: 123, catId: 1, message: "Hi my name is monkey" },
-        // { userId: 215, catId: 1, message: "I am Genius" },
-        // { userId: 87, catId: 2, message: "oh you looks like koala" },
-        // { userId: 123, catId: 1, message: "fucking crazy Lotteria!!!" },
-        // { userId: 87, catId: 2, message: "Umm Mcdonald is the best!!!" },
-        // { userId: 215, catId: 1, message: "BurgerKing is Cool!!" },
-        // { userId: 123, catId: 1, message: "Hi my name is monkey" },
-        // { userId: 215, catId: 1, message: "I am Genius" },
-        // { userId: 87, catId: 2, message: "oh you looks like koala" }
-      ],
+      messages: [],
       message: "",
       clearInput: false,
       myuserid: 10,
@@ -109,14 +96,10 @@ export default class ChatRoom extends React.Component {
     this.props.navigation.setParams({
       exitChat: this._exitChat,
       explodeChatRoom: this._explodeChatRoom
-      // <-- I think explodeChatRoom is useless
     });
-    //this._amImute();
   }
 
   render() {
-    // console.log("render");
-    // console.log(this.state.myuserid, "myuserid");
     return (
       <View style={styles.container}>
         <View style={styles.chatroom}>
@@ -125,11 +108,7 @@ export default class ChatRoom extends React.Component {
               <Store.Consumer>
                 {store => {
                   context = store;
-                  //console.log(store.messages, "coming message");
                   return store.messages.map((item, i) => {
-                    //console.log(item.message, "just message");
-                    // const catId =
-                    //   "./img/cat" + JSON.stringify(item.catId) + ".png";
                     return this.state.myuserid !== item.userId ? (
                       <View style={{ flexDirection: "row" }} key={i}>
                         <Image
@@ -160,7 +139,6 @@ export default class ChatRoom extends React.Component {
             </View>
           </AutoScroll>
           <View style={styles.chatinput}>
-            {/* <Text>Chat Room</Text> */}
             <Store.Consumer>
               {store => {
                 return (
@@ -174,9 +152,7 @@ export default class ChatRoom extends React.Component {
                     }}
                     returnKeyType="done"
                     autoCorrect={false}
-                    onSubmitEditing={() => {
-                      //this._sendMessage(this.state.message);
-                    }}
+                    onSubmitEditing={() => {}}
                   />
                 );
               }}
@@ -212,15 +188,7 @@ export default class ChatRoom extends React.Component {
             <View style={styles.statespace}>
               <Store.Consumer>
                 {store => {
-                  console.log(store.muteTime, "this. is upper mute time");
-                  return (
-                    <CatsList
-                      myuserid={this.state.myuserid}
-                      // muteTime={store.muteTime}
-                      // stopTimer={this._stopTimer}
-                      // muteTimer={this._muteTimer}
-                    />
-                  );
+                  return <CatsList myuserid={this.state.myuserid} />;
                 }}
               </Store.Consumer>
             </View>
@@ -231,13 +199,11 @@ export default class ChatRoom extends React.Component {
   }
 
   _sendMessage = (socket, message) => {
-    //Alert.alert(this.state.message);
     if (message.length > 0) {
       this.setState({
         clearInput: !this.state.clearInput,
         message: ""
       });
-      console.log("send Message");
 
       socket.emit("chat", {
         message: message,
@@ -256,28 +222,6 @@ export default class ChatRoom extends React.Component {
       }
     }
   };
-
-  // _amImute = () => {
-
-  //   for (var key in this.state.chatroomcats) {
-  //     if (
-  //       this.state.chatroomcats[key]["userId"] === this.state.myuserid &&
-  //       this.state.chatroomcats[key]["hp"] === 0
-  //     ) {
-  //       Alert.alert("1분간 채팅이 금지 되었습니다.");
-  //       this.setState({
-  //         muteoneminutes: true
-  //       });
-  //       setTimeout(() => {
-  //         Alert.alert("채팅 금지가 해제되었습니다!");
-  //         this.setState({
-  //           muteoneminutes: false
-  //         });
-  //         //서버에 hp 채우기 요청 보내기
-  //       }, 15000);
-  //     }
-  //   }
-  // };
 
   _myuserinfo = async () => {
     var myuserid = await AsyncStorage.getItem("myUserId");
@@ -321,7 +265,6 @@ const styles = StyleSheet.create({
   },
   catsstate: {
     flex: 1,
-    //backgroundColor: "yellow",
     width: width * 0.9,
     alignItems: "center"
   },
@@ -338,7 +281,6 @@ const styles = StyleSheet.create({
     margin: 5
   },
   mychat: {
-    //justifyContent: "flex-end"
     alignItems: "flex-end"
   },
   chatfont: {
@@ -348,8 +290,6 @@ const styles = StyleSheet.create({
   },
   eachmychat: {
     width: width * 0.7,
-    // borderWidth: 1,
-    // borderColor: "black",
     borderRadius: 10,
     margin: 5,
     padding: 8,
@@ -361,8 +301,6 @@ const styles = StyleSheet.create({
     margin: 5,
     padding: 8,
     width: width * 0.7,
-    // borderWidth: 1,
-    // borderColor: "black",
     borderRadius: 10,
     backgroundColor: "#C4E1DE",
     flexDirection: "row"
@@ -370,19 +308,12 @@ const styles = StyleSheet.create({
 
   chatroom: {
     flex: 1,
-    //backgroundColor: "red",
     width: width,
     margin: 5
-    // borderWidth: 1,
-    // borderColor: "black"
-    //justifyContent: "flex-end"
   },
   options: {
     flex: 0.6,
-    //backgroundColor: "yellow",
     width: width * 0.9,
-    // borderWidth: 1,
-    // borderColor: "black",
     justifyContent: "center",
     alignItems: "center"
   },
@@ -396,15 +327,11 @@ const styles = StyleSheet.create({
   },
   chats: {
     flex: 1,
-    // borderWidth: 1,
-    // borderColor: "black",
     marginBottom: 5
-    //backgroundColor: "red"
   },
   chatinput: {
     flex: 0.1,
     flexDirection: "row"
-    //backgroundColor: "blue"
   },
   subtitle: {
     color: "black",
@@ -412,65 +339,5 @@ const styles = StyleSheet.create({
     marginTop: 20,
     fontWeight: "500",
     fontWeight: "bold"
-    //marginBottom: 10
   }
 });
-
-// import React, { Component } from "react";
-// import {
-//   View,
-//   Text,
-//   Image,
-//   StyleSheet,
-//   AsyncStorage,
-//   KeyboardAvoidingView,
-//   TextInput
-// } from "react-native";
-// class test extends Component {
-//   render() {
-//     return (
-//       <KeyboardAvoidingView style={styles.container} behavior="padding">
-//         <View style={styles.upper}>
-//           <Text>hi</Text>
-//           <TextInput style={styles.textInput} />
-//         </View>
-//         <View style={styles.lower}>
-//           <Text>hi</Text>
-//           <TextInput style={styles.textInput} />
-//         </View>
-//       </KeyboardAvoidingView>
-//     );
-//   }
-// }
-
-// export default test;
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     backgroundColor: "#FCFCFC",
-//     alignItems: "center",
-//     justifyContent: "center"
-//   },
-//   title: {
-//     color: "#FFAA0E",
-//     fontFamily: "Goyang",
-//     fontSize: 30,
-//     marginTop: 10,
-//     fontWeight: "900",
-//     marginBottom: 10
-//   },
-//   textInput: {
-//     borderWidth: 1,
-//     borderColor: "black"
-//   },
-//   upper: {
-//     backgroundColor: "yellow",
-//     flex: 1,
-//     width: 300
-//   },
-//   lower: {
-//     backgroundColor: "green",
-//     flex: 1,
-//     width: 300
-//   }
-// });

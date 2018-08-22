@@ -4,13 +4,11 @@ import {
   View,
   Image,
   Dimensions,
-  TouchableOpacity,
-  AsyncStorage
+  TouchableOpacity
 } from "react-native";
 import Store from "./store";
 import { Icon } from "react-native-elements";
 
-const { width, height } = Dimensions.get("window");
 export default class OpenBox extends React.Component {
   state = {
     latitude: 0,
@@ -51,9 +49,6 @@ export default class OpenBox extends React.Component {
     };
   };
   componentDidMount() {
-    this.timeoutHandler = setTimeout(() => {
-      // RNRestart.Restart();
-    }, 5000);
     this.props.navigation.setParams({ openProfile: this._openProfile });
     navigator.geolocation.getCurrentPosition(position => {
       var lat = parseFloat(position.coords.latitude);
@@ -121,10 +116,5 @@ const styles = StyleSheet.create({
     backgroundColor: "#FCFCFC",
     alignItems: "center",
     justifyContent: "center"
-  },
-  card: {
-    // paddingLeft: 20,
-    // flex: 0.6,
-    // width: width * 0.9
   }
 });

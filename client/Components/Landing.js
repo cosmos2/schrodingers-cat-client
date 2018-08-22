@@ -25,7 +25,7 @@ export default class Landing extends Component {
       <View style={styles.container}>
         <Text style={styles.title}>슈뢰딩거의 고양이</Text>
         <Image
-          style={{ width: 300, height: 300 }}
+          style={{ width: 400, height: 400 }}
           source={require("./img/firstImg.png")}
         />
       </View>
