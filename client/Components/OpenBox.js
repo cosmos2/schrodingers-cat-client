@@ -9,7 +9,6 @@ import {
 } from "react-native";
 import Store from "./store";
 import { Icon } from "react-native-elements";
-import RNRestart from "react-native-restart";
 
 const { width, height } = Dimensions.get("window");
 export default class OpenBox extends React.Component {
