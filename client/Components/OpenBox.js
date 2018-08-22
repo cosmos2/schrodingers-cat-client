@@ -65,7 +65,7 @@ export default class OpenBox extends React.Component {
               return (
                 <TouchableOpacity
                   onPress={() => {
-                    this._findRoom(store.socket);
+                    this._findRoom(store.socket, store.muteornot);
                   }}
                 >
                   <Image
@@ -83,11 +83,14 @@ export default class OpenBox extends React.Component {
       </View>
     );
   }
-  _findRoom = async socket => {
+  _findRoom = async (socket, muteornot) => {
     const { latitude, longitude } = this.state;
     try {
       await socket.emit("findRoom", { latitude, longitude });
-      await this.props.navigation.navigate("LoadingScreen", { socket: socket });
+      await this.props.navigation.navigate("LoadingScreen", {
+        socket: socket,
+        muteornot: muteornot
+      });
     } catch (err) {
       console.log(err);
     }

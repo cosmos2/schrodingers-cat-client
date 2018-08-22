@@ -103,16 +103,9 @@ export default class ChatRoom extends React.Component {
       explodeChatRoom: this._explodeChatRoom
       // <-- I think explodeChatRoom is useless
     });
-    context.mutecontrol();
     //this._amImute();
   }
-  componentWillReceiveProps() {
-    if (context.mutecontrol()) {
-      this.setState({
-        muteoneminutes: true
-      });
-    }
-  }
+
   render() {
     // console.log("render");
     // console.log(this.state.myuserid, "myuserid");
@@ -209,12 +202,6 @@ export default class ChatRoom extends React.Component {
           <View style={styles.catsstate}>
             <View style={styles.statespace}>
               <CatsList myuserid={this.state.myuserid} />
-              {/* <CatsState
-                //chatRoomCats={this.state.chatroomcats}
-                myChatRoomNum={this.state.mychatroomnum}
-                socket={this.socket}
-                roomusers={this.roomusers}
-              /> */}
             </View>
           </View>
         </View>

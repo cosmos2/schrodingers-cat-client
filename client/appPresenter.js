@@ -76,7 +76,6 @@ export default class AppPresenter extends React.Component {
       });
     };
 
-
     this._socket.on("selectCat", userInfo => {
       this._getUserInfo(userInfo);
     });
@@ -92,8 +91,9 @@ export default class AppPresenter extends React.Component {
         console.log(err);
       }
     };
-
-
+    this._socket.on("fill", data => {
+      console.log(data, "this is filled socketId");
+    });
     this._socket.on("hit", data => {
       var arr = this.state.roomusers.slice();
       var arr2 = [...arr];
@@ -104,6 +104,11 @@ export default class AppPresenter extends React.Component {
       }
       this.setState({
         roomusers: arr2
+      });
+      this.state.roomusers.map(item => {
+        if (item.socketId === data && this.props.myUserId === item.userId) {
+          this._muteControl(data);
+        }
       });
     });
 
@@ -118,15 +123,31 @@ export default class AppPresenter extends React.Component {
     //   Alert.alert("what");
     // };
 
-    this._muteControl = () => {
-      console.log("mute control");
-      // console.log(this.props.myUserId, "this is my userId");
+    this._muteControl = socketId => {
       for (var i = 0; i < this.state.roomusers.length; i++) {
         if (
           this.state.roomusers[i].userId === this.props.myUserId &&
-          this.state.roomusers[i].hp <= 2
+          this.state.roomusers[i].hp <= 4
         ) {
-          return true;
+          this.setState({
+            muteornot: true
+          });
+          if (this.state.mutepushcount < 1) {
+            Alert.alert("1분간 채팅이 금지되었습니다.");
+            this.setState({
+              mutepushcount: 1
+            });
+          }
+          setTimeout(() => {
+            Alert.alert("채팅 금지가 해제되었습니다!");
+            this.setState({
+              muteornot: false,
+              mutepushcount: 0
+            });
+            this._socket.emit("fill", socketId);
+
+            //서버에 hp 채우기 요청 보내기
+          }, 10000);
         }
       }
     };
@@ -142,7 +163,8 @@ export default class AppPresenter extends React.Component {
       resetchat: this._resetchat,
       muteornot: false,
       mutecontrol: this._muteControl,
-      test: this._test
+      test: this._test,
+      mutepushcount: 0
     };
   }
 

@@ -10,7 +10,8 @@ export default class Loading extends Component {
     this.timeoutHandle = setTimeout(() => {
       this.props.navigation.navigate("ChatRoomScreen", {
         socket: this.props.navigation.state.params.socket,
-        roomusers: this.props.navigation.state.params.roomusers
+        roomusers: this.props.navigation.state.params.roomusers,
+        muteornot: this.props.navigation.state.params.muteornot
       });
     }, 2000);
   }
