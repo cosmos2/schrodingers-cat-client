@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import Store from "./store";
 import { Icon } from "react-native-elements";
+import RNRestart from "react-native-restart";
 
 const { width, height } = Dimensions.get("window");
 export default class OpenBox extends React.Component {
@@ -37,7 +38,12 @@ export default class OpenBox extends React.Component {
               <TouchableOpacity
                 onPress={() => params.openProfile(store.socket)}
               >
-                <Icon name="user" type="font-awesome" color="white" />
+                <Icon
+                  name="user"
+                  type="font-awesome"
+                  color="white"
+                  iconStyle={{ paddingLeft: 10 }}
+                />
               </TouchableOpacity>
             );
           }}
@@ -46,6 +52,9 @@ export default class OpenBox extends React.Component {
     };
   };
   componentDidMount() {
+    this.timeoutHandler = setTimeout(() => {
+      // RNRestart.Restart();
+    }, 5000);
     this.props.navigation.setParams({ openProfile: this._openProfile });
     navigator.geolocation.getCurrentPosition(position => {
       var lat = parseFloat(position.coords.latitude);
@@ -55,6 +64,9 @@ export default class OpenBox extends React.Component {
         longitude: long
       });
     });
+  }
+  componentWillUnmount() {
+    clearTimeout(this.timeoutHandler);
   }
   render() {
     return (
@@ -113,8 +125,8 @@ const styles = StyleSheet.create({
     justifyContent: "center"
   },
   card: {
-    paddingLeft: 20,
-    flex: 0.6,
-    width: width * 0.9
+    // paddingLeft: 20,
+    // flex: 0.6,
+    // width: width * 0.9
   }
 });
