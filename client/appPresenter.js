@@ -39,6 +39,7 @@ export default class AppPresenter extends React.Component {
       query: this.props.token
     });
     this._socket.on("info", myInfo => {
+      console.log(myInfo, "    this is myInfo");
       this.setState({
         myInfo
       });

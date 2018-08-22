@@ -15,7 +15,8 @@ export default class Cat extends Component {
       3: require("./img/cat3.png"),
       4: require("./img/cat4.png"),
       5: require("./img/cat5.png"),
-      6: require("./img/cat6.png")
+      6: require("./img/cat6.png"),
+      7: require("./img/cat7.png")
     };
   }
 
