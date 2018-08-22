@@ -23,7 +23,7 @@ export default class Loading extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.title}>Loading</Text>
+        <Text style={styles.title}>주변 고양이를 찾는중!!</Text>
         <Image
           style={{ width: 300, height: 300 }}
           source={{
@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
   },
   title: {
     color: "black",
-    fontSize: 50,
+    fontSize: 40,
     marginTop: 10,
     fontWeight: "700",
     marginBottom: 10,

@@ -1,13 +1,5 @@
 import React from "react";
-import {
-  StyleSheet,
-  Text,
-  View,
-  Dimensions,
-  Image,
-  TextInput,
-  AsyncStorage
-} from "react-native";
+import { StyleSheet, Text, View, Dimensions } from "react-native";
 import Store from "./store";
 import Cat from "./Cat";
 
@@ -40,8 +32,6 @@ export default class EditProfile extends React.Component {
       fontWeight: "bold"
     }
   };
-  componentDidMount() {}
-
   render() {
     const upperCats = [1, 2, 3];
     const lowerCats = [4, 5, 6];
@@ -49,7 +39,7 @@ export default class EditProfile extends React.Component {
       <View style={styles.body}>
         <View style={styles.container}>
           <View style={styles.title}>
-            <Text style={styles.text}>고양이를 바꿀꺼야?</Text>
+            <Text style={styles.text}>고양이를 바꿀고양?</Text>
           </View>
           <View style={styles.catContainer}>
             <View style={styles.cats}>
@@ -115,6 +105,5 @@ const styles = StyleSheet.create({
     flex: 0.4,
     flexDirection: "row",
     justifyContent: "space-around"
-    // backgroundColor: "pink"
   }
 });
