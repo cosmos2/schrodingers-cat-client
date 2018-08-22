@@ -30,7 +30,7 @@ export default class Profile extends React.Component {
       headerTitleStyle: {
         fontWeight: "bold"
       },
-      headerRightContainerStyle: { marginRight: 20, paddingLeft: 10 },
+      headerRightContainerStyle: { marginRight: 5 },
       headerRight: (
         <Store.Consumer>
           {store => {
@@ -39,7 +39,12 @@ export default class Profile extends React.Component {
                 name="pencil"
                 type="font-awesome"
                 color="white"
-                iconStyle={{ paddingLeft: 10 }}
+                iconStyle={{
+                  paddingRight: 10,
+                  paddingLeft: 20,
+                  paddingTop: 10,
+                  paddingBottom: 10
+                }}
                 onPress={() =>
                   params.navigation.navigate("EditProfileScreen", {
                     socket: store.socket
