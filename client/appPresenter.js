@@ -12,6 +12,7 @@ import { Font } from "expo";
 import Store from "./Components/store";
 import SocketIOClient from "socket.io-client";
 import EditProfile from "./Components/EditProfile";
+import Mute from "./Components/Mute";
 
 const AppNavigator = createStackNavigator(
   {
@@ -22,7 +23,8 @@ const AppNavigator = createStackNavigator(
     ChatRoomScreen: { screen: ChatRoom },
     LandingScreen: { screen: Landing },
     CatComponent: { screen: Cat },
-    EditProfileScreen: { screen: EditProfile }
+    EditProfileScreen: { screen: EditProfile },
+    MuteScreen: { screen: Mute }
   },
   {
     initialRouteName: "LandingScreen"
@@ -37,6 +39,7 @@ export default class AppPresenter extends React.Component {
       query: this.props.token
     });
     this._socket.on("info", myInfo => {
+      console.log(myInfo, "    this is myInfo");
       this.setState({
         myInfo
       });
@@ -97,9 +100,21 @@ export default class AppPresenter extends React.Component {
         console.log(err);
       }
     };
+
     this._socket.on("fill", data => {
       console.log(data, "this is filled socketId");
+      var arr = this.state.roomusers.slice();
+      var arr2 = [...arr];
+      for (var i = 0; i < arr2.length; i++) {
+        if (data === arr2[i].socketId) {
+          arr2[i].hp = 7;
+        }
+      }
+      this.setState({
+        roomusers: arr2
+      });
     });
+
     this._socket.on("hit", data => {
       var arr = this.state.roomusers.slice();
       var arr2 = [...arr];
@@ -135,20 +150,20 @@ export default class AppPresenter extends React.Component {
             muteornot: true
           });
           if (this.state.mutepushcount < 1) {
-            Alert.alert("1분간 채팅이 금지되었습니다.");
+            //Alert.alert("1분간 채팅이 금지되었습니다.");
             this.setState({
               mutepushcount: 1
             });
           }
           setTimeout(() => {
-            Alert.alert("채팅 금지가 해제되었습니다!");
+            // if (this.state.mutepushcount > 0) {
+            //   Alert.alert("채팅 금지가 해제되었습니다!");
+            // }
             this.setState({
               muteornot: false,
               mutepushcount: 0
             });
             this._socket.emit("fill", socketId);
-
-            //서버에 hp 채우기 요청 보내기
           }, 10000);
         }
       }
@@ -179,7 +194,6 @@ export default class AppPresenter extends React.Component {
   }
 
   render() {
-    //this._muteControl();
     return this.state.fontLoaded ? (
       <Store.Provider value={this.state}>
         <AppNavigator />

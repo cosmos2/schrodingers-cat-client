@@ -96,6 +96,11 @@ export default class ChatRoom extends React.Component {
       }
     };
   };
+  componentWillUpdate() {
+    context.muteornot
+      ? this.props.navigation.navigate("MuteScreen")
+      : this.props.navigation.navigate("ChatRoomScreen");
+  }
   componentWillMount() {
     this._whoamI();
     this._myuserinfo();
@@ -202,6 +207,7 @@ export default class ChatRoom extends React.Component {
           </View>
         </View>
         <View style={styles.options}>
+          <Text style={styles.statetext}>Cats in the Room</Text>
           <View style={styles.catsstate}>
             <View style={styles.statespace}>
               <Store.Consumer>
@@ -319,6 +325,13 @@ const styles = StyleSheet.create({
     width: width * 0.9,
     alignItems: "center"
   },
+  statetext: {
+    color: "black",
+    fontSize: 20,
+    marginTop: 5,
+    fontWeight: "500",
+    fontFamily: "Goyang"
+  },
   statespace: {
     width: width * 0.96,
     flex: 1,
@@ -402,3 +415,62 @@ const styles = StyleSheet.create({
     //marginBottom: 10
   }
 });
+
+// import React, { Component } from "react";
+// import {
+//   View,
+//   Text,
+//   Image,
+//   StyleSheet,
+//   AsyncStorage,
+//   KeyboardAvoidingView,
+//   TextInput
+// } from "react-native";
+// class test extends Component {
+//   render() {
+//     return (
+//       <KeyboardAvoidingView style={styles.container} behavior="padding">
+//         <View style={styles.upper}>
+//           <Text>hi</Text>
+//           <TextInput style={styles.textInput} />
+//         </View>
+//         <View style={styles.lower}>
+//           <Text>hi</Text>
+//           <TextInput style={styles.textInput} />
+//         </View>
+//       </KeyboardAvoidingView>
+//     );
+//   }
+// }
+
+// export default test;
+// const styles = StyleSheet.create({
+//   container: {
+//     flex: 1,
+//     backgroundColor: "#FCFCFC",
+//     alignItems: "center",
+//     justifyContent: "center"
+//   },
+//   title: {
+//     color: "#FFAA0E",
+//     fontFamily: "Goyang",
+//     fontSize: 30,
+//     marginTop: 10,
+//     fontWeight: "900",
+//     marginBottom: 10
+//   },
+//   textInput: {
+//     borderWidth: 1,
+//     borderColor: "black"
+//   },
+//   upper: {
+//     backgroundColor: "yellow",
+//     flex: 1,
+//     width: 300
+//   },
+//   lower: {
+//     backgroundColor: "green",
+//     flex: 1,
+//     width: 300
+//   }
+// });

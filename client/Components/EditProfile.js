@@ -22,7 +22,8 @@ export default class EditProfile extends React.Component {
       3: require("./img/cat3.png"),
       4: require("./img/cat4.png"),
       5: require("./img/cat5.png"),
-      6: require("./img/cat6.png")
+      6: require("./img/cat6.png"),
+      7: require("./img/cat7.png")
     };
     this.state = {
       socket: this.props.navigation.state.params.socket
@@ -61,6 +62,15 @@ export default class EditProfile extends React.Component {
                 <Cat key={cat} id={cat} sendCatInfom={this._sendCatInfom} />
               ))}
             </View>
+            <Store.Consumer>
+              {store => {
+                return store.myInfo._enterCount > 40 ? (
+                  <View style={styles.cats}>
+                    <Cat key={7} id={7} sendCatInfom={this._sendCatInfom} />
+                  </View>
+                ) : null;
+              }}
+            </Store.Consumer>
           </View>
         </View>
       </View>
