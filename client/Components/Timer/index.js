@@ -28,7 +28,9 @@ export default class Timer extends Component {
     try {
       await clearInterval(this.state.timer);
       await this.setState({ timeOver: true });
+      console.log("여기까진 가나?");
       await this.props.socket.emit("leaveRoom");
+      console.log("리브룸을 날렸다.");
       await this.props.resetchat();
       await this.props.explodeChatRoom();
       await console.log(
