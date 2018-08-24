@@ -5,7 +5,8 @@ const images = {
   4: require("./cat4.png"),
   5: require("./cat5.png"),
   6: require("./cat6.png"),
-  7: require("./mask.png")
+  7: require("./mask.png"),
+  punch: require("./fist.png")
 };
 
 export default images;
