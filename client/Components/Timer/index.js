@@ -22,6 +22,7 @@ export default class Timer extends Component {
     try {
       await this.props.socket.emit("timeOut");
       await this.props.explodeChatRoom();
+      await this.props.resetchat();
     } catch (err) {
       console.log(err);
     }

@@ -53,8 +53,7 @@ export default class AppPresenter extends React.Component {
     this._socket.on("findRoom", (users, leftTime) => {
       this.setState({
         roomusers: JSON.parse(users),
-        leftTime,
-        messages: []
+        leftTime
       });
       // console.log(leftTime, "<----- left time");
     });
@@ -143,7 +142,8 @@ export default class AppPresenter extends React.Component {
       try {
         const myInfo = {
           userId: userInfo.userId,
-          catId: userInfo.catImage
+          catId: userInfo.catImage,
+          nickname: userInfo.nickname
         };
         await AsyncStorage.setItem("myUserId", JSON.stringify(myInfo));
         await this.setState({
@@ -154,12 +154,12 @@ export default class AppPresenter extends React.Component {
       }
     };
 
-    // this._resetchat = () => {
-    //   this.setState({
-    //     roomusers: [],
-    //     messages: []
-    //   });
-    // };
+    this._resetchat = () => {
+      this.setState({
+        roomusers: [],
+        messages: []
+      });
+    };
 
     this._disconnectControl = () => {
       this.setState({

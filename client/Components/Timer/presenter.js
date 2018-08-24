@@ -4,16 +4,12 @@ import styles from "./styles";
 import { Icon } from "react-native-elements";
 
 export default class TimePicker extends Component {
-
   componentWillReceiveProps() {
     if (this.props.time === 1) {
       this.props.stopTimer();
     }
   }
-  componentDidMount() {
-    console.log(this.props.stopTimer);
-    console.log(this.props.clearInterval);
-  }
+  componentDidMount() {}
   render() {
     return (
       <View style={styles.timer}>
