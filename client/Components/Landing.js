@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 
 import { View, Text, Image, StyleSheet, AsyncStorage } from "react-native";
-
+//import moduleName from './store';
 export default class Landing extends Component {
   constructor(props) {
     super(props);

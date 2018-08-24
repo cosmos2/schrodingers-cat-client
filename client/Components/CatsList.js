@@ -5,7 +5,8 @@ import {
   View,
   Dimensions,
   Image,
-  TouchableOpacity
+  TouchableOpacity,
+  Vibration
 } from "react-native";
 import Images from "./img/catindex";
 import Store from "./store";
@@ -17,6 +18,7 @@ export default class CatsList extends Component {
     super(props);
     this.state = {
       muteornot: false,
+      changeImage: "",
       chatroomcats: [
         {
           hp: 7,
@@ -70,7 +72,7 @@ export default class CatsList extends Component {
                     >
                       <TouchableOpacity
                         disabled={
-                          store.muteornot
+                          item.hp === 4
                             ? true
                             : !!(
                                 this.props.myuserid === item.userId ||
@@ -88,11 +90,18 @@ export default class CatsList extends Component {
                         onPress={
                           !!(this.state.attackmode && !this.state.healingmode)
                             ? () => {
+                                Vibration.vibrate(100);
                                 console.log(item.userId);
                                 store.socket.emit("hit", item.socketId);
                                 this.setState({
-                                  myattacknum: this.state.myattacknum - 1
+                                  myattacknum: this.state.myattacknum - 1,
+                                  changeImage: item.userId
                                 });
+                                setTimeout(() => {
+                                  this.setState({
+                                    changeImage: ""
+                                  });
+                                }, 200);
                               }
                             : !!(
                                 !this.state.attackmode && this.state.healingmode
@@ -105,13 +114,20 @@ export default class CatsList extends Component {
                       >
                         <Image
                           source={
-                            item.hp === 4 ? Images[7] : Images[item.catImage]
+                            this.state.changeImage === item.userId
+                              ? Images["punch"]
+                              : item.hp === 4
+                                ? Images[7]
+                                : Images[item.catImage]
                           }
                           style={{
                             marginTop: 6,
                             marginLeft: 10,
                             width: 50,
-                            height: 50
+                            height: 50,
+                            shadowColor: "black",
+                            shadowOffset: { height: 2 },
+                            shadowOpacity: 0.3
                           }}
                         />
                       </TouchableOpacity>
