@@ -8,7 +8,7 @@ export default class Timer extends Component {
   };
 
   static getDerivedStateFromProps(nextProps, prevState) {
-    if (nextProps.leftTime < prevState.time) {
+    if (nextProps.leftTime !== prevState.time) {
       return { time: nextProps.leftTime };
     }
     return null;

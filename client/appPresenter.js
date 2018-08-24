@@ -56,7 +56,8 @@ export default class AppPresenter extends React.Component {
         leftTime,
         chatOver: false
       });
-      // console.log(leftTime, "<----- left time");
+      console.log(this.state.roomusers);
+      console.log(leftTime, "<----- left time");
     });
 
     this._socket.on("disconnect", async () => {
@@ -77,14 +78,12 @@ export default class AppPresenter extends React.Component {
 
     //"chat"으로 들어온 정보를 messages 라는 배열에 저장하기 위함
     this._socket.on("chat", data => {
-      // console.log(data, "this is message");
-      if (!this.state.chatOver) {
-        this._storemessage({
-          userId: data.userId,
-          catId: data.catImage,
-          message: data.message
-        });
-      }
+      this._storemessage({
+        nickname: data.nickname,
+        userId: data.userId,
+        catId: data.catImage,
+        message: data.message
+      });
     });
 
     this._socket.on("selectCat", userInfo => {
@@ -178,7 +177,7 @@ export default class AppPresenter extends React.Component {
       for (var i = 0; i < this.state.roomusers.length; i++) {
         if (
           this.state.roomusers[i].userId === this.props.myUserId &&
-          this.state.roomusers[i].hp <= 4
+          this.state.roomusers[i].hp <= 0
         ) {
           this.setState({
             muteornot: true
