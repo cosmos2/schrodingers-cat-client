@@ -8,14 +8,12 @@ import {
   Image,
   Dimensions,
   TextInput,
-  ScrollView,
   AsyncStorage,
-  KeyboardAvoidingView
+  AppState
 } from "react-native";
 import { Icon } from "react-native-elements";
 import AutoScroll from "react-native-auto-scroll";
 import Images from "./img/catindex";
-import CatsState from "./CatsState";
 import Timer from "./Timer";
 import Store from "./store";
 import CatsList from "./CatsList";
@@ -24,8 +22,6 @@ const { width, height } = Dimensions.get("window");
 export default class ChatRoom extends React.Component {
   constructor(props) {
     super(props);
-    //this.socket = this.props.navigation.state.params.socket;
-    //this.roomusers = this.props.navigation.state.params.roomusers;
     this.state = {
       messages: [],
       message: "",
@@ -35,7 +31,8 @@ export default class ChatRoom extends React.Component {
       chatroomcats: [],
       muteoneminutes: false,
       mychatroomnum: "",
-      muteTime: 10
+      muteTime: 10,
+      appState: AppState.currentState
     };
   }
   static navigationOptions = ({ navigation }) => {
@@ -67,7 +64,7 @@ export default class ChatRoom extends React.Component {
           {store => {
             return (
               <Icon
-                onPress={() => params.exitChat(store.socket, store.resetchat)}
+                onPress={() => params.exitChat(store.socket)}
                 type="ionicon"
                 name="md-exit"
                 color="white"
@@ -93,10 +90,14 @@ export default class ChatRoom extends React.Component {
     this._myuserinfo();
   }
   componentDidMount() {
+    AppState.addEventListener("change", this._handleAppStateChange);
     this.props.navigation.setParams({
       exitChat: this._exitChat,
       explodeChatRoom: this._explodeChatRoom
     });
+  }
+  componentWillUnmount() {
+    AppState.removeEventListener("change", this._handleAppStateChange);
   }
 
   render() {
@@ -232,7 +233,7 @@ export default class ChatRoom extends React.Component {
     });
   };
 
-  _exitChat = (socket, resetchat) => {
+  _exitChat = socket => {
     Alert.alert(
       "채팅방을 나가시겠습니까?",
       "",
@@ -241,7 +242,6 @@ export default class ChatRoom extends React.Component {
           text: "나가기",
           onPress: () => {
             socket.emit("leaveRoom");
-            resetchat();
             this.props.navigation.navigate("OpenBoxScreen");
           }
         },
@@ -250,11 +250,22 @@ export default class ChatRoom extends React.Component {
       { cancelable: false }
     );
   };
+
+  // Timer 에서 쓰임. 타임아웃되면 화면 전환
   _explodeChatRoom = () => {
-    console.log("방 폭발");
     this.props.navigation.navigate("OpenBoxScreen");
   };
-  // <--- Timer에서 쓰임
+
+  // 앱이 백그라운드에서 다시 돌아왔을 때 실행
+  _handleAppStateChange = nextAppState => {
+    if (
+      this.state.appState.match(/inactive|background/) &&
+      nextAppState === "active"
+    ) {
+      console.log("App has come to the foreground!");
+    }
+    this.setState({ appState: nextAppState });
+  };
 }
 
 const styles = StyleSheet.create({

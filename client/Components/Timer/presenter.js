@@ -9,6 +9,10 @@ export default class TimePicker extends Component {
       this.props.stopTimer();
     }
   }
+  componentDidMount() {
+    console.log(this.props.stopTimer);
+    console.log(this.props.clearInterval);
+  }
   render() {
     return (
       <View style={styles.timer}>
