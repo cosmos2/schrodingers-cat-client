@@ -266,6 +266,7 @@ export default class ChatRoom extends React.Component {
     );
   };
   _explodeChatRoom = () => {
+    console.log("방 폭발");
     this.props.navigation.navigate("OpenBoxScreen");
   };
   // <--- Timer에서 쓰임

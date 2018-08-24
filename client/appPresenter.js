@@ -44,7 +44,7 @@ export default class AppPresenter extends React.Component {
     });
 
     this._socket.on("info", myInfo => {
-      console.log(myInfo, "    this is myInfo");
+      // console.log(myInfo, "    this is myInfo");
       this.setState({
         myInfo
       });
@@ -119,6 +119,12 @@ export default class AppPresenter extends React.Component {
         if (item.socketId === data && this.props.myUserId === item.userId) {
           this._muteControl(data);
         }
+      });
+    });
+
+    this._socket.on("timeOut", () => {
+      this.setState({
+        chatOver: true
       });
     });
 
@@ -201,7 +207,8 @@ export default class AppPresenter extends React.Component {
       test: this._test,
       mutepushcount: 0,
       disconnectornot: false,
-      disconnectcontrol: this._disconnectControl
+      disconnectcontrol: this._disconnectControl,
+      chatOver: false
     };
   }
 

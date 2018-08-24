@@ -9,14 +9,12 @@ export default class Timer extends Component {
     time: this.props.leftTime
   };
   componentDidMount() {
-    if (this.state.timeOver === false) {
-      const timer = setInterval(() => {
-        this.setState(prevState => {
-          return { time: prevState.time - 1 };
-        });
-      }, 1000);
-      this.setState({ timer });
-    }
+    const timer = setInterval(() => {
+      this.setState(prevState => {
+        return { time: prevState.time - 1 };
+      });
+    }, 1000);
+    this.setState({ timer });
   }
   componentWillUnmount() {
     clearInterval(this.state.timer);

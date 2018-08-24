@@ -57,7 +57,6 @@ export default class CatsList extends Component {
     return (
       <Store.Consumer>
         {store => {
-          console.log(store.roomusers, "this is roomusers");
           return (
             <View style={styles.container}>
               <View style={styles.state}>
