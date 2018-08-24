@@ -64,6 +64,7 @@ export default class AppPresenter extends React.Component {
       await this.setState({
         disconnectornot: true
       });
+      await this._resetchat();
       await console.log(this.state.disconnectornot, "this is apppresenter");
     });
 
