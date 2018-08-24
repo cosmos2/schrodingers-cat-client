@@ -18,36 +18,6 @@ export default class CatsList extends Component {
     super(props);
     this.state = {
       muteornot: false,
-      changeImage: "",
-      chatroomcats: [
-        {
-          hp: 7,
-          attack: 5,
-          hittenCount: 0,
-          muteCount: 0,
-          socketId: "oeCJz7CQhbbFvjm5AAAA",
-          userId: 254,
-          catImage: 1
-        },
-        {
-          hp: 7,
-          attack: 5,
-          hittenCount: 0,
-          muteCount: 0,
-          socketId: "3fzCAoBQKjSTCD9vAAAC",
-          userId: 255,
-          catImage: 6
-        },
-        {
-          hp: 7,
-          attack: 5,
-          hittenCount: 0,
-          muteCount: 0,
-          socketId: "PWgOp4aDPeroI2pPAAAB",
-          userId: 253,
-          catImage: 1
-        }
-      ],
       attackmode: false,
       healingmode: false,
       myattacknum: 5

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { View, TouchableOpacity, Image } from "react-native";
-import Store from "./store";
+import Store from "../store";
 
 export default class Cat extends Component {
   constructor(props) {
@@ -9,13 +9,13 @@ export default class Cat extends Component {
       catId: this.props.id
     };
     this.images = {
-      1: require("./img/cat1.png"),
-      2: require("./img/cat2.png"),
-      3: require("./img/cat3.png"),
-      4: require("./img/cat4.png"),
-      5: require("./img/cat5.png"),
-      6: require("./img/cat6.png"),
-      7: require("./img/cat7.png")
+      1: require("../img/cat1.png"),
+      2: require("../img/cat2.png"),
+      3: require("../img/cat3.png"),
+      4: require("../img/cat4.png"),
+      5: require("../img/cat5.png"),
+      6: require("../img/cat6.png"),
+      7: require("../img/cat7.png")
     };
   }
 

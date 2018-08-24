@@ -1,21 +1,20 @@
 import React from "react";
-import { StyleSheet, Text, View, Dimensions } from "react-native";
-import Store from "./store";
-import Cat from "./Cat";
-
-const { width, height } = Dimensions.get("window");
+import { Text, View } from "react-native";
+import Store from "../store";
+import Cat from "../Cat/Cat";
+import styles from "./styles";
 
 export default class EditProfile extends React.Component {
   constructor(props) {
     super(props);
     this.images = {
-      1: require("./img/cat1.png"),
-      2: require("./img/cat2.png"),
-      3: require("./img/cat3.png"),
-      4: require("./img/cat4.png"),
-      5: require("./img/cat5.png"),
-      6: require("./img/cat6.png"),
-      7: require("./img/cat7.png")
+      1: require("../img/cat1.png"),
+      2: require("../img/cat2.png"),
+      3: require("../img/cat3.png"),
+      4: require("../img/cat4.png"),
+      5: require("../img/cat5.png"),
+      6: require("../img/cat6.png"),
+      7: require("../img/cat7.png")
     };
     this.state = {
       socket: this.props.navigation.state.params.socket
@@ -75,35 +74,3 @@ export default class EditProfile extends React.Component {
     }
   };
 }
-
-const styles = StyleSheet.create({
-  body: {
-    flex: 1,
-    alignItems: "center",
-    backgroundColor: "#FCFCFC"
-  },
-  container: {
-    flex: 1,
-    width: width * 0.8,
-    height: height * 0.8
-  },
-  title: {
-    flex: 0.3,
-    justifyContent: "center",
-    alignItems: "center",
-    marginBottom: 50
-  },
-  text: {
-    fontWeight: "bold",
-    fontFamily: "Goyang",
-    fontSize: 30
-  },
-  catContainer: {
-    flex: 0.7
-  },
-  cats: {
-    flex: 0.4,
-    flexDirection: "row",
-    justifyContent: "space-around"
-  }
-});
