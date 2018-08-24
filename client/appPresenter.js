@@ -42,7 +42,7 @@ export default class AppPresenter extends React.Component {
     });
 
     this._socket.on("info", myInfo => {
-      console.log(myInfo, "    this is myInfo");
+      // console.log(myInfo, "    this is myInfo");
       this.setState({
         myInfo
       });
@@ -51,9 +51,10 @@ export default class AppPresenter extends React.Component {
     this._socket.on("findRoom", (users, leftTime) => {
       this.setState({
         roomusers: JSON.parse(users),
-        leftTime
+        leftTime,
+        messages: []
       });
-      console.log(leftTime, "<----- left time");
+      // console.log(leftTime, "<----- left time");
     });
 
     this._socket.on("leaveRoom", users => {
@@ -65,12 +66,14 @@ export default class AppPresenter extends React.Component {
 
     //"chat"으로 들어온 정보를 messages 라는 배열에 저장하기 위함
     this._socket.on("chat", data => {
-      console.log(data, "this is message");
-      this._storemessage({
-        userId: data.userId,
-        catId: data.catImage,
-        message: data.message
-      });
+      // console.log(data, "this is message");
+      if (!this.state.chatOver) {
+        this._storemessage({
+          userId: data.userId,
+          catId: data.catImage,
+          message: data.message
+        });
+      }
     });
 
     this._socket.on("selectCat", userInfo => {
@@ -109,6 +112,12 @@ export default class AppPresenter extends React.Component {
       });
     });
 
+    this._socket.on("timeOut", () => {
+      this.setState({
+        chatOver: true
+      });
+    });
+
     // <-------------------           socket            -------------------> //
 
     //새로 들어온 채팅을 추가해 messages라는 state에 저장하기 위함
@@ -131,7 +140,7 @@ export default class AppPresenter extends React.Component {
           JSON.stringify(myInfo)
         );
         await this.setState({
-          myUserId: JSON.parse(myUserId).userId
+          myUserId: userInfo.userId
         });
       } catch (err) {
         console.log(err);
@@ -182,7 +191,8 @@ export default class AppPresenter extends React.Component {
       muteornot: false,
       mutecontrol: this._muteControl,
       test: this._test,
-      mutepushcount: 0
+      mutepushcount: 0,
+      chatOver: false
     };
   }
 

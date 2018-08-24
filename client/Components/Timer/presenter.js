@@ -4,9 +4,8 @@ import styles from "./styles";
 import { Icon } from "react-native-elements";
 
 export default class TimePicker extends Component {
-  componentWillReceiveProps() {
+  componentWillReceiveProps(nextProps) {
     if (this.props.time === 1) {
-      console.log(this.props.time);
       this.props.stopTimer();
     }
   }
