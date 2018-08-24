@@ -29,7 +29,7 @@ const AppNavigator = createStackNavigator(
     DisconnectScreen: { screen: Disconnect }
   },
   {
-    initialRouteName: "OpenBoxScreen"
+    initialRouteName: "LandingScreen"
   }
 );
 
@@ -56,6 +56,7 @@ export default class AppPresenter extends React.Component {
         leftTime,
         messages: []
       });
+      console.log(this.state.roomusers);
       console.log(leftTime, "<----- left time");
     });
 
@@ -78,6 +79,7 @@ export default class AppPresenter extends React.Component {
     this._socket.on("chat", data => {
       console.log(data, "this is message");
       this._storemessage({
+        nickname: data.nickname,
         userId: data.userId,
         catId: data.catImage,
         message: data.message
@@ -135,7 +137,8 @@ export default class AppPresenter extends React.Component {
       try {
         const myInfo = {
           userId: userInfo.userId,
-          catId: userInfo.catImage
+          catId: userInfo.catImage,
+          nickname: userInfo.nickname
         };
         await AsyncStorage.setItem("myUserId", JSON.stringify(myInfo));
         await this.setState({
@@ -163,7 +166,7 @@ export default class AppPresenter extends React.Component {
       for (var i = 0; i < this.state.roomusers.length; i++) {
         if (
           this.state.roomusers[i].userId === this.props.myUserId &&
-          this.state.roomusers[i].hp <= 4
+          this.state.roomusers[i].hp <= 0
         ) {
           this.setState({
             muteornot: true

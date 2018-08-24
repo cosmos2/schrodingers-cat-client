@@ -32,6 +32,7 @@ export default class ChatRoom extends React.Component {
       clearInput: false,
       myuserid: 10,
       mycatid: 0,
+      mynickname: "",
       chatroomcats: [],
       muteoneminutes: false,
       mychatroomnum: "",
@@ -134,16 +135,14 @@ export default class ChatRoom extends React.Component {
                         />
                         <View style={styles.eachotherschat}>
                           <Text style={styles.chatfont}>
-                            {item.userId} : {item.message}
+                            {item.nickname} : {item.message}
                           </Text>
                         </View>
                       </View>
                     ) : (
                       <View style={styles.mychat} key={i}>
                         <View style={styles.eachmychat}>
-                          <Text style={styles.chatfont}>
-                            {item.userId} : {item.message}
-                          </Text>
+                          <Text style={styles.chatfont}>{item.message}</Text>
                         </View>
                       </View>
                     );
@@ -222,7 +221,8 @@ export default class ChatRoom extends React.Component {
       socket.emit("chat", {
         message: message,
         userId: this.state.myuserid,
-        catImage: this.state.mycatid
+        catImage: this.state.mycatid,
+        nickname: this.state.mynickname
       });
     }
   };
@@ -242,7 +242,8 @@ export default class ChatRoom extends React.Component {
     myuserid = JSON.parse(myuserid);
     this.setState({
       myuserid: myuserid["userId"],
-      mycatid: myuserid["catId"]
+      mycatid: myuserid["catId"],
+      mynickname: myuserid["nickname"]
     });
   };
 
@@ -296,6 +297,7 @@ const styles = StyleSheet.create({
   },
   mychat: {
     alignItems: "flex-end"
+    //backgroundColor: "red"
   },
   chatfont: {
     fontSize: 15,
@@ -303,18 +305,19 @@ const styles = StyleSheet.create({
     fontFamily: "Goyang"
   },
   eachmychat: {
-    width: width * 0.7,
+    //width: width * 0.7,
     borderRadius: 10,
     margin: 5,
     padding: 8,
-    alignItems: "flex-end",
+    justifyContent: "flex-end",
     backgroundColor: "#F4E39D",
     flexDirection: "row"
+    //backgroundColor: "red"
   },
   eachotherschat: {
     margin: 5,
     padding: 8,
-    width: width * 0.7,
+    //width: width * 0.7,
     borderRadius: 10,
     backgroundColor: "#C4E1DE",
     flexDirection: "row"

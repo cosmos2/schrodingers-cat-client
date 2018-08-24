@@ -74,6 +74,9 @@ export default class Profile extends React.Component {
                 </View>
                 <View style={styles.userinfo}>
                   <Text style={styles.subtitle}>
+                    이름 : {store.myInfo.nickname}
+                  </Text>
+                  <Text style={styles.subtitle}>
                     ID : {store.myInfo.userId}
                   </Text>
                   <Text style={styles.subtitle}>

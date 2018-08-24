@@ -57,6 +57,7 @@ export default class CatsList extends Component {
     return (
       <Store.Consumer>
         {store => {
+          console.log(store.roomusers, "this is roomusers");
           return (
             <View style={styles.container}>
               <View style={styles.state}>
@@ -72,7 +73,7 @@ export default class CatsList extends Component {
                     >
                       <TouchableOpacity
                         disabled={
-                          item.hp === 4
+                          item.hp === 0
                             ? true
                             : !!(
                                 this.props.myuserid === item.userId ||
@@ -116,7 +117,7 @@ export default class CatsList extends Component {
                           source={
                             this.state.changeImage === item.userId
                               ? Images["punch"]
-                              : item.hp === 4
+                              : item.hp === 0
                                 ? Images[7]
                                 : Images[item.catImage]
                           }
@@ -132,8 +133,30 @@ export default class CatsList extends Component {
                         />
                       </TouchableOpacity>
                       <View style={{ flexDirection: "column" }}>
-                        <Text style={styles.subtitle}>ID : {item.userId}</Text>
-                        <Text style={styles.subtitle}>HP : {item.hp} / 7</Text>
+                        <Text style={styles.nickname}>{item.nickname}</Text>
+                        {/* <Text style={styles.subtitle}>ID : {item.userId}</Text> */}
+                        <View style={{ flexDirection: "row", marginTop: 3 }}>
+                          <Text style={styles.subtitle}>HP : </Text>
+                          <Image
+                            source={
+                              item.hp > 6
+                                ? Images["b1"]
+                                : item.hp > 5
+                                  ? Images["b2"]
+                                  : item.hp > 3
+                                    ? Images["b3"]
+                                    : item.hp > 1
+                                      ? Images["b4"]
+                                      : Images["b5"]
+                            }
+                            style={{
+                              //marginTop: 10,
+                              width: 50,
+                              height: 30
+                            }}
+                          />
+                          <Text style={styles.subtitle}>{item.hp} / 7</Text>
+                        </View>
                       </View>
                     </View>
                   );
@@ -238,12 +261,21 @@ const styles = StyleSheet.create({
   },
   subtitle: {
     color: "black",
-    fontSize: 15,
+    fontSize: 13,
     marginTop: 5,
     marginLeft: 10,
     fontWeight: "500",
     fontWeight: "bold",
     fontFamily: "Goyang"
+  },
+  nickname: {
+    color: "black",
+    fontSize: 13,
+    marginTop: 5,
+    marginLeft: 10,
+    fontWeight: "500",
+    fontWeight: "bold"
+    //fontFamily: "Goyang"
   },
   attack: {
     justifyContent: "center",
