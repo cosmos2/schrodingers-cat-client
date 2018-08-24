@@ -78,7 +78,6 @@ export default class AppPresenter extends React.Component {
 
     //"chat"으로 들어온 정보를 messages 라는 배열에 저장하기 위함
     this._socket.on("chat", data => {
-      console.log(data, "this is message");
       this._storemessage({
         nickname: data.nickname,
         userId: data.userId,
