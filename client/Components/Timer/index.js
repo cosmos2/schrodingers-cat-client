@@ -8,13 +8,14 @@ export default class Timer extends Component {
   };
 
   static getDerivedStateFromProps(nextProps, prevState) {
-    if (nextProps.leftTime !== prevState.time) {
+    if (nextProps.leftTime < prevState.time) {
       return { time: nextProps.leftTime };
     }
     return null;
   }
 
   componentDidMount() {
+    // console.log(this.props.leftTime, "<--- leftTime");
     const timer = setInterval(() => {
       this.setState(prevState => {
         return { time: prevState.time - 1 };
@@ -29,8 +30,9 @@ export default class Timer extends Component {
   _stopTimer = async () => {
     try {
       await this.props.socket.emit("timeOut");
-      await this.props.explodeChatRoom();
       await this.props.resetchat();
+      // this.setState({ time: this.props.leftTime });
+      await this.props.explodeChatRoom();
     } catch (err) {
       console.log(err);
     }

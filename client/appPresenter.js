@@ -29,7 +29,7 @@ const AppNavigator = createStackNavigator(
     DisconnectScreen: { screen: Disconnect }
   },
   {
-    initialRouteName: "OpenBoxScreen"
+    initialRouteName: "LandingScreen"
   }
 );
 
@@ -53,7 +53,8 @@ export default class AppPresenter extends React.Component {
     this._socket.on("findRoom", (users, leftTime) => {
       this.setState({
         roomusers: JSON.parse(users),
-        leftTime
+        leftTime,
+        chatOver: false
       });
       // console.log(leftTime, "<----- left time");
     });
@@ -63,6 +64,7 @@ export default class AppPresenter extends React.Component {
       await this.setState({
         disconnectornot: true
       });
+      await this._resetchat();
       await console.log(this.state.disconnectornot, "this is apppresenter");
     });
 
@@ -128,7 +130,7 @@ export default class AppPresenter extends React.Component {
     });
 
     this._socket.on("leftTime", leftTime => {
-      console.log(leftTime);
+      console.log(leftTime, "<---- leftTime in app presenter");
       this.setState({ leftTime });
     });
 
@@ -197,6 +199,10 @@ export default class AppPresenter extends React.Component {
       }
     };
 
+    this._timeChanged = leftTime => {
+      this.setState({ leftTime });
+    };
+
     this.state = {
       fontLoaded: false,
       socket: this._socket,
@@ -211,7 +217,8 @@ export default class AppPresenter extends React.Component {
       mutepushcount: 0,
       disconnectornot: false,
       disconnectcontrol: this._disconnectControl,
-      chatOver: false
+      chatOver: false,
+      timeChanged: this._timeChanged
     };
   }
 
