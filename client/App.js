@@ -28,6 +28,10 @@ export default class Index extends React.Component {
       } else {
         // when run at the first time
         const response = await axios.post("http://52.79.251.45:8080/init/1");
+        console.log(
+          response.data,
+          "==========================================="
+        );
         await AsyncStorage.setItem("token", JSON.stringify(response.data));
         await AsyncStorage.setItem("firstTime", "firstTime");
         const token = response.data.query;
