@@ -44,7 +44,7 @@ export default class AppPresenter extends React.Component {
     });
 
     this._socket.on("info", myInfo => {
-      console.log(myInfo, "    this is myInfo");
+      // console.log(myInfo, "    this is myInfo");
       this.setState({
         myInfo
       });
@@ -56,7 +56,7 @@ export default class AppPresenter extends React.Component {
         leftTime,
         messages: []
       });
-      console.log(leftTime, "<----- left time");
+      // console.log(leftTime, "<----- left time");
     });
 
     this._socket.on("disconnect", async () => {
@@ -76,12 +76,14 @@ export default class AppPresenter extends React.Component {
 
     //"chat"으로 들어온 정보를 messages 라는 배열에 저장하기 위함
     this._socket.on("chat", data => {
-      console.log(data, "this is message");
-      this._storemessage({
-        userId: data.userId,
-        catId: data.catImage,
-        message: data.message
-      });
+      // console.log(data, "this is message");
+      if (!this.state.chatOver) {
+        this._storemessage({
+          userId: data.userId,
+          catId: data.catImage,
+          message: data.message
+        });
+      }
     });
 
     this._socket.on("selectCat", userInfo => {
@@ -117,6 +119,12 @@ export default class AppPresenter extends React.Component {
         if (item.socketId === data && this.props.myUserId === item.userId) {
           this._muteControl(data);
         }
+      });
+    });
+
+    this._socket.on("timeOut", () => {
+      this.setState({
+        chatOver: true
       });
     });
 
@@ -198,7 +206,8 @@ export default class AppPresenter extends React.Component {
       test: this._test,
       mutepushcount: 0,
       disconnectornot: false,
-      disconnectcontrol: this._disconnectControl
+      disconnectcontrol: this._disconnectControl,
+      chatOver: false
     };
   }
 
