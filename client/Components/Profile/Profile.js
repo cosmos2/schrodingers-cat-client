@@ -1,21 +1,20 @@
 import React from "react";
-import { StyleSheet, Text, View, Dimensions, Image } from "react-native";
-import Store from "./store";
+import { Text, View, Image } from "react-native";
+import Store from "../store";
 import { Icon } from "react-native-elements";
-
-const { width } = Dimensions.get("window");
+import styles from "./styles";
 
 export default class Profile extends React.Component {
   constructor(props) {
     super(props);
     this.images = {
-      1: require("./img/cat1.png"),
-      2: require("./img/cat2.png"),
-      3: require("./img/cat3.png"),
-      4: require("./img/cat4.png"),
-      5: require("./img/cat5.png"),
-      6: require("./img/cat6.png"),
-      7: require("./img/cat7.png")
+      1: require("../img/cat1.png"),
+      2: require("../img/cat2.png"),
+      3: require("../img/cat3.png"),
+      4: require("../img/cat4.png"),
+      5: require("../img/cat5.png"),
+      6: require("../img/cat6.png"),
+      7: require("../img/cat7.png")
     };
   }
   static navigationOptions = ({ navigation }) => {
@@ -94,41 +93,3 @@ export default class Profile extends React.Component {
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#FCFCFC",
-    alignItems: "center",
-    justifyContent: "center"
-  },
-  profilecat: {
-    marginTop: 40,
-    marginBottom: 30,
-    alignItems: "center",
-    justifyContent: "center"
-  },
-  userinfo: {
-    alignItems: "center",
-    justifyContent: "center"
-  },
-  subtitle: {
-    color: "black",
-    fontSize: 20,
-    marginTop: 20,
-    fontFamily: "Goyang",
-    fontWeight: "500",
-    fontWeight: "bold"
-  },
-  title: {
-    color: "black",
-    fontSize: 50,
-    marginTop: 10,
-    fontWeight: "700",
-    marginBottom: 10
-  },
-  card: {
-    flex: 1,
-    width: width * 0.9
-  }
-});

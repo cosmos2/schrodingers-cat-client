@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-
-import { View, Text, Image, StyleSheet, AsyncStorage } from "react-native";
+import { View, Text, Image, AsyncStorage } from "react-native";
+import styles from "./styles";
 
 export default class Landing extends Component {
   constructor(props) {
@@ -26,13 +26,13 @@ export default class Landing extends Component {
         <Text style={styles.title}>슈뢰딩거의 고양이</Text>
         <Image
           style={{ width: 400, height: 400 }}
-          source={require("./img/firstImg.png")}
+          source={require("../img/firstImg.png")}
         />
       </View>
     );
   }
   _userInfo = async () => {
-    //위도, 경도, 토큰 보내주기
+    //위도 경도, 첫 접속인지 아닌지 확인 후 뷰를 넘김
     try {
       const firstTime = await AsyncStorage.getItem("firstTime");
       if (firstTime === "firstTime") {
@@ -45,20 +45,3 @@ export default class Landing extends Component {
     }
   };
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#FCFCFC",
-    alignItems: "center",
-    justifyContent: "center"
-  },
-  title: {
-    color: "#FFAA0E",
-    fontFamily: "Goyang",
-    fontSize: 30,
-    marginTop: 10,
-    fontWeight: "900",
-    marginBottom: 10
-  }
-});

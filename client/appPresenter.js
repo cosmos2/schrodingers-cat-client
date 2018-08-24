@@ -1,17 +1,17 @@
 import React from "react";
 import { AsyncStorage } from "react-native";
-import SelectCat from "./Components/SelectCat";
-import OpenBox from "./Components/OpenBox";
-import Profile from "./Components/Profile";
+import SelectCat from "./Components/SelectCat/SelectCat";
+import OpenBox from "./Components/OpenBox/OpenBox";
+import Profile from "./Components/Profile/Profile";
 import ChatRoom from "./Components/ChatRoom";
-import Loading from "./Components/Loading";
-import Landing from "./Components/Landing";
-import Cat from "./Components/Cat";
+import Loading from "./Components/Loading/Loading";
+import Landing from "./Components/Landing/Landing";
+import Cat from "./Components/Cat/Cat";
 import { createStackNavigator } from "react-navigation";
 import { Font } from "expo";
 import Store from "./Components/store";
 import SocketIOClient from "socket.io-client";
-import EditProfile from "./Components/EditProfile";
+import EditProfile from "./Components/EditProfile/EditProfile";
 import Mute from "./Components/Mute";
 
 const AppNavigator = createStackNavigator(
@@ -147,12 +147,12 @@ export default class AppPresenter extends React.Component {
       }
     };
 
-    this._resetchat = () => {
-      this.setState({
-        roomusers: [],
-        messages: []
-      });
-    };
+    // this._resetchat = () => {
+    //   this.setState({
+    //     roomusers: [],
+    //     messages: []
+    //   });
+    // };
 
     this._muteControl = socketId => {
       for (var i = 0; i < this.state.roomusers.length; i++) {
@@ -182,7 +182,6 @@ export default class AppPresenter extends React.Component {
     this.state = {
       fontLoaded: false,
       socket: this._socket,
-      token: this.props.token,
       roomusers: [],
       myInfo: {},
       messages: [],

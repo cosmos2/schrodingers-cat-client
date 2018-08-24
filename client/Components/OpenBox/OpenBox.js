@@ -1,12 +1,6 @@
 import React from "react";
-import {
-  StyleSheet,
-  View,
-  Image,
-  Dimensions,
-  TouchableOpacity
-} from "react-native";
-import Store from "./store";
+import { StyleSheet, View, Image, TouchableOpacity } from "react-native";
+import Store from "../store";
 import { Icon } from "react-native-elements";
 
 export default class OpenBox extends React.Component {
@@ -76,7 +70,7 @@ export default class OpenBox extends React.Component {
               return (
                 <TouchableOpacity
                   onPress={() => {
-                    this._findRoom(store.socket, store.muteornot);
+                    this._findRoom(store.socket);
                   }}
                 >
                   <Image
@@ -98,9 +92,7 @@ export default class OpenBox extends React.Component {
     const { latitude, longitude } = this.state;
     try {
       await socket.emit("findRoom", { latitude, longitude });
-      await this.props.navigation.navigate("LoadingScreen", {
-        socket: socket
-      });
+      await this.props.navigation.navigate("LoadingScreen");
     } catch (err) {
       console.log(err);
     }

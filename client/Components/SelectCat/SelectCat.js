@@ -1,10 +1,9 @@
 import React, { Component } from "react";
-import { StyleSheet, Text, View, Dimensions, AsyncStorage } from "react-native";
-import Cat from "./Cat";
+import { Text, View, Dimensions, AsyncStorage } from "react-native";
+import Cat from "../Cat/Cat";
+import styles from "./styles";
 
-const { width, height } = Dimensions.get("window");
-
-class SelectCat extends Component {
+export default class SelectCat extends Component {
   static navigationOptions = {
     title: "슈뢰딩거의 고양이",
     headerStyle: {
@@ -53,37 +52,3 @@ class SelectCat extends Component {
     }
   };
 }
-
-const styles = StyleSheet.create({
-  body: {
-    flex: 1,
-    alignItems: "center",
-    backgroundColor: "#FCFCFC"
-  },
-  container: {
-    flex: 1,
-    width: width * 0.8,
-    height: height * 0.8
-  },
-  title: {
-    flex: 0.3,
-    justifyContent: "center",
-    alignItems: "center",
-    marginBottom: 50
-  },
-  text: {
-    fontWeight: "bold",
-    fontFamily: "Goyang",
-    fontSize: 30
-  },
-  catContainer: {
-    flex: 0.7
-  },
-  cats: {
-    flex: 0.4,
-    flexDirection: "row",
-    justifyContent: "space-around"
-  }
-});
-
-export default SelectCat;
