@@ -84,10 +84,24 @@ export default class ChatRoom extends React.Component {
     };
   };
   componentWillUpdate() {
+    // if (context.muteornot && !context.disconnectornot) {
+    //   this.props.navigation.navigate("MuteScreen");
+    // } else if (!context.muteornot && context.disconnectornot) {
+    //   this.props.navigation.navigate("DisconnectScreen");
+    // } else {
+    //   this.props.navigation.navigate("ChatRoomScreen");
+    // }
     context.muteornot
       ? this.props.navigation.navigate("MuteScreen")
       : this.props.navigation.navigate("ChatRoomScreen");
   }
+
+  // componentDidUpdate() {
+  //   context.disconnectornot
+  //     ? this.props.navigation.navigate("DisconnectScreen")
+  //     : null;
+  // }
+
   componentWillMount() {
     this._whoamI();
     this._myuserinfo();

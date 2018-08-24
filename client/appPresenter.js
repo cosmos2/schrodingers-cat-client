@@ -13,6 +13,7 @@ import Store from "./Components/store";
 import SocketIOClient from "socket.io-client";
 import EditProfile from "./Components/EditProfile";
 import Mute from "./Components/Mute";
+import Disconnect from "./Components/Disconnect";
 
 const AppNavigator = createStackNavigator(
   {
@@ -24,10 +25,11 @@ const AppNavigator = createStackNavigator(
     LandingScreen: { screen: Landing },
     CatComponent: { screen: Cat },
     EditProfileScreen: { screen: EditProfile },
-    MuteScreen: { screen: Mute }
+    MuteScreen: { screen: Mute },
+    DisconnectScreen: { screen: Disconnect }
   },
   {
-    initialRouteName: "LandingScreen"
+    initialRouteName: "OpenBoxScreen"
   }
 );
 
@@ -51,9 +53,18 @@ export default class AppPresenter extends React.Component {
     this._socket.on("findRoom", (users, leftTime) => {
       this.setState({
         roomusers: JSON.parse(users),
-        leftTime
+        leftTime,
+        messages: []
       });
       console.log(leftTime, "<----- left time");
+    });
+
+    this._socket.on("disconnect", async () => {
+      await console.log("disconneted");
+      await this.setState({
+        disconnectornot: true
+      });
+      await console.log(this.state.disconnectornot, "this is apppresenter");
     });
 
     this._socket.on("leaveRoom", users => {
@@ -126,12 +137,9 @@ export default class AppPresenter extends React.Component {
           userId: userInfo.userId,
           catId: userInfo.catImage
         };
-        const myUserId = await AsyncStorage.setItem(
-          "myUserId",
-          JSON.stringify(myInfo)
-        );
+        await AsyncStorage.setItem("myUserId", JSON.stringify(myInfo));
         await this.setState({
-          myUserId: JSON.parse(myUserId).userId
+          myUserId: userInfo.userId
         });
       } catch (err) {
         console.log(err);
@@ -142,6 +150,12 @@ export default class AppPresenter extends React.Component {
       this.setState({
         roomusers: [],
         messages: []
+      });
+    };
+
+    this._disconnectControl = () => {
+      this.setState({
+        disconnectornot: false
       });
     };
 
@@ -182,7 +196,9 @@ export default class AppPresenter extends React.Component {
       muteornot: false,
       mutecontrol: this._muteControl,
       test: this._test,
-      mutepushcount: 0
+      mutepushcount: 0,
+      disconnectornot: false,
+      disconnectcontrol: this._disconnectControl
     };
   }
 
@@ -195,7 +211,11 @@ export default class AppPresenter extends React.Component {
   }
 
   render() {
-    return this.state.fontLoaded ? (
+    return this.state.disconnectornot ? (
+      <Store.Provider value={this.state}>
+        <Disconnect />
+      </Store.Provider>
+    ) : this.state.fontLoaded ? (
       <Store.Provider value={this.state}>
         <AppNavigator />
       </Store.Provider>

@@ -26,14 +26,14 @@ export default class Timer extends Component {
   }
   _stopTimer = async () => {
     try {
-      await clearInterval(this.state.timer);
-      await this.setState({ timeOver: true });
-      await this.props.socket.emit("leaveRoom");
-      await this.props.resetchat();
+      //await clearInterval(this.state.timer);
+      //await this.setState({ timeOver: true });
+      await this.props.socket.emit("timeOut");
+      //await this.props.resetchat();
       await this.props.explodeChatRoom();
-      await console.log(
-        `if timeOver is ${this.state.timeOver} send to server time's up`
-      );
+      // await console.log(
+      //   `if timeOver is ${this.state.timeOver} send to server time's up`
+      // );
     } catch (err) {
       console.log(err);
     }
