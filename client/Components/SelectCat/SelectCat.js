@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Text, View, Dimensions, AsyncStorage } from "react-native";
+import { Text, View, AsyncStorage } from "react-native";
 import Cat from "../Cat/Cat";
 import styles from "./styles";
 
