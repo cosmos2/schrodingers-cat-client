@@ -7,6 +7,13 @@ export default class Timer extends Component {
     time: this.props.leftTime
   };
 
+  static getDerivedStateFromProps(nextProps, prevState) {
+    if (nextProps.leftTime !== prevState.time) {
+      return { time: nextProps.leftTime };
+    }
+    return null;
+  }
+
   componentDidMount() {
     const timer = setInterval(() => {
       this.setState(prevState => {
@@ -18,6 +25,7 @@ export default class Timer extends Component {
   componentWillUnmount() {
     this._clearInterval();
   }
+
   _stopTimer = async () => {
     try {
       await this.props.socket.emit("timeOut");
