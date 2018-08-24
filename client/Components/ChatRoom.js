@@ -277,7 +277,7 @@ export default class ChatRoom extends React.Component {
       this.state.appState.match(/inactive|background/) &&
       nextAppState === "active"
     ) {
-      console.log("App has come to the foreground!");
+      context.socket.emit("leftTime");
     }
     this.setState({ appState: nextAppState });
   };

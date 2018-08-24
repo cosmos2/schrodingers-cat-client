@@ -127,6 +127,11 @@ export default class AppPresenter extends React.Component {
       });
     });
 
+    this._socket.on("leftTime", leftTime => {
+      console.log(leftTime);
+      this.setState({ leftTime });
+    });
+
     // <-------------------           socket            -------------------> //
 
     //새로 들어온 채팅을 추가해 messages라는 state에 저장하기 위함
