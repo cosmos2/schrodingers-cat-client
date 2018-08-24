@@ -5,7 +5,7 @@ import { Icon } from "react-native-elements";
 
 export default class TimePicker extends Component {
   state = {
-    timeLimit: 90,
+    timeLimit: 1,
     timeOver: false
   };
 
