@@ -1,17 +1,17 @@
 import React from "react";
 import { AsyncStorage } from "react-native";
-import SelectCat from "./Components/SelectCat";
-import OpenBox from "./Components/OpenBox";
-import Profile from "./Components/Profile";
+import SelectCat from "./Components/SelectCat/SelectCat";
+import OpenBox from "./Components/OpenBox/OpenBox";
+import Profile from "./Components/Profile/Profile";
 import ChatRoom from "./Components/ChatRoom";
-import Loading from "./Components/Loading";
-import Landing from "./Components/Landing";
-import Cat from "./Components/Cat";
+import Loading from "./Components/Loading/Loading";
+import Landing from "./Components/Landing/Landing";
+import Cat from "./Components/Cat/Cat";
 import { createStackNavigator } from "react-navigation";
 import { Font } from "expo";
 import Store from "./Components/store";
 import SocketIOClient from "socket.io-client";
-import EditProfile from "./Components/EditProfile";
+import EditProfile from "./Components/EditProfile/EditProfile";
 import Mute from "./Components/Mute";
 import Disconnect from "./Components/Disconnect";
 
@@ -53,8 +53,7 @@ export default class AppPresenter extends React.Component {
     this._socket.on("findRoom", (users, leftTime) => {
       this.setState({
         roomusers: JSON.parse(users),
-        leftTime,
-        messages: []
+        leftTime
       });
       console.log(this.state.roomusers);
       console.log(leftTime, "<----- left time");
@@ -128,6 +127,11 @@ export default class AppPresenter extends React.Component {
       });
     });
 
+    this._socket.on("leftTime", leftTime => {
+      console.log(leftTime);
+      this.setState({ leftTime });
+    });
+
     // <-------------------           socket            -------------------> //
 
     //새로 들어온 채팅을 추가해 messages라는 state에 저장하기 위함
@@ -196,7 +200,6 @@ export default class AppPresenter extends React.Component {
     this.state = {
       fontLoaded: false,
       socket: this._socket,
-      token: this.props.token,
       roomusers: [],
       myInfo: {},
       messages: [],
