@@ -30,14 +30,15 @@ export default class OpenBox extends React.Component {
                 onPress={() => params.openProfile(store.socket)}
               >
                 <Icon
-                  name="user"
-                  type="font-awesome"
+                  name="cat"
+                  type="material-community"
                   color="white"
+                  size={28}
                   iconStyle={{
                     paddingRight: 10,
                     paddingLeft: 20,
-                    paddingTop: 10,
-                    paddingBottom: 10
+                    paddingTop: 12,
+                    paddingBottom: 8
                   }}
                 />
               </TouchableOpacity>
