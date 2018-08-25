@@ -4,8 +4,6 @@ import {
   Text,
   View,
   Alert,
-  TouchableOpacity,
-  Image,
   Dimensions,
   TextInput,
   AsyncStorage,
@@ -13,26 +11,19 @@ import {
 } from "react-native";
 import { Icon } from "react-native-elements";
 import AutoScroll from "react-native-auto-scroll";
-import Images from "./img/catindex";
 import Timer from "./Timer";
 import Store from "./store";
 import CatsList from "./CatsList";
+import Chat from "./Chat";
 
 const { width, height } = Dimensions.get("window");
 export default class ChatRoom extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      messages: [],
-      message: "",
-      clearInput: false,
       myuserid: 10,
       mycatid: 0,
       mynickname: "",
-      chatroomcats: [],
-      muteoneminutes: false,
-      mychatroomnum: "",
-      muteTime: 10,
       appState: AppState.currentState
     };
   }
@@ -83,28 +74,15 @@ export default class ChatRoom extends React.Component {
     };
   };
   componentWillUpdate() {
-    // if (context.muteornot && !context.disconnectornot) {
-    //   this.props.navigation.navigate("MuteScreen");
-    // } else if (!context.muteornot && context.disconnectornot) {
-    //   this.props.navigation.navigate("DisconnectScreen");
-    // } else {
-    //   this.props.navigation.navigate("ChatRoomScreen");
-    // }
     context.muteornot
       ? this.props.navigation.navigate("MuteScreen")
       : this.props.navigation.navigate("ChatRoomScreen");
   }
 
-  // componentDidUpdate() {
-  //   context.disconnectornot
-  //     ? this.props.navigation.navigate("DisconnectScreen")
-  //     : null;
-  // }
-
   componentWillMount() {
-    this._whoamI();
     this._myuserinfo();
   }
+
   componentDidMount() {
     AppState.addEventListener("change", this._handleAppStateChange);
     this.props.navigation.setParams({
@@ -112,6 +90,7 @@ export default class ChatRoom extends React.Component {
       explodeChatRoom: this._explodeChatRoom
     });
   }
+
   componentWillUnmount() {
     AppState.removeEventListener("change", this._handleAppStateChange);
   }
@@ -120,124 +99,19 @@ export default class ChatRoom extends React.Component {
     return (
       <View style={styles.container}>
         <View style={styles.chatroom}>
-          <AutoScroll style={styles.chats}>
-            <View>
-              <Store.Consumer>
-                {store => {
-                  context = store;
-                  return store.messages.map((item, i) => {
-                    return this.state.myuserid !== item.userId ? (
-                      <View style={{ flexDirection: "row" }} key={i}>
-                        <Image
-                          source={Images[item.catId]}
-                          style={{
-                            marginTop: 5,
-                            marginLeft: 5
-                          }}
-                        />
-                        <View style={styles.eachotherschat}>
-                          <Text style={styles.chatfont}>
-                            {item.nickname} : {item.message}
-                          </Text>
-                        </View>
-                      </View>
-                    ) : (
-                      <View style={styles.mychat} key={i}>
-                        <View style={styles.eachmychat}>
-                          <Text style={styles.chatfont}>{item.message}</Text>
-                        </View>
-                      </View>
-                    );
-                  });
-                }}
-              </Store.Consumer>
-            </View>
-          </AutoScroll>
-          <View style={styles.chatinput}>
-            <Store.Consumer>
-              {store => {
-                return (
-                  <TextInput
-                    style={styles.textInput}
-                    editable={store.muteornot ? false : true}
-                    multiline={false}
-                    value={!this.state.clearInput ? this.state.message : null}
-                    onChangeText={message => {
-                      this.setState({ message: message, clearInput: false });
-                    }}
-                    returnKeyType="done"
-                    autoCorrect={false}
-                    onSubmitEditing={() => {}}
-                  />
-                );
-              }}
-            </Store.Consumer>
-            <Store.Consumer>
-              {store => {
-                return (
-                  <TouchableOpacity
-                    onPress={() => {
-                      {
-                        store.muteornot
-                          ? Alert.alert("1분간 채팅 금지")
-                          : this._sendMessage(store.socket, this.state.message);
-                      }
-                    }}
-                  >
-                    <Image
-                      source={require("./img/sendprint.png")}
-                      style={{
-                        marginBottom: 10,
-                        marginLeft: 10
-                      }}
-                    />
-                  </TouchableOpacity>
-                );
-              }}
-            </Store.Consumer>
-          </View>
+          <Chat />
         </View>
         <View style={styles.options}>
           <Text style={styles.statetext}>Cats in the Room</Text>
           <View style={styles.catsstate}>
             <View style={styles.statespace}>
-              <Store.Consumer>
-                {store => {
-                  return <CatsList myuserid={this.state.myuserid} />;
-                }}
-              </Store.Consumer>
+              <CatsList myuserid={this.state.myuserid} />;
             </View>
           </View>
         </View>
       </View>
     );
   }
-
-  _sendMessage = (socket, message) => {
-    if (message.length > 0) {
-      this.setState({
-        clearInput: !this.state.clearInput,
-        message: ""
-      });
-
-      socket.emit("chat", {
-        message: message,
-        userId: this.state.myuserid,
-        catImage: this.state.mycatid,
-        nickname: this.state.mynickname
-      });
-    }
-  };
-
-  _whoamI = () => {
-    for (var key in this.state.chatroomcats) {
-      if (this.state.chatroomcats[key]["userId"] === this.state.myuserid) {
-        this.setState({
-          mychatroomnum: key
-        });
-      }
-    }
-  };
 
   _myuserinfo = async () => {
     var myuserid = await AsyncStorage.getItem("myUserId");
@@ -300,7 +174,7 @@ const styles = StyleSheet.create({
   statetext: {
     color: "black",
     fontSize: 20,
-    marginTop: 5,
+    marginTop: 1,
     fontWeight: "500",
     fontFamily: "Goyang"
   },
@@ -309,66 +183,17 @@ const styles = StyleSheet.create({
     flex: 1,
     margin: 5
   },
-  mychat: {
-    alignItems: "flex-end"
-    //backgroundColor: "red"
-  },
-  chatfont: {
-    fontSize: 15,
-    fontWeight: "500",
-    fontFamily: "Goyang"
-  },
-  eachmychat: {
-    //width: width * 0.7,
-    borderRadius: 10,
-    margin: 5,
-    padding: 8,
-    justifyContent: "flex-end",
-    backgroundColor: "#F4E39D",
-    flexDirection: "row"
-    //backgroundColor: "red"
-  },
-  eachotherschat: {
-    margin: 5,
-    padding: 8,
-    //width: width * 0.7,
-    borderRadius: 10,
-    backgroundColor: "#C4E1DE",
-    flexDirection: "row"
-  },
-
   chatroom: {
     flex: 1,
     width: width,
     margin: 5
+    //backgroundColor: "yellow"
   },
   options: {
     flex: 0.6,
     width: width * 0.9,
     justifyContent: "center",
     alignItems: "center"
-  },
-  textInput: {
-    borderWidth: 1,
-    borderColor: "black",
-    borderRadius: 10,
-    width: width * 0.83,
-    height: height * 0.05,
-    marginLeft: 10
-  },
-  chats: {
-    flex: 1,
-    marginBottom: 5
-  },
-  chatinput: {
-    flex: 0.1,
-    flexDirection: "row"
-  },
-  subtitle: {
-    color: "black",
-    fontSize: 20,
-    marginTop: 20,
-    fontWeight: "500",
-    fontWeight: "bold"
+    // backgroundColor: "green"
   }
 });
