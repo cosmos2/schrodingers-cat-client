@@ -44,7 +44,6 @@ export default class Timer extends Component {
     return (
       <TimePicker
         time={this.state.time}
-        organizedTime={this.props.organizedTime}
         stopTimer={this._stopTimer}
         clearInterval={this._clearInterval}
       />
