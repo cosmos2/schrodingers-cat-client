@@ -4,10 +4,13 @@ import styles from "./styles";
 import { Icon } from "react-native-elements";
 
 export default class TimePicker extends Component {
-  state = {
-    timeLimit: 1,
-    timeOver: false
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      timeLimit: 1,
+      timeOver: false
+    };
+  }
 
   static getDerivedStateFromProps(nextProps, prevState) {
     if (nextProps.time < prevState.timeLimit) {
@@ -25,7 +28,7 @@ export default class TimePicker extends Component {
     return (
       <View style={styles.timer}>
         <Icon name="md-time" type="ionicon" color="black" size={21} />
-        <Text style={styles.text}>{this.props.time}</Text>;
+        <Text style={styles.text}>{this.props.time}</Text>
       </View>
     );
   }

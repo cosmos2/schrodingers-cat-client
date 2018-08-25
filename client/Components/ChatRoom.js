@@ -53,7 +53,7 @@ export default class ChatRoom extends React.Component {
                 resetchat={store.resetchat}
                 socket={store.socket}
                 leftTime={store.leftTime}
-                timeChanged={store.timeChanged}
+                organizedTime={store.organizedTime}
                 explodeChatRoom={params.explodeChatRoom}
               />
             );
