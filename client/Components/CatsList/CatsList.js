@@ -8,8 +8,8 @@ import {
   TouchableOpacity,
   Vibration
 } from "react-native";
-import Images from "./img/catindex";
-import Store from "./store";
+import Images from "../../assets/img/catindex";
+import Store from "../store";
 
 const { width } = Dimensions.get("window");
 
@@ -144,7 +144,7 @@ export default class CatsList extends Component {
                           }}
                         >
                           <Image
-                            source={require("./img/pawprint5.png")}
+                            source={require("../../assets/img/pawprint5.png")}
                             style={{
                               marginBottom: 1
                             }}
@@ -166,7 +166,7 @@ export default class CatsList extends Component {
                           }}
                         >
                           <Image
-                            source={require("./img/pawprint4.png")}
+                            source={require("../../assets/img/pawprint4.png")}
                             style={{
                               marginBottom: 1
                             }}
@@ -180,7 +180,7 @@ export default class CatsList extends Component {
                   ) : (
                     <View style={styles.attack}>
                       <Image
-                        source={require("./img/catcup.png")}
+                        source={require("../../assets/img/catcup.png")}
                         style={{
                           marginBottom: 1
                         }}

@@ -8,7 +8,7 @@ import {
   TouchableOpacity,
   Alert
 } from "react-native";
-import Images from "./img/catindex";
+import Images from "../../assets/img/catindex";
 import Store from "./store";
 
 const { width, height } = Dimensions.get("window");
@@ -350,7 +350,7 @@ export default class CatsState extends Component {
                   }}
                 >
                   <Image
-                    source={require("./img/pawprint5.png")}
+                    source={require("../../assets/img/pawprint5.png")}
                     style={{
                       marginBottom: 1
                     }}
@@ -369,7 +369,7 @@ export default class CatsState extends Component {
                   }}
                 >
                   <Image
-                    source={require("./img/pawprint4.png")}
+                    source={require("../../assets/img/pawprint4.png")}
                     style={{
                       marginBottom: 1
                     }}
@@ -383,7 +383,7 @@ export default class CatsState extends Component {
           ) : (
             <View style={styles.attack}>
               <Image
-                source={require("./img/catcup.png")}
+                source={require("../../assets/img/catcup.png")}
                 style={{
                   marginBottom: 1
                 }}
@@ -403,7 +403,7 @@ export default class CatsState extends Component {
                   }}
                 >
                   <Image
-                    source={require("./img/catfood.png")}
+                    source={require("../../assets/img/catfood.png")}
                     style={{
                       marginBottom: 1
                     }}
@@ -420,7 +420,7 @@ export default class CatsState extends Component {
                   }}
                 >
                   <Image
-                    source={require("./img/catfood2.png")}
+                    source={require("../../assets/img/catfood2.png")}
                     style={{
                       marginBottom: 1
                     }}
@@ -432,7 +432,7 @@ export default class CatsState extends Component {
           ) : (
             <View style={styles.attack}>
               <Image
-                source={require("./img/plaster.png")}
+                source={require("../../assets/img/plaster.png")}
                 style={{
                   marginBottom: 1
                 }}
