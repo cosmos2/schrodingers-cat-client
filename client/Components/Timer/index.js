@@ -4,12 +4,14 @@ import TimePicker from "./presenter";
 export default class Timer extends Component {
   state = {
     timeOver: false,
-    time: this.props.leftTime
+    time: this.props.organizedTime
   };
 
   static getDerivedStateFromProps(nextProps, prevState) {
     if (nextProps.leftTime < prevState.time) {
-      return { time: nextProps.leftTime };
+      const time =
+        100 + nextProps.leftTime - Math.floor(new Date().getTime() / 1000);
+      return { time };
     }
     return null;
   }
@@ -17,9 +19,9 @@ export default class Timer extends Component {
   componentDidMount() {
     // console.log(this.props.leftTime, "<--- leftTime");
     const timer = setInterval(() => {
-      this.setState(prevState => {
-        return { time: prevState.time - 1 };
-      });
+      const time =
+        100 + this.props.leftTime - Math.floor(new Date().getTime() / 1000);
+      this.setState({ time });
     }, 1000);
     this.setState({ timer });
   }
@@ -45,6 +47,7 @@ export default class Timer extends Component {
     return (
       <TimePicker
         time={this.state.time}
+        organizedTime={this.props.organizedTime}
         stopTimer={this._stopTimer}
         clearInterval={this._clearInterval}
       />

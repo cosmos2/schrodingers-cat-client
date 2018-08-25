@@ -51,13 +51,14 @@ export default class AppPresenter extends React.Component {
     });
 
     this._socket.on("findRoom", (users, leftTime) => {
+      const time = 100 + leftTime - Math.floor(new Date().getTime() / 1000);
       this.setState({
         roomusers: JSON.parse(users),
+        organizedTime: time,
         leftTime,
         chatOver: false
       });
-      console.log(this.state.roomusers);
-      console.log(leftTime, "<----- left time");
+      // console.log(leftTime, "<----- left time");
     });
 
     this._socket.on("disconnect", async () => {
@@ -196,10 +197,6 @@ export default class AppPresenter extends React.Component {
           }, 10000);
         }
       }
-    };
-
-    this._timeChanged = leftTime => {
-      this.setState({ leftTime });
     };
 
     this.state = {
