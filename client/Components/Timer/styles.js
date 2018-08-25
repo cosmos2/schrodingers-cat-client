@@ -15,7 +15,9 @@ export default (styles = StyleSheet.create({
     height: height * 0.05,
     borderRadius: 10,
     alignItems: "center",
-    justifyContent: "space-around"
+    justifyContent: "space-between",
+    paddingLeft: 10,
+    paddingRight: 10
   },
   text: {
     fontSize: 18
