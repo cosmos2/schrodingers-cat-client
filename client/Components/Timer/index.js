@@ -30,6 +30,7 @@ export default class Timer extends Component {
   _stopTimer = async () => {
     try {
       await this.props.socket.emit("timeOut");
+      console.log("socket emit timeout=================");
       await this.props.resetchat();
       // this.setState({ time: this.props.leftTime });
       await this.props.explodeChatRoom();
