@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { View, Text, Image, StyleSheet, AppState } from "react-native";
-import Store from "./store";
+import Store from "../store";
 
 class test extends Component {
   static navigationOptions = {

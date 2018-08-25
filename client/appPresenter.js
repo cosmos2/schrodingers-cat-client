@@ -3,7 +3,7 @@ import { AsyncStorage, Vibration } from "react-native";
 import SelectCat from "./Components/SelectCat/SelectCat";
 import OpenBox from "./Components/OpenBox/OpenBox";
 import Profile from "./Components/Profile/Profile";
-import ChatRoom from "./Components/ChatRoom";
+import ChatRoom from "./Components/ChatRoom/ChatRoom";
 import Loading from "./Components/Loading/Loading";
 import Landing from "./Components/Landing/Landing";
 import Cat from "./Components/Cat/Cat";
@@ -12,8 +12,8 @@ import { Font } from "expo";
 import Store from "./Components/store";
 import SocketIOClient from "socket.io-client";
 import EditProfile from "./Components/EditProfile/EditProfile";
-import Mute from "./Components/Mute";
-import Disconnect from "./Components/Disconnect";
+import Mute from "./Components/Mute/Mute";
+import Disconnect from "./Components/Disconnect/Disconnect";
 
 const AppNavigator = createStackNavigator(
   {
@@ -217,8 +217,7 @@ export default class AppPresenter extends React.Component {
       mutepushcount: 0,
       disconnectornot: false,
       disconnectcontrol: this._disconnectControl,
-      chatOver: false,
-      timeChanged: this._timeChanged
+      chatOver: false
     };
   }
 

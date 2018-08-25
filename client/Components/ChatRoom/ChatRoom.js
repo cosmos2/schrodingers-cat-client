@@ -5,18 +5,16 @@ import {
   View,
   Alert,
   Dimensions,
-  TextInput,
   AsyncStorage,
   AppState
 } from "react-native";
 import { Icon } from "react-native-elements";
-import AutoScroll from "react-native-auto-scroll";
-import Timer from "./Timer";
-import Store from "./store";
-import CatsList from "./CatsList";
-import Chat from "./Chat";
+import Timer from "../Timer";
+import Store from "../store";
+import CatsList from "../CatsList/CatsList";
+import Chat from "../Chat/Chat";
 
-const { width, height } = Dimensions.get("window");
+const { width } = Dimensions.get("window");
 export default class ChatRoom extends React.Component {
   constructor(props) {
     super(props);

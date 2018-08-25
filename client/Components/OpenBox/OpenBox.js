@@ -49,14 +49,14 @@ export default class OpenBox extends React.Component {
   };
   componentDidMount() {
     this.props.navigation.setParams({ openProfile: this._openProfile });
-    navigator.geolocation.getCurrentPosition(position => {
-      var lat = parseFloat(position.coords.latitude);
-      var long = parseFloat(position.coords.longitude);
-      this.setState({
-        latitude: lat,
-        longitude: long
-      });
-    });
+    // navigator.geolocation.getCurrentPosition(position => {
+    //   var lat = parseFloat(position.coords.latitude);
+    //   var long = parseFloat(position.coords.longitude);
+    //   this.setState({
+    //     latitude: lat,
+    //     longitude: long
+    //   });
+    // });
   }
   componentWillUnmount() {
     clearTimeout(this.timeoutHandler);
@@ -89,9 +89,9 @@ export default class OpenBox extends React.Component {
     );
   }
   _findRoom = async socket => {
-    const { latitude, longitude } = this.state;
+    // const { latitude, longitude } = this.state;
     try {
-      await socket.emit("findRoom", { latitude, longitude });
+      // await socket.emit("findRoom", { latitude, longitude });
       await this.props.navigation.navigate("LoadingScreen");
     } catch (err) {
       console.log(err);

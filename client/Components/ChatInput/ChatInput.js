@@ -1,7 +1,6 @@
 import React from "react";
 import {
   StyleSheet,
-  Text,
   View,
   Alert,
   TouchableOpacity,
@@ -10,10 +9,7 @@ import {
   TextInput,
   AsyncStorage
 } from "react-native";
-import { Icon } from "react-native-elements";
-import AutoScroll from "react-native-auto-scroll";
-import Images from "./img/catindex";
-import Store from "./store";
+import Store from "../store";
 
 const { width, height } = Dimensions.get("window");
 export default class ChatInput extends React.Component {
@@ -67,7 +63,7 @@ export default class ChatInput extends React.Component {
                   }}
                 >
                   <Image
-                    source={require("./img/sendprint.png")}
+                    source={require("../../assets/img/sendprint.png")}
                     style={{
                       marginBottom: 10,
                       marginLeft: 10
