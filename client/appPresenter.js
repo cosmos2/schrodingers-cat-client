@@ -29,7 +29,8 @@ const AppNavigator = createStackNavigator(
     DisconnectScreen: { screen: Disconnect }
   },
   {
-    initialRouteName: "LandingScreen"
+    initialRouteName: "LandingScreen",
+    navigationOptions: { gesturesEnabled: false }
   }
 );
 
@@ -213,8 +214,7 @@ export default class AppPresenter extends React.Component {
       mutepushcount: 0,
       disconnectornot: false,
       disconnectcontrol: this._disconnectControl,
-      chatOver: false,
-      timeChanged: this._timeChanged
+      chatOver: false
     };
   }
 
