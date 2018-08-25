@@ -42,6 +42,11 @@ export default class ChatInput extends React.Component {
                   value={!this.state.clearInput ? this.state.message : null}
                   onChangeText={message => {
                     this.setState({ message: message, clearInput: false });
+                    if (this.state.message.length !== 0) {
+                      store.socket.emit("typing", {
+                        nickname: this.state.mynickname
+                      });
+                    }
                   }}
                   returnKeyType="done"
                   autoCorrect={false}

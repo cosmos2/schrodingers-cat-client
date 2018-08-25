@@ -4,7 +4,7 @@ import TimePicker from "./presenter";
 export default class Timer extends Component {
   state = {
     timeOver: false,
-    time: ""
+    time: this.props.organizedTime
   };
 
   static getDerivedStateFromProps(nextProps, prevState) {
@@ -47,7 +47,6 @@ export default class Timer extends Component {
     return (
       <TimePicker
         time={this.state.time}
-        organizedTime={this.props.organizedTime}
         stopTimer={this._stopTimer}
         clearInterval={this._clearInterval}
       />
