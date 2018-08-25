@@ -1,15 +1,29 @@
 import React, { Component } from "react";
 import { View, Text, Image, StyleSheet } from "react-native";
+import Store from "../store";
 
 export default class Loading extends Component {
   static navigationOptions = {
     header: null
   };
-  componentDidMount() {
-    // Start counting when the page is loaded
-    this.timeoutHandle = setTimeout(() => {
-      this.props.navigation.navigate("ChatRoomScreen");
-    }, 1500);
+  async componentDidMount() {
+    try {
+      await navigator.geolocation.getCurrentPosition(position => {
+        var lat = parseFloat(position.coords.latitude);
+        var long = parseFloat(position.coords.longitude);
+        this.setState({
+          latitude: lat,
+          longitude: long
+        });
+      });
+      this.timeoutHandle = await setTimeout(() => {
+        const { latitude, longitude } = this.state;
+        socket.emit("findRoom", { latitude, longitude });
+        this.props.navigation.navigate("ChatRoomScreen");
+      }, 1500);
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   componentWillUnmount() {
@@ -20,6 +34,11 @@ export default class Loading extends Component {
     return (
       <View style={styles.container}>
         <Text style={styles.title}>주변 고양이를 찾는중!!</Text>
+        <Store.Consumer>
+          {store => {
+            socket = store.socket;
+          }}
+        </Store.Consumer>
         <Image
           style={{ width: 300, height: 300 }}
           source={{
