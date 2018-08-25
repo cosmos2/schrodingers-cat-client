@@ -11,6 +11,11 @@ class test extends Component {
   };
   componentDidMount() {
     AppState.addEventListener("change", this._handleAppStateChange);
+    if (this.state.appState === "active") {
+      this.timeoutHandle = setTimeout(() => {
+        context.disconnectcontrol();
+      }, 1500);
+    }
   }
 
   componentWillUnmount() {
@@ -27,7 +32,6 @@ class test extends Component {
 
       this.timeoutHandle = setTimeout(() => {
         context.disconnectcontrol();
-        //this.props.navigation.navigate("OpenBoxScreen");
       }, 1500);
     }
     this.setState({ appState: nextAppState });

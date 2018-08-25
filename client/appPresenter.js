@@ -1,5 +1,5 @@
 import React from "react";
-import { AsyncStorage } from "react-native";
+import { AsyncStorage, Vibration } from "react-native";
 import SelectCat from "./Components/SelectCat/SelectCat";
 import OpenBox from "./Components/OpenBox/OpenBox";
 import Profile from "./Components/Profile/Profile";
@@ -29,7 +29,10 @@ const AppNavigator = createStackNavigator(
     DisconnectScreen: { screen: Disconnect }
   },
   {
-    initialRouteName: "LandingScreen"
+    initialRouteName: "LandingScreen",
+    navigationOptions: {
+      gesturesEnabled: false
+    }
   }
 );
 
@@ -175,6 +178,7 @@ export default class AppPresenter extends React.Component {
     };
 
     this._muteControl = socketId => {
+      Vibration.vibrate(100);
       for (var i = 0; i < this.state.roomusers.length; i++) {
         if (
           this.state.roomusers[i].userId === this.props.myUserId &&
