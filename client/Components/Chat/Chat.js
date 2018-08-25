@@ -3,20 +3,16 @@ import {
   StyleSheet,
   Text,
   View,
-  Alert,
-  TouchableOpacity,
   Image,
   Dimensions,
-  TextInput,
   AsyncStorage
 } from "react-native";
-import { Icon } from "react-native-elements";
 import AutoScroll from "react-native-auto-scroll";
-import Images from "./img/catindex";
-import Store from "./store";
-import ChatInput from "./ChatInput";
+import Images from "../../assets/img/catindex";
+import Store from "../store";
+import ChatInput from "../ChatInput/ChatInput";
 
-const { width, height } = Dimensions.get("window");
+const { width } = Dimensions.get("window");
 export default class ChatRoom extends React.Component {
   constructor(props) {
     super(props);

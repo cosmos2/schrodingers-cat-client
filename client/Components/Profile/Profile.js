@@ -8,13 +8,13 @@ export default class Profile extends React.Component {
   constructor(props) {
     super(props);
     this.images = {
-      1: require("../img/cat1.png"),
-      2: require("../img/cat2.png"),
-      3: require("../img/cat3.png"),
-      4: require("../img/cat4.png"),
-      5: require("../img/cat5.png"),
-      6: require("../img/cat6.png"),
-      7: require("../img/cat7.png")
+      1: require("../../assets/img/cat1.png"),
+      2: require("../../assets/img/cat2.png"),
+      3: require("../../assets/img/cat3.png"),
+      4: require("../../assets/img/cat4.png"),
+      5: require("../../assets/img/cat5.png"),
+      6: require("../../assets/img/cat6.png"),
+      7: require("../../assets/img/cat7.png")
     };
   }
   static navigationOptions = ({ navigation }) => {
