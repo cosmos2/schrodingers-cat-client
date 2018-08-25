@@ -35,7 +35,7 @@ const AppNavigator = createStackNavigator(
     }
   }
 );
-
+const thisroomcats = "이 구역의 야옹이들";
 export default class AppPresenter extends React.Component {
   constructor(props) {
     super(props);
@@ -67,7 +67,8 @@ export default class AppPresenter extends React.Component {
     this._socket.on("disconnect", async () => {
       await console.log("disconneted");
       await this.setState({
-        disconnectornot: true
+        disconnectornot: true,
+        typing: thisroomcats
       });
       await this._resetchat();
       await console.log(this.state.disconnectornot, "this is apppresenter");
@@ -75,7 +76,8 @@ export default class AppPresenter extends React.Component {
 
     this._socket.on("leaveRoom", users => {
       this.setState({
-        roomusers: JSON.parse(users)
+        roomusers: JSON.parse(users),
+        typing: thisroomcats
       });
       console.log(users, "<----- leaveRoom event");
     });
@@ -128,7 +130,14 @@ export default class AppPresenter extends React.Component {
 
     this._socket.on("timeOut", () => {
       this.setState({
-        chatOver: true
+        chatOver: true,
+        typing: thisroomcats
+      });
+    });
+
+    this._socket.on("typing", data => {
+      this.setState({
+        typing: data.nickname + "is typing"
       });
     });
 
@@ -146,6 +155,11 @@ export default class AppPresenter extends React.Component {
       this.setState({
         messages: arr
       });
+      if (chat.nickname + "is typing" === this.state.typing) {
+        this.setState({
+          typing: thisroomcats
+        });
+      }
     };
 
     this._getUserInfo = async userInfo => {
@@ -217,7 +231,8 @@ export default class AppPresenter extends React.Component {
       mutepushcount: 0,
       disconnectornot: false,
       disconnectcontrol: this._disconnectControl,
-      chatOver: false
+      chatOver: false,
+      typing: thisroomcats
     };
   }
 

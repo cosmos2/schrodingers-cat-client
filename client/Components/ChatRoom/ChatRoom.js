@@ -53,6 +53,7 @@ export default class ChatRoom extends React.Component {
       headerRight: (
         <Store.Consumer>
           {store => {
+            context = store;
             return (
               <Icon
                 onPress={() => params.exitChat(store)}
@@ -100,7 +101,11 @@ export default class ChatRoom extends React.Component {
           <Chat />
         </View>
         <View style={styles.options}>
-          <Text style={styles.statetext}>Cats in the Room</Text>
+          <Store.Consumer>
+            {store => {
+              return <Text style={styles.statetext}>{store.typing}</Text>;
+            }}
+          </Store.Consumer>
           <View style={styles.catsstate}>
             <View style={styles.statespace}>
               <CatsList myuserid={this.state.myuserid} />;
