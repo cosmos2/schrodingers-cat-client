@@ -76,15 +76,18 @@ export default class Cat extends Component {
                         }
                       ],
                       borderWidth: 5,
-                      width: 70,
-                      height: 70,
+                      width: 80,
+                      height: 80,
                       borderRadius: 40,
                       borderColor: "#f4da6c",
                       justifyContent: "center",
                       alignItems: "center"
                     }}
                   >
-                    <Image source={this.images[catId]} />
+                    <Image
+                      source={this.images[catId]}
+                      style={{ width: 42, height: 42 }}
+                    />
                   </Animated.View>
                 </View>
               </TouchableWithoutFeedback>
