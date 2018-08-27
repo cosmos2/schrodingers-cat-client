@@ -4,9 +4,8 @@ import TimePicker from "./presenter";
 export default class Timer extends Component {
   state = {
     timeOver: false,
-    time: this.props.organizedTime
+    time: "POP"
   };
-
   static getDerivedStateFromProps(nextProps, prevState) {
     if (nextProps.leftTime < prevState.time) {
       const time =
@@ -17,7 +16,6 @@ export default class Timer extends Component {
   }
 
   componentDidMount() {
-    // console.log(this.props.leftTime, "<--- leftTime");
     const timer = setInterval(() => {
       const time =
         100 + this.props.leftTime - Math.floor(new Date().getTime() / 1000);
@@ -32,7 +30,6 @@ export default class Timer extends Component {
   _stopTimer = async () => {
     try {
       await this.props.socket.emit("timeOut");
-      console.log("socket emit timeout=================");
       await this.props.resetchat();
       this.setState({ time: "" });
       await this.props.explodeChatRoom();

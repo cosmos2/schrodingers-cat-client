@@ -17,14 +17,14 @@ export default test;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#FCFCFC",
+    backgroundColor: "#f4da6c",
     alignItems: "center",
     justifyContent: "center"
   },
   title: {
-    color: "#FFAA0E",
+    color: "white",
     fontFamily: "Goyang",
-    fontSize: 35,
+    fontSize: 25,
     marginTop: 10,
     fontWeight: "900",
     marginBottom: 10
