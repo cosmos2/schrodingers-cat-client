@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, Text, Image, StyleSheet } from "react-native";
+import { View, Text, Image, StyleSheet, Alert } from "react-native";
 import Store from "../store";
 
 export default class Loading extends Component {

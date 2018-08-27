@@ -72,7 +72,10 @@ export default class Profile extends React.Component {
             return (
               <View style={styles.card}>
                 <View style={styles.profilecat}>
-                  <Image source={this.images[store.myInfo.catImage]} />
+                  <Image
+                    source={this.images[store.myInfo.catImage]}
+                    style={{ width: 42, height: 42 }}
+                  />
                 </View>
                 <ElevatedView style={styles.userinfo} elevation={2}>
                   <Text style={styles.subtitle}>
