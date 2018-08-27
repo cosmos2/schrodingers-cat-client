@@ -3,6 +3,10 @@ import { View, Text, Image, StyleSheet, Alert } from "react-native";
 import Store from "../store";
 
 export default class Loading extends Component {
+  state = {
+    latitude: 0,
+    longitude: 0
+  };
   static navigationOptions = {
     header: null
   };

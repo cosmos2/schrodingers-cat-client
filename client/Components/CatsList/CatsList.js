@@ -48,7 +48,7 @@ export default class CatsList extends Component {
   render() {
     const animatedStyle = {
       transform: [{ scale: this.animatedValue }]
-    };
+    }
     return (
       <Store.Consumer>
         {store => {
@@ -83,24 +83,24 @@ export default class CatsList extends Component {
                         onPress={
                           !!(this.state.attackmode && !this.state.healingmode)
                             ? () => {
-                                Vibration.vibrate(100);
-                                console.log(item.userId);
-                                store.socket.emit("hit", item.socketId);
+                                Vibration.vibrate(100)
+                                console.log(item.userId)
+                                store.socket.emit("hit", item.socketId)
                                 this.setState({
                                   myattacknum: this.state.myattacknum - 1,
                                   changeImage: item.userId
-                                });
+                                })
                                 setTimeout(() => {
                                   this.setState({
                                     changeImage: ""
-                                  });
-                                }, 200);
+                                  })
+                                }, 200)
                               }
                             : !!(
                                 !this.state.attackmode && this.state.healingmode
                               )
                               ? () => {
-                                  console.log(item.userId);
+                                  console.log(item.userId)
                                 }
                               : null
                         }
@@ -152,7 +152,7 @@ export default class CatsList extends Component {
                         </View>
                       </View>
                     </View>
-                  );
+                  )
                 })}
               </View>
               <View style={styles.attackspace}>
@@ -163,8 +163,8 @@ export default class CatsList extends Component {
                         <TouchableOpacity
                           disabled={this.state.attackmode ? false : true}
                           onPress={() => {
-                            this.setState({ attackmode: false });
-                            console.log("공격 모드");
+                            this.setState({ attackmode: false })
+                            console.log("공격 모드")
                           }}
                         >
                           <Image
@@ -185,8 +185,8 @@ export default class CatsList extends Component {
                             this.setState({
                               attackmode: true,
                               healingmode: false
-                            });
-                            console.log("공격 모드 해제");
+                            })
+                            console.log("공격 모드 해제")
                           }}
                         >
                           <Image
@@ -219,10 +219,10 @@ export default class CatsList extends Component {
                 )}
               </View>
             </View>
-          );
+          )
         }}
       </Store.Consumer>
-    );
+    )
   }
 }
 

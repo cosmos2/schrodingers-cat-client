@@ -103,17 +103,17 @@ export default class ChatRoom extends React.Component {
         <View style={styles.options}>
           <Store.Consumer>
             {store => {
-              return <Text style={styles.statetext}>{store.typing}</Text>;
+              return <Text style={styles.statetext}>{store.typing}</Text>
             }}
           </Store.Consumer>
           <View style={styles.catsstate}>
             <View style={styles.statespace}>
-              <CatsList myuserid={this.state.myuserid} />;
+              <CatsList myuserid={this.state.myuserid} />
             </View>
           </View>
         </View>
       </View>
-    );
+    )
   }
 
   _myuserinfo = async () => {
