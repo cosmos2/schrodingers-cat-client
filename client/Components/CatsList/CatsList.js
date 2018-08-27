@@ -22,32 +22,26 @@ export default class CatsList extends Component {
       muteornot: false,
       attackmode: false,
       healingmode: false,
-      myattacknum: 5
+      myattacknum: 5,
+      animatePress: new Animated.Value(1)
     };
-    this._handlePressIn = this._handlePressIn.bind(this);
-    this._handlePressOut = this._handlePressOut.bind(this);
   }
 
-  _handlePressIn() {
-    Animated.spring(this.animatedValue, {
-      toValue: 0.6
+  animateIn = () => {
+    Animated.spring(this.state.animatePress, {
+      toValue: 0.8
     }).start();
-  }
-  _handlePressOut() {
-    Animated.spring(this.animatedValue, {
+  };
+
+  animateOut = () => {
+    Animated.spring(this.state.animatePress, {
       toValue: 1,
       friction: 3,
       tension: 40
     }).start();
-  }
+  };
 
-  componentWillMount() {
-    this.animatedValue = new Animated.Value(1);
-  }
   render() {
-    const animatedStyle = {
-      transform: [{ scale: this.animatedValue }]
-    };
     return (
       <Store.Consumer>
         {store => {
@@ -57,10 +51,9 @@ export default class CatsList extends Component {
                 {store.roomusers.map((item, i) => {
                   return (
                     <View key={i} style={styles.eachcat}>
-                      <TouchableOpacity
-                        // onPressIn={this._handlePressIn}
-                        // onPressOut={}
-                        // onPressOut={this._handlePressOut}
+                      <TouchableWithoutFeedback
+                        onPressIn={() => this.animateIn()}
+                        onPressOut={() => this.animateOut()}
                         disabled={
                           item.hp === 0
                             ? true
@@ -77,8 +70,6 @@ export default class CatsList extends Component {
                                 ? false
                                 : true
                         }
-                        onPressIn={this._handlePressIn.bind(this, item)}
-                        onPressOut={this._handlePressOut.bind(this, item)}
                         onPress={
                           !!(this.state.attackmode && !this.state.healingmode)
                             ? () => {
@@ -104,26 +95,34 @@ export default class CatsList extends Component {
                               : null
                         }
                       >
-                        <Animated.View
-                          style={[
-                            this.props.myuserid === item.userId
-                              ? styles.mycatBorder
-                              : styles.catBorder,
-                            animatedStyle
-                          ]}
-                        >
-                          <Image
-                            source={
-                              this.state.changeImage === item.userId
-                                ? Images["punch"]
-                                : item.hp === 0
-                                  ? Images[7]
-                                  : Images[item.catImage]
-                            }
-                            style={styles.catImage}
-                          />
-                        </Animated.View>
-                      </TouchableOpacity>
+                        <View>
+                          <Animated.View
+                            style={[
+                              {
+                                transform: [
+                                  {
+                                    scale: this.state.animatePress
+                                  }
+                                ]
+                              },
+                              this.props.myuserid === item.userId
+                                ? styles.mycatBorder
+                                : styles.catBorder
+                            ]}
+                          >
+                            <Image
+                              source={
+                                this.state.changeImage === item.userId
+                                  ? Images["punch"]
+                                  : item.hp === 0
+                                    ? Images[7]
+                                    : Images[item.catImage]
+                              }
+                              style={styles.catImage}
+                            />
+                          </Animated.View>
+                        </View>
+                      </TouchableWithoutFeedback>
                       <View style={{ flexDirection: "column" }}>
                         <Text style={styles.nickname}>{item.nickname}</Text>
                         {/* <Text style={styles.subtitle}>ID : {item.userId}</Text> */}
