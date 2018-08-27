@@ -13,7 +13,7 @@ export default class Landing extends Component {
   componentDidMount() {
     this.timeoutHandle = setTimeout(() => {
       this._userInfo();
-    }, 1500);
+    }, 3000);
   }
 
   componentWillUnmount() {
@@ -24,10 +24,10 @@ export default class Landing extends Component {
     return (
       <View style={styles.container}>
         <Text style={styles.title}>슈뢰딩거의 고양이</Text>
-        <Image
+        {/* <Image
           style={{ width: 400, height: 400 }}
           source={require("../../assets/img/firstImg.png")}
-        />
+        /> */}
       </View>
     );
   }

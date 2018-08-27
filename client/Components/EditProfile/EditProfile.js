@@ -1,8 +1,10 @@
 import React from "react";
-import { Text, View } from "react-native";
+import { Text, View, Dimensions } from "react-native";
 import Store from "../store";
 import Cat from "../Cat/Cat";
 import styles from "./styles";
+
+const { height } = Dimensions.get("window");
 
 export default class EditProfile extends React.Component {
   constructor(props) {
@@ -23,8 +25,8 @@ export default class EditProfile extends React.Component {
   static navigationOptions = {
     title: "프로필 편집",
     headerStyle: {
-      backgroundColor: "#FFAA0E",
-      height: 60
+      backgroundColor: "#f4da6c",
+      height: height * 0.07
     },
     headerTintColor: "#fff",
     headerTitleStyle: {
