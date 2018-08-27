@@ -1,17 +1,19 @@
 import React, { Component } from "react";
-import { Text, View, AsyncStorage } from "react-native";
+import { Text, View, AsyncStorage, Dimensions } from "react-native";
 import Cat from "../Cat/Cat";
 import styles from "./styles";
+
+const { height } = Dimensions.get("window");
 
 export default class SelectCat extends Component {
   static navigationOptions = {
     title: "슈뢰딩거의 고양이",
     headerStyle: {
-      backgroundColor: "#FFAA0E",
-      height: 60
+      backgroundColor: "#f4da6c",
+      height: height * 0.07
     },
     headerLeft: null,
-    headerTintColor: "#fff",
+    headerTintColor: "black",
     headerTitleStyle: {
       fontWeight: "bold"
     }

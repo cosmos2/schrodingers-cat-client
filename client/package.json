@@ -27,6 +27,7 @@
     "react-native": "~0.55.2",
     "react-native-auto-scroll": "0.0.1",
     "react-native-elements": "^0.19.1",
+    "react-native-elevated-view": "^0.0.6",
     "react-navigation": "^2.11.2",
     "socket.io-client": "^2.1.1"
   }

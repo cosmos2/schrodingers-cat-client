@@ -1,7 +1,15 @@
 import React from "react";
-import { StyleSheet, View, Image, TouchableOpacity } from "react-native";
+import {
+  StyleSheet,
+  View,
+  Image,
+  TouchableOpacity,
+  Dimensions
+} from "react-native";
 import Store from "../store";
 import { Icon } from "react-native-elements";
+
+const { height } = Dimensions.get("window");
 
 export default class OpenBox extends React.Component {
   state = {
@@ -13,10 +21,10 @@ export default class OpenBox extends React.Component {
     return {
       title: "상자 안에 고양이가 있을까요?",
       headerStyle: {
-        backgroundColor: "#FFAA0E",
-        height: 60
+        backgroundColor: "#f4da6c",
+        height: height * 0.07
       },
-      headerTintColor: "#fff",
+      headerTintColor: "black",
       headerTitleStyle: {
         fontWeight: "bold"
       },
@@ -37,8 +45,8 @@ export default class OpenBox extends React.Component {
                   iconStyle={{
                     paddingRight: 10,
                     paddingLeft: 20,
-                    paddingTop: 12,
-                    paddingBottom: 8
+                    paddingTop: 10,
+                    paddingBottom: 10
                   }}
                 />
               </TouchableOpacity>
