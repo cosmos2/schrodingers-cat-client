@@ -12,6 +12,7 @@ import Store from "../store";
 import { Icon } from "react-native-elements";
 
 const { width, height } = Dimensions.get("window");
+
 export default class OpenBox extends React.Component {
   constructor(props) {
     super(props);
