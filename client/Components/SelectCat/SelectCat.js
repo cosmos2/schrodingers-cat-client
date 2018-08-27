@@ -3,8 +3,7 @@ import { Text, View, AsyncStorage, Dimensions } from "react-native";
 import Cat from "../Cat/Cat";
 import styles from "./styles";
 
-const { height } = Dimensions.get("window");
-
+const { width, height } = Dimensions.get("window");
 export default class SelectCat extends Component {
   static navigationOptions = {
     title: "슈뢰딩거의 고양이",

@@ -14,7 +14,7 @@ import Store from "../store";
 import CatsList from "../CatsList/CatsList";
 import Chat from "../Chat/Chat";
 
-const { width } = Dimensions.get("window");
+const { width, height } = Dimensions.get("window");
 export default class ChatRoom extends React.Component {
   constructor(props) {
     super(props);
@@ -30,8 +30,8 @@ export default class ChatRoom extends React.Component {
     return {
       title: "고양이 발견!",
       headerStyle: {
-        backgroundColor: "#FFAA0E",
-        height: 60
+        backgroundColor: "#f4da6c",
+        height: height * 0.07
       },
       headerLeftContainerStyle: { marginLeft: 10 },
       headerLeft: (
@@ -66,7 +66,7 @@ export default class ChatRoom extends React.Component {
           }}
         </Store.Consumer>
       ),
-      headerTintColor: "#fff",
+      headerTintColor: "black",
       headerTitleStyle: {
         fontWeight: "bold"
       }
@@ -103,17 +103,17 @@ export default class ChatRoom extends React.Component {
         <View style={styles.options}>
           <Store.Consumer>
             {store => {
-              return <Text style={styles.statetext}>{store.typing}</Text>;
+              return <Text style={styles.statetext}>{store.typing}</Text>
             }}
           </Store.Consumer>
           <View style={styles.catsstate}>
             <View style={styles.statespace}>
-              <CatsList myuserid={this.state.myuserid} />;
+              <CatsList myuserid={this.state.myuserid} />
             </View>
           </View>
         </View>
       </View>
-    );
+    )
   }
 
   _myuserinfo = async () => {
@@ -177,20 +177,20 @@ const styles = StyleSheet.create({
   statetext: {
     color: "black",
     fontSize: 20,
-    marginTop: 1,
+    margin: 3,
     fontWeight: "500",
     fontFamily: "Goyang"
   },
   statespace: {
     width: width * 0.96,
-    flex: 1,
-    margin: 5
+    flex: 1
+    //margin: 5
   },
   chatroom: {
     flex: 1,
     width: width,
     margin: 5
-    //backgroundColor: "yellow"
+    //backgroundColor: "green"
   },
   options: {
     flex: 0.6,
