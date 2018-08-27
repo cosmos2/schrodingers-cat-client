@@ -41,18 +41,18 @@ export default class ChatInput extends React.Component {
                   multiline={false}
                   value={!this.state.clearInput ? this.state.message : null}
                   onChangeText={message => {
-                    this.setState({ message: message, clearInput: false });
+                    this.setState({ message: message, clearInput: false })
                     if (this.state.message.length !== 0) {
                       store.socket.emit("typing", {
                         nickname: this.state.mynickname
-                      });
+                      })
                     }
                   }}
                   returnKeyType="done"
                   autoCorrect={false}
                   onSubmitEditing={() => {}}
                 />
-              );
+              )
             }}
           </Store.Consumer>
           <Store.Consumer>
@@ -75,12 +75,12 @@ export default class ChatInput extends React.Component {
                     }}
                   />
                 </TouchableOpacity>
-              );
+              )
             }}
           </Store.Consumer>
         </View>
       </View>
-    );
+    )
   }
 
   _sendMessage = (socket, message) => {

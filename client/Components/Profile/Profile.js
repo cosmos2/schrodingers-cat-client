@@ -6,6 +6,7 @@ import styles from "./styles";
 import ElevatedView from "react-native-elevated-view";
 
 const { width, height } = Dimensions.get("window");
+
 export default class Profile extends React.Component {
   constructor(props) {
     super(props);
