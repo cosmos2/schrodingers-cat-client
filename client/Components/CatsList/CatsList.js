@@ -6,7 +6,9 @@ import {
   Dimensions,
   Image,
   TouchableOpacity,
-  Vibration
+  Vibration,
+  TouchableWithoutFeedback,
+  Animated
 } from "react-native";
 import Images from "../../assets/img/catindex";
 import Store from "../store";
@@ -22,8 +24,31 @@ export default class CatsList extends Component {
       healingmode: false,
       myattacknum: 5
     };
+    this._handlePressIn = this._handlePressIn.bind(this);
+    this._handlePressOut = this._handlePressOut.bind(this);
+  }
+
+  _handlePressIn() {
+    Animated.spring(this.animatedValue, {
+      toValue: 0.6
+    }).start();
+    console.log("why?!?");
+  }
+  _handlePressOut() {
+    Animated.spring(this.animatedValue, {
+      toValue: 1,
+      friction: 3,
+      tension: 40
+    }).start();
+  }
+
+  componentWillMount() {
+    this.animatedValue = new Animated.Value(1);
   }
   render() {
+    const animatedStyle = {
+      transform: [{ scale: this.animatedValue }]
+    };
     return (
       <Store.Consumer>
         {store => {
@@ -32,15 +57,11 @@ export default class CatsList extends Component {
               <View style={styles.state}>
                 {store.roomusers.map((item, i) => {
                   return (
-                    <View
-                      key={i}
-                      style={
-                        this.props.myuserid === item.userId
-                          ? styles.mycat
-                          : styles.eachcat
-                      }
-                    >
+                    <View key={i} style={styles.eachcat}>
                       <TouchableOpacity
+                        // onPressIn={this._handlePressIn}
+                        // onPressOut={}
+                        // onPressOut={this._handlePressOut}
                         disabled={
                           item.hp === 0
                             ? true
@@ -57,6 +78,8 @@ export default class CatsList extends Component {
                                 ? false
                                 : true
                         }
+                        onPressIn={this._handlePressIn.bind(this, item)}
+                        onPressOut={this._handlePressOut.bind(this, item)}
                         onPress={
                           !!(this.state.attackmode && !this.state.healingmode)
                             ? () => {
@@ -82,24 +105,25 @@ export default class CatsList extends Component {
                               : null
                         }
                       >
-                        <Image
-                          source={
-                            this.state.changeImage === item.userId
-                              ? Images["punch"]
-                              : item.hp === 0
-                                ? Images[7]
-                                : Images[item.catImage]
-                          }
-                          style={{
-                            marginTop: 6,
-                            marginLeft: 10,
-                            width: 50,
-                            height: 50,
-                            shadowColor: "black",
-                            shadowOffset: { height: 2 },
-                            shadowOpacity: 0.3
-                          }}
-                        />
+                        <Animated.View
+                          style={[
+                            this.props.myuserid === item.userId
+                              ? styles.mycatBorder
+                              : styles.catBorder,
+                            animatedStyle
+                          ]}
+                        >
+                          <Image
+                            source={
+                              this.state.changeImage === item.userId
+                                ? Images["punch"]
+                                : item.hp === 0
+                                  ? Images[7]
+                                  : Images[item.catImage]
+                            }
+                            style={styles.catImage}
+                          />
+                        </Animated.View>
                       </TouchableOpacity>
                       <View style={{ flexDirection: "column" }}>
                         <Text style={styles.nickname}>{item.nickname}</Text>
@@ -209,39 +233,68 @@ const styles = StyleSheet.create({
     justifyContent: "center"
   },
   state: {
-    flex: 0.65,
-    width: width * 0.96,
+    flex: 1,
+    width: width * 0.99,
     flexDirection: "row",
     borderRadius: 10,
     flexWrap: "wrap"
   },
   attackspace: {
-    flex: 0.3,
+    flex: 0.2,
     width: width,
     flexDirection: "row",
-    justifyContent: "space-around"
+    backgroundColor: "#f4da6c"
   },
   eachcat: {
     width: "50%",
     height: "50%",
-    borderColor: "black",
-    borderWidth: 0.5,
-    flexDirection: "row"
+    // borderColor: "black",
+    // borderWidth: 0.5,
+    // borderRadius: 40,
+    flexDirection: "row",
+    alignItems: "center"
   },
   subtitle: {
     color: "black",
     fontSize: 13,
     marginTop: 5,
-    marginLeft: 10,
+    marginLeft: 1,
     fontWeight: "500",
     fontWeight: "bold",
     fontFamily: "Goyang"
+  },
+  catImage: {
+    // marginTop: 6,
+    // marginLeft: 10,
+    width: 50,
+    height: 50,
+    shadowColor: "black",
+    shadowOffset: { height: 2 },
+    shadowOpacity: 0.3
+  },
+  catBorder: {
+    borderColor: "#6dd3fe",
+    borderRadius: 40,
+    borderWidth: 5,
+    width: 80,
+    height: 80,
+    justifyContent: "center",
+    alignItems: "center"
+  },
+  mycatBorder: {
+    borderColor: "#f4da6c",
+    borderRadius: 40,
+    borderWidth: 5,
+    width: 80,
+    height: 80,
+    justifyContent: "center",
+    alignItems: "center"
   },
   nickname: {
     color: "black",
     fontSize: 13,
     marginTop: 5,
-    marginLeft: 10,
+    marginLeft: 2,
     fontWeight: "500",
     fontWeight: "bold"
     //fontFamily: "Goyang"
@@ -251,13 +304,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     flexDirection: "row",
     flex: 1
-  },
-  mycat: {
-    width: "50%",
-    height: "50%",
-    borderColor: "black",
-    borderWidth: 0.5,
-    flexDirection: "row",
-    backgroundColor: "pink"
+    //backgroundColor: "yellow"
   }
 });

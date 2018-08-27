@@ -1,9 +1,10 @@
 import React from "react";
-import { Text, View, Image } from "react-native";
+import { Text, View, Image, Dimensions } from "react-native";
 import Store from "../store";
 import { Icon } from "react-native-elements";
 import styles from "./styles";
 
+const { width, height } = Dimensions.get("window");
 export default class Profile extends React.Component {
   constructor(props) {
     super(props);
@@ -23,7 +24,7 @@ export default class Profile extends React.Component {
       title: "고양이 프로필",
       headerStyle: {
         backgroundColor: "#FFAA0E",
-        height: 60
+        height: height * 0.07
       },
       headerTintColor: "#fff",
       headerTitleStyle: {
