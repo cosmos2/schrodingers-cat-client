@@ -3,6 +3,9 @@ import { Text, View, Image, Dimensions } from "react-native";
 import Store from "../store";
 import { Icon } from "react-native-elements";
 import styles from "./styles";
+import ElevatedView from "react-native-elevated-view";
+
+const { height } = Dimensions.get("window");
 
 const { width, height } = Dimensions.get("window");
 export default class Profile extends React.Component {
@@ -23,7 +26,7 @@ export default class Profile extends React.Component {
     return {
       title: "고양이 프로필",
       headerStyle: {
-        backgroundColor: "#FFAA0E",
+        backgroundColor: "#f4da6c",
         height: height * 0.07
       },
       headerTintColor: "#fff",
@@ -72,7 +75,7 @@ export default class Profile extends React.Component {
                 <View style={styles.profilecat}>
                   <Image source={this.images[store.myInfo.catImage]} />
                 </View>
-                <View style={styles.userinfo}>
+                <ElevatedView style={styles.userinfo} elevation={2}>
                   <Text style={styles.subtitle}>
                     이름 : {store.myInfo.nickname}
                   </Text>
@@ -88,7 +91,7 @@ export default class Profile extends React.Component {
                   <Text style={styles.subtitle}>
                     뮤트된 횟수 : {store.myInfo._muteCount}
                   </Text>
-                </View>
+                </ElevatedView>
               </View>
             );
           }}

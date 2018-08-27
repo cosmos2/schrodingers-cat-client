@@ -32,7 +32,6 @@ export default class CatsList extends Component {
     Animated.spring(this.animatedValue, {
       toValue: 0.6
     }).start();
-    console.log("why?!?");
   }
   _handlePressOut() {
     Animated.spring(this.animatedValue, {

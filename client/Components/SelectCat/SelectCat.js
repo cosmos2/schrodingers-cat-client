@@ -8,11 +8,11 @@ export default class SelectCat extends Component {
   static navigationOptions = {
     title: "슈뢰딩거의 고양이",
     headerStyle: {
-      backgroundColor: "#FFAA0E",
+      backgroundColor: "#f4da6c",
       height: height * 0.07
     },
     headerLeft: null,
-    headerTintColor: "#fff",
+    headerTintColor: "black",
     headerTitleStyle: {
       fontWeight: "bold"
     }

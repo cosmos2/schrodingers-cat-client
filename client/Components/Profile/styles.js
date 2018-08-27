@@ -1,5 +1,5 @@
 import { StyleSheet, Dimensions } from "react-native";
-const { width } = Dimensions.get("window");
+const { width, height } = Dimensions.get("window");
 
 export default (styles = StyleSheet.create({
   container: {
@@ -12,11 +12,19 @@ export default (styles = StyleSheet.create({
     marginTop: 40,
     marginBottom: 30,
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "center",
+    width: 70,
+    height: 70,
+    borderRadius: 40
   },
   userinfo: {
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "center",
+    height: height * 0.4,
+    width: width * 0.7,
+    borderRadius: 30,
+    paddingBottom: 20,
+    backgroundColor: "#fff9e6"
   },
   subtitle: {
     color: "black",
@@ -35,6 +43,8 @@ export default (styles = StyleSheet.create({
   },
   card: {
     flex: 1,
-    width: width * 0.9
+    width: width * 0.9,
+    alignItems: "center",
+    paddingTop: 50
   }
 }));

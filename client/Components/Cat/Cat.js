@@ -1,12 +1,19 @@
 import React, { Component } from "react";
-import { View, TouchableOpacity, Image } from "react-native";
+import {
+  View,
+  TouchableWithoutFeedback,
+  Image,
+  Animated,
+  StyleSheet
+} from "react-native";
 import Store from "../store";
 
 export default class Cat extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      catId: this.props.id
+      catId: this.props.id,
+      animatePress: new Animated.Value(1)
     };
     this.images = {
       1: require("../../assets/img/cat1.png"),
@@ -19,17 +26,68 @@ export default class Cat extends Component {
     };
   }
 
-  render() {
+  animateIn = () => {
+    Animated.spring(this.state.animatePress, {
+      toValue: 0.8
+    }).start();
+  };
+
+  handleSetTimeout = (catId, store) => {
     const { sendCatInfom } = this.props;
+    setTimeout(() => {
+      sendCatInfom(catId, store);
+    }, 500);
+  };
+
+  animateOut = async (catId, store) => {
+    try {
+      await Animated.spring(this.state.animatePress, {
+        toValue: 1,
+        friction: 3,
+        tension: 40
+      }).start();
+      await this.handleSetTimeout(catId, store);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  componentWillUnmount() {
+    clearTimeout(this.handleSetTimeout);
+  }
+
+  render() {
     const { catId } = this.state;
     return (
       <View>
         <Store.Consumer>
           {store => {
             return (
-              <TouchableOpacity onPress={() => sendCatInfom(catId, store)}>
-                <Image source={this.images[catId]} />
-              </TouchableOpacity>
+              <TouchableWithoutFeedback
+                onPressIn={() => this.animateIn()}
+                onPressOut={() => this.animateOut(catId, store)}
+              >
+                <View style={styles.container}>
+                  <Animated.View
+                    style={{
+                      transform: [
+                        {
+                          scale: this.state.animatePress
+                        }
+                      ],
+                      borderWidth: 5,
+                      width: 70,
+                      height: 70,
+                      borderRadius: 40,
+                      borderColor: "#f4da6c",
+                      justifyContent: "center",
+                      alignItems: "center"
+                    }}
+                  >
+                    <Image source={this.images[catId]} />
+                  </Animated.View>
+                </View>
+              </TouchableWithoutFeedback>
             );
           }}
         </Store.Consumer>
@@ -37,3 +95,7 @@ export default class Cat extends Component {
     );
   }
 }
+
+const styles = StyleSheet.create({
+  container: {}
+});

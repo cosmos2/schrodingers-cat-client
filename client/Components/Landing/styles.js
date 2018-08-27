@@ -3,12 +3,12 @@ import { StyleSheet } from "react-native";
 export default (styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#FCFCFC",
+    backgroundColor: "#f4da6c",
     alignItems: "center",
     justifyContent: "center"
   },
   title: {
-    color: "#FFAA0E",
+    color: "white",
     fontFamily: "Goyang",
     fontSize: 30,
     marginTop: 10,
