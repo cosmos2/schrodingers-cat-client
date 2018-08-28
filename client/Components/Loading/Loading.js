@@ -24,7 +24,7 @@ export default class Loading extends Component {
         const { latitude, longitude } = this.state;
         socket.emit("findRoom", { latitude, longitude });
         this.props.navigation.navigate("ChatRoomScreen");
-      }, 1500);
+      }, 2500);
     } catch (err) {
       console.log(err);
     }
@@ -44,10 +44,8 @@ export default class Loading extends Component {
           }}
         </Store.Consumer>
         <Image
-          style={{ width: 300, height: 300 }}
-          source={{
-            uri: "https://media.giphy.com/media/l2QE861VOZU7zQdDG/giphy.gif"
-          }}
+          style={{ width: 250, height: 250 }}
+          source={require("../../assets/img/loading.gif")}
         />
       </View>
     );
@@ -57,13 +55,13 @@ export default class Loading extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: "#f4da6c",
     alignItems: "center",
     justifyContent: "center"
   },
   title: {
-    color: "black",
-    fontSize: 40,
+    color: "white",
+    fontSize: 30,
     marginTop: 10,
     fontWeight: "700",
     marginBottom: 10,
