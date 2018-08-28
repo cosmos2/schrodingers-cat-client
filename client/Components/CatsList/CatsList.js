@@ -84,7 +84,7 @@ export default class CatsList extends Component {
                                   this.setState({
                                     changeImage: ""
                                   });
-                                }, 200);
+                                }, 500);
                               }
                             : !!(
                                 !this.state.attackmode && this.state.healingmode

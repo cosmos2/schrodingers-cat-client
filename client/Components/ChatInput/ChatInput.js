@@ -37,6 +37,7 @@ export default class ChatInput extends React.Component {
               return (
                 <TextInput
                   style={styles.textInput}
+                  underlineColorAndroid={"transparent"}
                   editable={store.muteornot ? false : true}
                   multiline={false}
                   value={!this.state.clearInput ? this.state.message : null}

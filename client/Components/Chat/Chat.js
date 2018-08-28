@@ -135,10 +135,11 @@ const styles = StyleSheet.create({
   chats: {
     flex: 1,
     marginBottom: 5,
-    width: width
+    width: width,
+    backgroundColor: "red"
   },
   chatinput: {
-    flex: 0.1,
+    flex: 0.15,
     flexDirection: "row"
   },
   subtitle: {
