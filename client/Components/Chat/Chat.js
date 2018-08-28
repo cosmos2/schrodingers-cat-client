@@ -37,13 +37,15 @@ export default class ChatRoom extends React.Component {
           <View>
             <Store.Consumer>
               {store => {
-                context = store
+                context = store;
                 return store.messages.map((item, i) => {
                   return this.state.myuserid !== item.userId ? (
                     <View style={{ flexDirection: "row" }} key={i}>
                       <Image
                         source={Images[item.catId]}
                         style={{
+                          width: 32,
+                          height: 32,
                           marginTop: 5,
                           marginLeft: 5
                         }}
@@ -60,8 +62,8 @@ export default class ChatRoom extends React.Component {
                         <Text style={styles.chatfont}>{item.message}</Text>
                       </View>
                     </View>
-                  )
-                })
+                  );
+                });
               }}
             </Store.Consumer>
           </View>
@@ -70,7 +72,7 @@ export default class ChatRoom extends React.Component {
           <ChatInput />
         </View>
       </View>
-    )
+    );
   }
 
   _myuserinfo = async () => {

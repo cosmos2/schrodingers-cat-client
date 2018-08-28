@@ -118,8 +118,8 @@ const styles = StyleSheet.create({
   },
   textInput: {
     width: width * 0.85,
-    height: height * 0.05
-    //marginLeft: 5
+    height: height * 0.05,
+    marginLeft: 2
   },
   chatinput: {
     flexDirection: "row",
