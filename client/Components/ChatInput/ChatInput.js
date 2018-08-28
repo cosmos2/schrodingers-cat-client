@@ -41,18 +41,18 @@ export default class ChatInput extends React.Component {
                   multiline={false}
                   value={!this.state.clearInput ? this.state.message : null}
                   onChangeText={message => {
-                    this.setState({ message: message, clearInput: false })
+                    this.setState({ message: message, clearInput: false });
                     if (this.state.message.length !== 0) {
                       store.socket.emit("typing", {
                         nickname: this.state.mynickname
-                      })
+                      });
                     }
                   }}
                   returnKeyType="done"
                   autoCorrect={false}
                   onSubmitEditing={() => {}}
                 />
-              )
+              );
             }}
           </Store.Consumer>
           <Store.Consumer>
@@ -67,20 +67,19 @@ export default class ChatInput extends React.Component {
                     }
                   }}
                 >
-                  <Image
-                    source={require("../../assets/img/sendprint.png")}
-                    style={{
-                      marginBottom: 10,
-                      marginLeft: 10
-                    }}
-                  />
+                  <View>
+                    <Image
+                      source={require("../../assets/img/arrow2.png")}
+                      style={{ marginRight: 3, marginTop: 1 }}
+                    />
+                  </View>
                 </TouchableOpacity>
-              )
+              );
             }}
           </Store.Consumer>
         </View>
       </View>
-    )
+    );
   }
 
   _sendMessage = (socket, message) => {
@@ -118,16 +117,17 @@ const styles = StyleSheet.create({
     justifyContent: "center"
   },
   textInput: {
-    borderWidth: 1,
-    borderColor: "black",
-    borderRadius: 10,
     width: width * 0.85,
     height: height * 0.05,
-    marginLeft: 5
+    marginLeft: 2
   },
   chatinput: {
     flexDirection: "row",
-    justifyContent: "flex-start"
+    justifyContent: "flex-start",
+    borderWidth: 1.5,
+    borderColor: "black",
+    borderRadius: 30,
+    height: 38
   },
   subtitle: {
     color: "black",
