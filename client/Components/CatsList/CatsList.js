@@ -157,57 +157,37 @@ export default class CatsList extends Component {
                 {!store.muteornot ? (
                   this.state.myattacknum > 0 ? (
                     this.state.attackmode ? (
-                      <View style={styles.attack}>
-                        <TouchableOpacity
-                          disabled={this.state.attackmode ? false : true}
-                          onPress={() => {
-                            this.setState({ attackmode: false });
-                            console.log("공격 모드");
-                          }}
-                        >
-                          <Image
-                            source={require("../../assets/img/pawprint5.png")}
-                            style={{
-                              marginBottom: 1
-                            }}
-                          />
-                        </TouchableOpacity>
-                        <Text style={styles.subtitle}>
-                          공 격 중 ( {this.state.myattacknum} / 5 )
+                      <TouchableOpacity
+                        disabled={this.state.attackmode ? false : true}
+                        onPress={() => {
+                          this.setState({ attackmode: false });
+                          console.log("공격 모드");
+                        }}
+                        style={styles.punching}
+                      >
+                        <Text style={styles.attacktext}>
+                          펀 치 중 ( {this.state.myattacknum} / 5 )
                         </Text>
-                      </View>
+                      </TouchableOpacity>
                     ) : (
-                      <View style={styles.attack}>
-                        <TouchableOpacity
-                          onPress={() => {
-                            this.setState({
-                              attackmode: true,
-                              healingmode: false
-                            });
-                            console.log("공격 모드 해제");
-                          }}
-                        >
-                          <Image
-                            source={require("../../assets/img/pawprint4.png")}
-                            style={{
-                              marginBottom: 1
-                            }}
-                          />
-                        </TouchableOpacity>
-                        <Text style={styles.subtitle}>
-                          공 격 력 ( {this.state.myattacknum} / 5 )
+                      <TouchableOpacity
+                        onPress={() => {
+                          this.setState({
+                            attackmode: true,
+                            healingmode: false
+                          });
+                          console.log("공격 모드 해제");
+                        }}
+                        style={styles.attack}
+                      >
+                        <Text style={styles.attacktext}>
+                          냥 냥 펀 치 (click) ( {this.state.myattacknum} / 5 )
                         </Text>
-                      </View>
+                      </TouchableOpacity>
                     )
                   ) : (
-                    <View style={styles.attack}>
-                      <Image
-                        source={require("../../assets/img/catcup.png")}
-                        style={{
-                          marginBottom: 1
-                        }}
-                      />
-                      <Text style={styles.subtitle}>공 격 력 0</Text>
+                    <View style={styles.noenergy}>
+                      <Text style={styles.attacktext}>공 격 력 0</Text>
                     </View>
                   )
                 ) : (
@@ -238,10 +218,10 @@ const styles = StyleSheet.create({
     flexWrap: "wrap"
   },
   attackspace: {
-    flex: 0.2,
+    flex: 0.25,
     width: width,
-    flexDirection: "row",
-    backgroundColor: "#f4da6c"
+    flexDirection: "row"
+    //backgroundColor: "#f4da6c"
   },
   eachcat: {
     width: "50%",
@@ -251,6 +231,13 @@ const styles = StyleSheet.create({
     // borderRadius: 40,
     flexDirection: "row",
     alignItems: "center"
+  },
+  attacktext: {
+    color: "black",
+    fontSize: 13,
+    fontWeight: "500",
+    fontWeight: "bold",
+    fontFamily: "Goyang"
   },
   subtitle: {
     color: "black",
@@ -301,7 +288,39 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     flexDirection: "row",
-    flex: 1
-    //backgroundColor: "yellow"
+    flex: 1,
+    backgroundColor: "#f4da6c",
+    borderColor: "#f4da6c",
+    borderRadius: 40,
+    borderWidth: 3,
+    marginLeft: 50,
+    marginRight: 50,
+    marginBottom: 10
+  },
+  noenergy: {
+    justifyContent: "center",
+    alignItems: "center",
+    flexDirection: "row",
+    flex: 1,
+    backgroundColor: "#e5dfdf",
+    borderColor: "#e5dfdf",
+    borderRadius: 40,
+    borderWidth: 3,
+    marginLeft: 50,
+    marginRight: 50,
+    marginBottom: 10
+  },
+  punching: {
+    justifyContent: "center",
+    alignItems: "center",
+    flexDirection: "row",
+    flex: 1,
+    backgroundColor: "#ef6f6f",
+    borderColor: "#ef6f6f",
+    borderRadius: 40,
+    borderWidth: 3,
+    marginLeft: 50,
+    marginRight: 50,
+    marginBottom: 10
   }
 });

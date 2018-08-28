@@ -35,7 +35,7 @@ const AppNavigator = createStackNavigator(
     }
   }
 );
-const thisroomcats = "이 구역의 야옹이들";
+const thisroomcats = "";
 export default class AppPresenter extends React.Component {
   constructor(props) {
     super(props);
