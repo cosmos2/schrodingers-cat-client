@@ -6,7 +6,8 @@ import {
   TouchableOpacity,
   Dimensions,
   TouchableWithoutFeedback,
-  Animated
+  Animated,
+  Text
 } from "react-native";
 import Store from "../store";
 import { Icon } from "react-native-elements";
@@ -42,12 +43,12 @@ export default class OpenBox extends React.Component {
   static navigationOptions = ({ navigation }) => {
     const { params = {} } = navigation.state;
     return {
-      title: "상자 안에 고양이가 있을까요?",
+      title: "고양이들을 만나러 갈고양?",
       headerStyle: {
         backgroundColor: "#f4da6c",
         height: height * 0.07
       },
-      headerTintColor: "black",
+      headerTintColor: "white",
       headerTitleStyle: {
         fontWeight: "bold"
       },
@@ -102,34 +103,30 @@ export default class OpenBox extends React.Component {
     };
     return (
       <View style={styles.container}>
-        <View style={styles.card}>
-          <Store.Consumer>
-            {store => {
-              return (
-                <TouchableWithoutFeedback
-                  onPressIn={this._handlePressIn}
-                  // onPressOut={}
-                  onPressOut={() => {
-                    this._handlePressOut();
-                    setTimeout(() => {
-                      this._findRoom(store.socket);
-                    }, 500);
-                  }}
-                >
-                  <Animated.View style={animatedStyle}>
-                    <Image
-                      style={{ width: 300, height: 300 }}
-                      source={{
-                        uri:
-                          "https://media1.tenor.com/images/2bbbd5be81fe0265103bfe25d16c7c8e/tenor.gif?itemid=12215186"
-                      }}
-                    />
-                  </Animated.View>
-                </TouchableWithoutFeedback>
-              );
-            }}
-          </Store.Consumer>
-        </View>
+        <Text style={styles.text}>상자속에 고양이들이 있을 것 같다옹</Text>
+        <Store.Consumer>
+          {store => {
+            return (
+              <TouchableWithoutFeedback
+                onPressIn={this._handlePressIn}
+                // onPressOut={}
+                onPressOut={() => {
+                  this._handlePressOut();
+                  setTimeout(() => {
+                    this._findRoom(store.socket);
+                  }, 500);
+                }}
+              >
+                <Animated.View style={animatedStyle}>
+                  <Image
+                    style={{ width: 250, height: 250 }}
+                    source={require("../../assets/img/openBox.gif")}
+                  />
+                </Animated.View>
+              </TouchableWithoutFeedback>
+            );
+          }}
+        </Store.Consumer>
       </View>
     );
   }
@@ -158,5 +155,9 @@ const styles = StyleSheet.create({
     backgroundColor: "#FCFCFC",
     alignItems: "center",
     justifyContent: "center"
+  },
+  text: {
+    fontFamily: "Goyang",
+    fontSize: 20
   }
 });
