@@ -28,7 +28,7 @@ export default class ChatRoom extends React.Component {
   static navigationOptions = ({ navigation }) => {
     const { params = {} } = navigation.state;
     return {
-      title: "고양이 발견!",
+      title: "반갑다옹",
       headerStyle: {
         backgroundColor: "#f4da6c",
         height: height * 0.07
@@ -66,7 +66,7 @@ export default class ChatRoom extends React.Component {
           }}
         </Store.Consumer>
       ),
-      headerTintColor: "black",
+      headerTintColor: "white",
       headerTitleStyle: {
         fontWeight: "bold"
       }
