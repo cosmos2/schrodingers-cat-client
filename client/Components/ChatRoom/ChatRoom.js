@@ -101,11 +101,6 @@ export default class ChatRoom extends React.Component {
           <Chat />
         </View>
         <View style={styles.options}>
-          <Store.Consumer>
-            {store => {
-              return <Text style={styles.statetext}>{store.typing}</Text>;
-            }}
-          </Store.Consumer>
           <View style={styles.catsstate}>
             <View style={styles.statespace}>
               <CatsList myuserid={this.state.myuserid} />
@@ -174,13 +169,6 @@ const styles = StyleSheet.create({
     width: width * 0.9,
     alignItems: "center"
   },
-  statetext: {
-    color: "black",
-    fontSize: 20,
-    margin: 3,
-    fontWeight: "500",
-    fontFamily: "Goyang"
-  },
   statespace: {
     width: width * 0.96,
     flex: 1
@@ -193,7 +181,7 @@ const styles = StyleSheet.create({
     //backgroundColor: "green"
   },
   options: {
-    flex: 0.6,
+    flex: 0.7,
     width: width * 0.9,
     justifyContent: "center",
     alignItems: "center"
