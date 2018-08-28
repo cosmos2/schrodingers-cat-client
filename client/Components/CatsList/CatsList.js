@@ -115,7 +115,7 @@ export default class CatsList extends Component {
                                 this.state.changeImage === item.userId
                                   ? Images["punch"]
                                   : item.hp === 0
-                                    ? Images[7]
+                                    ? Images["mute"]
                                     : Images[item.catImage]
                               }
                               style={styles.catImage}
