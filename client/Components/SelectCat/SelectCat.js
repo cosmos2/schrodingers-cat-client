@@ -5,11 +5,13 @@ import {
   AsyncStorage,
   Dimensions,
   StyleSheet,
-  TouchableOpacity
+  TouchableOpacity,
+  Image
 } from "react-native";
 import Cat from "../Cat/Cat";
 import styles from "./styles";
 import Modal from "react-native-modal";
+import Tutorial from "../Tutorial";
 
 const { width, height } = Dimensions.get("window");
 export default class SelectCat extends Component {
@@ -36,9 +38,7 @@ export default class SelectCat extends Component {
     const lowerCats = [4, 5, 6];
     return (
       <View style={styles.body}>
-        <Modal isVisible={false} style={styles.modalContent}>
-          <Text>hihi</Text>
-        </Modal>
+        <Tutorial />
         <View style={styles.container}>
           <View style={styles.title}>
             <Text style={styles.text}>고양이를 고를고양</Text>

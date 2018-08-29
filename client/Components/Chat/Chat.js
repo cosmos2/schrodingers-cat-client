@@ -74,7 +74,7 @@ export default class ChatRoom extends React.Component {
           }}
         </Store.Consumer>
         <View style={styles.chatinput}>
-          <ChatInput />
+          <ChatInput chatting={this.props.chatting} />
         </View>
       </View>
     );
@@ -135,8 +135,7 @@ const styles = StyleSheet.create({
   chats: {
     flex: 1,
     marginBottom: 5,
-    width: width,
-    backgroundColor: "red"
+    width: width
   },
   chatinput: {
     flex: 0.15,

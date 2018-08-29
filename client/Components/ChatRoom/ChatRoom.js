@@ -6,7 +6,8 @@ import {
   Alert,
   Dimensions,
   AsyncStorage,
-  AppState
+  AppState,
+  Keyboard
 } from "react-native";
 import { Icon } from "react-native-elements";
 import Timer from "../Timer";
@@ -22,7 +23,8 @@ export default class ChatRoom extends React.Component {
       myuserid: 10,
       mycatid: 0,
       mynickname: "",
-      appState: AppState.currentState
+      appState: AppState.currentState,
+      chatting: false
     };
   }
   static navigationOptions = ({ navigation }) => {
@@ -88,22 +90,41 @@ export default class ChatRoom extends React.Component {
       exitChat: this._exitChat,
       explodeChatRoom: this._explodeChatRoom
     });
+    this.keyboardDidShowListener = Keyboard.addListener(
+      "keyboardDidShow",
+      this._keyboardDidShow
+    );
   }
+
+  _keyboardDidShow = () => {
+    this.setState({
+      chatting: true
+    });
+  };
 
   componentWillUnmount() {
     AppState.removeEventListener("change", this._handleAppStateChange);
+    this.keyboardDidShowListener.remove();
   }
 
   render() {
     return (
       <View style={styles.container}>
         <View style={styles.chatroom}>
-          <Chat />
+          <Chat chatting={this._chatting} />
         </View>
         <View style={styles.options}>
           <View style={styles.catsstate}>
             <View style={styles.statespace}>
-              <CatsList myuserid={this.state.myuserid} />
+              {this.state.chatting ? (
+                <View style={{ alignItems: "center" }}>
+                  <Text style={{ fontFamily: "Goyang", fontSize: 20 }}>
+                    Meoooooooooooooooow
+                  </Text>
+                </View>
+              ) : (
+                <CatsList myuserid={this.state.myuserid} />
+              )}
             </View>
           </View>
         </View>
@@ -143,6 +164,18 @@ export default class ChatRoom extends React.Component {
   // Timer 에서 쓰임. 타임아웃되면 화면 전환
   _explodeChatRoom = () => {
     this.props.navigation.navigate("OpenBoxScreen");
+  };
+
+  _chatting = e => {
+    if (e) {
+      this.setState({
+        chatting: false
+      });
+    } else {
+      this.setState({
+        chatting: true
+      });
+    }
   };
 
   // 앱이 백그라운드에서 다시 돌아왔을 때 실행

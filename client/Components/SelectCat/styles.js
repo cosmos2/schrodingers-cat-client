@@ -30,13 +30,5 @@ export default (styles = StyleSheet.create({
     flex: 0.4,
     flexDirection: "row",
     justifyContent: "space-around"
-  },
-  modalContent: {
-    backgroundColor: "white",
-    padding: 22,
-    justifyContent: "center",
-    alignItems: "center",
-    borderRadius: 20,
-    borderColor: "black"
   }
 }));
