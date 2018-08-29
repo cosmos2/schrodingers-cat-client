@@ -21,6 +21,9 @@ export default class SelectCat extends Component {
   componentDidMount() {
     this._isFirstTime();
   }
+  componentWillUnmount() {
+    clearTimeout(this._handleTimeout);
+  }
   static getDerivedStateFromProps(nextProps, prevState) {
     if (nextProps.tutorial) {
       return { firstornot: true };
@@ -41,9 +44,7 @@ export default class SelectCat extends Component {
           <View style={{ flex: 0.07, alignItems: "flex-end" }}>
             <TouchableOpacity
               onPress={() => {
-                this.setState({
-                  firstornot: false
-                });
+                this._closeTutorial();
               }}
             >
               <Image
@@ -123,12 +124,18 @@ export default class SelectCat extends Component {
       this.setState({
         firstornot: true
       });
-    } else {
-      this.setState({
-        firstornot: false
-      });
-      this.props.toggleTutorial(1);
     }
+  };
+  _closeTutorial = () => {
+    this.setState({ firstornot: false });
+    if (this.props.toggleTutorial) {
+      this._handleTimeout();
+    }
+  };
+  _handleTimeout = () => {
+    setTimeout(() => {
+      this.props.toggleTutorial(1);
+    }, 1100);
   };
 }
 
