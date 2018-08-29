@@ -54,7 +54,7 @@ export default class SelectCat extends Component {
             </TouchableOpacity>
           </View>
           <View style={{ flex: 1, alignItems: "center" }}>
-            <Text style={styles.title}>튜 토 리 얼</Text>
+            <Text style={styles.title}>Tutorial</Text>
             <Swiper showsButtons={true}>
               <View style={styles.wrapper}>
                 <Image
@@ -153,7 +153,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontFamily: "Goyang",
-    fontSize: 40
+    fontSize: 30
   },
   wrapper: {
     justifyContent: "center",
