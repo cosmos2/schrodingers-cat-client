@@ -60,56 +60,51 @@ export default class SelectCat extends Component {
                 <Image
                   source={Images["tut1"]}
                   style={{
-                    width: width * 0.5,
-                    height: height * 0.5,
+                    width: width * 0.6,
+                    height: height * 0.6,
                     marginTop: 10
                   }}
                 />
-                <Text style={{ fontSize: 20, fontFamily: "Goyang" }}>
-                  고양이를 고르세요
-                </Text>
               </View>
               <View style={styles.wrapper}>
                 <Image
                   source={Images["tut2"]}
                   style={{
-                    width: width * 0.5,
-                    height: height * 0.5,
+                    width: width * 0.6,
+                    height: height * 0.6,
                     marginTop: 10
                   }}
                 />
-                <Text style={{ fontSize: 20, fontFamily: "Goyang" }}>
-                  상자를 눌러 채팅방에 접속하세요
-                </Text>
               </View>
               <View style={styles.wrapper}>
                 <Image
                   source={Images["tut3"]}
                   style={{
-                    width: width * 0.5,
-                    height: height * 0.5,
+                    width: width * 0.6,
+                    height: height * 0.6,
                     marginTop: 10
                   }}
                 />
-                <Text style={{ fontSize: 17, fontFamily: "Goyang" }}>
-                  자신의 프로필을 확인하고
-                </Text>
-                <Text style={{ fontSize: 17, fontFamily: "Goyang" }}>
-                  고양이를 변경할 수 있습니다.
-                </Text>
               </View>
               <View style={styles.wrapper}>
                 <Image
                   source={Images["tut4"]}
                   style={{
-                    width: width * 0.5,
-                    height: height * 0.5,
+                    width: width * 0.6,
+                    height: height * 0.6,
                     marginTop: 10
                   }}
                 />
-                <Text style={{ fontSize: 20, fontFamily: "Goyang" }}>
-                  채팅방
-                </Text>
+              </View>
+              <View style={styles.wrapper}>
+                <Image
+                  source={Images["tut5"]}
+                  style={{
+                    width: width * 0.6,
+                    height: height * 0.6,
+                    marginTop: 10
+                  }}
+                />
               </View>
             </Swiper>
           </View>
