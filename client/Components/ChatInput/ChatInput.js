@@ -37,10 +37,12 @@ export default class ChatInput extends React.Component {
               return (
                 <TextInput
                   style={styles.textInput}
+                  underlineColorAndroid={"transparent"}
                   editable={store.muteornot ? false : true}
                   multiline={false}
                   value={!this.state.clearInput ? this.state.message : null}
                   onChangeText={message => {
+                    this.props.chatting();
                     this.setState({ message: message, clearInput: false });
                     if (this.state.message.length !== 0) {
                       store.socket.emit("typing", {
@@ -48,6 +50,7 @@ export default class ChatInput extends React.Component {
                       });
                     }
                   }}
+                  onBlur={() => this.props.chatting(1)}
                   returnKeyType="done"
                   autoCorrect={false}
                   onSubmitEditing={() => {}}

@@ -13,7 +13,7 @@ export default class Index extends React.Component {
   }
   async componentDidMount() {
     try {
-      // await AsyncStorage.removeItem("token");
+      await AsyncStorage.removeItem("token");
       // await AsyncStorage.removeItem("myUserId");
       const getToken = await AsyncStorage.getItem("token");
       const myUserId = await AsyncStorage.getItem("myUserId");
