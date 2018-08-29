@@ -21,6 +21,12 @@ export default class SelectCat extends Component {
   componentDidMount() {
     this._isFirstTime();
   }
+  static getDerivedStateFromProps(nextProps, prevState) {
+    if (nextProps.tutorial) {
+      return { firstornot: true };
+    }
+    return null;
+  }
   render() {
     return (
       <View>
@@ -113,10 +119,15 @@ export default class SelectCat extends Component {
 
   _isFirstTime = async () => {
     const first = await AsyncStorage.getItem("firstTime");
-    if (first) {
+    if (first || this.props.tutorial) {
       this.setState({
         firstornot: true
       });
+    } else {
+      this.setState({
+        firstornot: false
+      });
+      this.props.toggleTutorial(1);
     }
   };
 }

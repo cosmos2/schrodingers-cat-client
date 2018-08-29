@@ -61,10 +61,10 @@ export default class OpenBox extends React.Component {
             name="help-circle"
             type="material-community"
             color="white"
-            size={28}
+            size={22}
             iconStyle={{
-              paddingRight: 10,
-              paddingLeft: 20,
+              paddingLeft: 10,
+              paddingRight: 20,
               paddingTop: 10,
               paddingBottom: 10
             }}
@@ -87,8 +87,8 @@ export default class OpenBox extends React.Component {
                   iconStyle={{
                     paddingRight: 10,
                     paddingLeft: 20,
-                    paddingTop: 10,
-                    paddingBottom: 10
+                    paddingTop: 9,
+                    paddingBottom: 11
                   }}
                 />
               </TouchableOpacity>
@@ -99,7 +99,12 @@ export default class OpenBox extends React.Component {
     };
   };
   componentDidMount() {
-    this.props.navigation.setParams({ openProfile: this._openProfile });
+    this.props.navigation.setParams({
+      openProfile: this._openProfile
+    });
+    this.props.navigation.setParams({
+      toggleTutorial: this._toggleTutorial
+    });
     // navigator.geolocation.getCurrentPosition(position => {
     //   var lat = parseFloat(position.coords.latitude);
     //   var long = parseFloat(position.coords.longitude);
@@ -171,16 +176,11 @@ export default class OpenBox extends React.Component {
       console.log(err);
     }
   };
-
   _toggleTutorial = e => {
     if (e) {
-      this.setState({
-        tutorial: false
-      });
+      this.setState({ tutorial: false });
     } else {
-      this.setState({
-        tutorial: true
-      });
+      this.setState({ tutorial: true });
     }
   };
 }
