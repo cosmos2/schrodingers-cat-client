@@ -122,15 +122,7 @@ export default class ChatRoom extends React.Component {
         <View style={styles.options}>
           <View style={styles.catsstate}>
             <View style={styles.statespace}>
-              {this.state.chatting ? (
-                <View style={{ alignItems: "center" }}>
-                  <Text style={{ fontFamily: "Goyang", fontSize: 20 }}>
-                    Meoooooooooooooooow
-                  </Text>
-                </View>
-              ) : (
-                <CatsList myuserid={this.state.myuserid} />
-              )}
+              <CatsList myuserid={this.state.myuserid} />
             </View>
           </View>
         </View>
