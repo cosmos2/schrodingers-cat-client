@@ -18,7 +18,7 @@ export default class SelectCat extends Component {
   state = {
     firstornot: false
   };
-  componentWillMount() {
+  componentDidMount() {
     this._isFirstTime();
   }
   render() {
