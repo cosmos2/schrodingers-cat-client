@@ -45,15 +45,16 @@ export default class OpenBox extends React.Component {
   static navigationOptions = ({ navigation }) => {
     const { params = {} } = navigation.state;
     return {
-      title: "고양이들을 만나러 갈고양?",
+      headerTitle: (
+        <View style={{ alignItems: "center", flex: 1 }}>
+          <Text style={{ fontFamily: "Goyang", fontSize: 17, color: "white" }}>
+            고양이들을 만나러 갈고양?
+          </Text>
+        </View>
+      ),
       headerStyle: {
         backgroundColor: "#f4da6c",
         height: height * 0.07
-      },
-      headerTintColor: "white",
-      headerTitleStyle: {
-        fontWeight: "bold",
-        textAlign: "center"
       },
       headerLeft: (
         <TouchableOpacity onPress={() => params.toggleTutorial()}>
