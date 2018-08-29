@@ -11,6 +11,7 @@ import {
 } from "react-native";
 import Store from "../store";
 import { Icon } from "react-native-elements";
+import Tutorial from "../Tutorial";
 
 const { width, height } = Dimensions.get("window");
 
@@ -20,7 +21,8 @@ export default class OpenBox extends React.Component {
 
     this.state = {
       latitude: 0,
-      longitude: 0
+      longitude: 0,
+      tutorial: false
     };
 
     this._handlePressIn = this._handlePressIn.bind(this);
@@ -54,28 +56,20 @@ export default class OpenBox extends React.Component {
         textAlign: "center"
       },
       headerLeft: (
-        <Store.Consumer>
-          {store => {
-            return (
-              <TouchableOpacity
-                onPress={() => params.openProfile(store.socket)}
-              >
-                <Icon
-                  name="help-circle"
-                  type="material-community"
-                  color="white"
-                  size={22}
-                  iconStyle={{
-                    paddingRight: 10,
-                    paddingLeft: 20,
-                    paddingTop: 10,
-                    paddingBottom: 10
-                  }}
-                />
-              </TouchableOpacity>
-            );
-          }}
-        </Store.Consumer>
+        <TouchableOpacity onPress={() => params.toggleTutorial()}>
+          <Icon
+            name="help-circle"
+            type="material-community"
+            color="white"
+            size={22}
+            iconStyle={{
+              paddingLeft: 10,
+              paddingRight: 20,
+              paddingTop: 10,
+              paddingBottom: 10
+            }}
+          />
+        </TouchableOpacity>
       ),
       headerRightContainerStyle: { marginRight: 5 },
       headerRight: (
@@ -105,7 +99,12 @@ export default class OpenBox extends React.Component {
     };
   };
   componentDidMount() {
-    this.props.navigation.setParams({ openProfile: this._openProfile });
+    this.props.navigation.setParams({
+      openProfile: this._openProfile
+    });
+    this.props.navigation.setParams({
+      toggleTutorial: this._toggleTutorial
+    });
     // navigator.geolocation.getCurrentPosition(position => {
     //   var lat = parseFloat(position.coords.latitude);
     //   var long = parseFloat(position.coords.longitude);
@@ -127,6 +126,12 @@ export default class OpenBox extends React.Component {
     };
     return (
       <View style={styles.container}>
+        {this.state.tutorial ? (
+          <Tutorial
+            tutorial={this.state.tutorial}
+            toggleTutorial={this._toggleTutorial}
+          />
+        ) : null}
         <Text style={styles.text}>상자속에 고양이들이 있을 것 같다옹</Text>
         <Store.Consumer>
           {store => {
@@ -169,6 +174,13 @@ export default class OpenBox extends React.Component {
       await this.props.navigation.navigate("ProfileScreen");
     } catch (err) {
       console.log(err);
+    }
+  };
+  _toggleTutorial = e => {
+    if (e) {
+      this.setState({ tutorial: false });
+    } else {
+      this.setState({ tutorial: true });
     }
   };
 }
