@@ -35,7 +35,7 @@ const AppNavigator = createStackNavigator(
     }
   }
 );
-const thisroomcats = "이 구역의 야옹이들";
+const thisroomcats = "";
 export default class AppPresenter extends React.Component {
   constructor(props) {
     super(props);
@@ -59,7 +59,8 @@ export default class AppPresenter extends React.Component {
         roomusers: JSON.parse(users),
         organizedTime: time,
         leftTime,
-        chatOver: false
+        chatOver: false,
+        typing: ""
       });
       // console.log(leftTime, "<----- left time");
     });
@@ -67,8 +68,7 @@ export default class AppPresenter extends React.Component {
     this._socket.on("disconnect", async () => {
       await console.log("disconneted");
       await this.setState({
-        disconnectornot: true,
-        typing: thisroomcats
+        disconnectornot: true
       });
       await this._resetchat();
       await console.log(this.state.disconnectornot, "this is apppresenter");
@@ -76,8 +76,7 @@ export default class AppPresenter extends React.Component {
 
     this._socket.on("leaveRoom", users => {
       this.setState({
-        roomusers: JSON.parse(users),
-        typing: thisroomcats
+        roomusers: JSON.parse(users)
       });
       console.log(users, "<----- leaveRoom event");
     });
@@ -130,8 +129,7 @@ export default class AppPresenter extends React.Component {
 
     this._socket.on("timeOut", () => {
       this.setState({
-        chatOver: true,
-        typing: thisroomcats
+        chatOver: true
       });
     });
 
