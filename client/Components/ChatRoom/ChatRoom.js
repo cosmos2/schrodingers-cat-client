@@ -122,15 +122,7 @@ export default class ChatRoom extends React.Component {
         <View style={styles.options}>
           <View style={styles.catsstate}>
             <View style={styles.statespace}>
-              {this.state.chatting ? (
-                <View style={{ alignItems: "center" }}>
-                  <Text style={{ fontFamily: "Goyang", fontSize: 20 }}>
-                    Meoooooooooooooooow
-                  </Text>
-                </View>
-              ) : (
-                <CatsList myuserid={this.state.myuserid} />
-              )}
+              <CatsList myuserid={this.state.myuserid} />
             </View>
           </View>
         </View>
@@ -150,18 +142,18 @@ export default class ChatRoom extends React.Component {
 
   _exitChat = store => {
     Alert.alert(
-      "채팅방을 나가시겠습니까?",
+      "고양이들을 떠날고양?",
       "",
       [
         {
-          text: "나가기",
+          text: "떠날고양",
           onPress: () => {
             store.socket.emit("leaveRoom");
             store.resetchat();
             this.props.navigation.navigate("OpenBoxScreen");
           }
         },
-        { text: "취소" }
+        { text: "더 있을고양" }
       ],
       { cancelable: false }
     );
