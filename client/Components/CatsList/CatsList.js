@@ -54,13 +54,13 @@ export default class CatsList extends Component {
               ) : this.state.myattacknum === 0 ? (
                 <View style={{ flex: 0.1 }}>
                   <Text style={{ fontFamily: "Goyang", fontSize: 15 }}>
-                    펀치할 힘이 없습니다.
+                    펀치할 힘이 없다옹..
                   </Text>
                 </View>
               ) : (
                 <View style={{ flex: 0.1 }}>
                   <Text style={{ fontFamily: "Goyang", fontSize: 15 }}>
-                    고양이 얼굴을 펀치하세요
+                    고양이 얼굴을 펀치하라옹!!
                   </Text>
                 </View>
               )}
