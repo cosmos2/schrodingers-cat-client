@@ -52,7 +52,30 @@ export default class OpenBox extends React.Component {
       headerTitleStyle: {
         fontWeight: "bold"
       },
-      headerLeft: null,
+      headerLeft: (
+        <Store.Consumer>
+          {store => {
+            return (
+              <TouchableOpacity
+                onPress={() => params.openProfile(store.socket)}
+              >
+                <Icon
+                  name="help-circle"
+                  type="material-community"
+                  color="white"
+                  size={22}
+                  iconStyle={{
+                    paddingRight: 10,
+                    paddingLeft: 20,
+                    paddingTop: 10,
+                    paddingBottom: 10
+                  }}
+                />
+              </TouchableOpacity>
+            );
+          }}
+        </Store.Consumer>
+      ),
       headerRightContainerStyle: { marginRight: 5 },
       headerRight: (
         <Store.Consumer>
@@ -69,8 +92,8 @@ export default class OpenBox extends React.Component {
                   iconStyle={{
                     paddingRight: 10,
                     paddingLeft: 20,
-                    paddingTop: 10,
-                    paddingBottom: 10
+                    paddingTop: 9,
+                    paddingBottom: 11
                   }}
                 />
               </TouchableOpacity>
