@@ -106,14 +106,6 @@ export default class OpenBox extends React.Component {
     this.props.navigation.setParams({
       toggleTutorial: this._toggleTutorial
     });
-    // navigator.geolocation.getCurrentPosition(position => {
-    //   var lat = parseFloat(position.coords.latitude);
-    //   var long = parseFloat(position.coords.longitude);
-    //   this.setState({
-    //     latitude: lat,
-    //     longitude: long
-    //   });
-    // });
   }
   componentWillMount() {
     this.animatedValue = new Animated.Value(1);
