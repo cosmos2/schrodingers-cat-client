@@ -25,10 +25,10 @@ export default class CatsList extends Component {
       attackmode: false,
       healingmode: false,
       myattacknum: 5,
-      animatePress: new Animated.Value(1)
+      animatePress: new Animated.Value(1),
+      showText: true
     };
   }
-
   animateIn = () => {
     Animated.spring(this.state.animatePress, {
       toValue: 0.8
