@@ -25,7 +25,6 @@ export default class ChatInput extends React.Component {
   }
 
   componentWillMount() {
-    //this._whoamI();
     this._myuserinfo();
   }
   render() {
@@ -73,7 +72,12 @@ export default class ChatInput extends React.Component {
                   <View>
                     <Image
                       source={require("../../assets/img/arrow2.png")}
-                      style={{ marginRight: 3, marginTop: 1 }}
+                      style={{
+                        marginRight: 3,
+                        marginTop: 1,
+                        width: 32,
+                        height: 32
+                      }}
                     />
                   </View>
                 </TouchableOpacity>
@@ -115,7 +119,7 @@ export default class ChatInput extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: "#fcfcfc",
     alignItems: "center",
     justifyContent: "center"
   },

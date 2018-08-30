@@ -1,14 +1,21 @@
 {
   "expo": {
     "name": "cat in the box",
-    "version": "0.1.0",
-    "slug": "cat-in-the-box",
+    "description": "chat with cats in the world",
+    "version": "1.0.0",
+    "slug": "Schrodingers-cat",
+    "platforms": ["ios", "android"],
+    "privacy": "public",
+    "orientation": "portrait",
+    "icon": "./assets/img/icon.png",
     "sdkVersion": "27.0.0",
     "ios": {
       "bundleIdentifier": "com.catinthebox.catinthebox"
     },
     "android": {
-      "package": "com.catinthebox.catinthebox"
+      "package": "com.catinthebox.catinthebox",
+      "permissions": ["ACCESS_FINE_LOCATION"],
+      "versionCode": 1
     }
   }
 }
