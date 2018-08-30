@@ -62,23 +62,19 @@ export default class AppPresenter extends React.Component {
         chatOver: false,
         typing: ""
       });
-      // console.log(leftTime, "<----- left time");
     });
 
     this._socket.on("disconnect", async () => {
-      await console.log("disconneted");
       await this.setState({
         disconnectornot: true
       });
       await this._resetchat();
-      await console.log(this.state.disconnectornot, "this is apppresenter");
     });
 
     this._socket.on("leaveRoom", users => {
       this.setState({
         roomusers: JSON.parse(users)
       });
-      console.log(users, "<----- leaveRoom event");
     });
 
     //"chat"으로 들어온 정보를 messages 라는 배열에 저장하기 위함
@@ -96,7 +92,6 @@ export default class AppPresenter extends React.Component {
     });
 
     this._socket.on("fill", data => {
-      console.log(data, "this is filled socketId");
       var arr = this.state.roomusers.slice();
       var arr2 = [...arr];
       for (var i = 0; i < arr2.length; i++) {
@@ -140,7 +135,6 @@ export default class AppPresenter extends React.Component {
     });
 
     this._socket.on("leftTime", leftTime => {
-      console.log(leftTime, "<---- leftTime in app presenter");
       this.setState({ leftTime });
     });
 
@@ -235,7 +229,6 @@ export default class AppPresenter extends React.Component {
   }
 
   async componentDidMount() {
-    // console.log(this.props.token);
     await Font.loadAsync({
       Goyang: require("./assets/fonts/Goyang.otf")
     });

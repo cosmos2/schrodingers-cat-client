@@ -91,7 +91,6 @@ export default class CatsList extends Component {
                           !!(this.state.attackmode && !this.state.healingmode)
                             ? () => {
                                 Vibration.vibrate(100);
-                                console.log(item.userId);
                                 store.socket.emit("hit", item.socketId);
                                 this.setState({
                                   myattacknum: this.state.myattacknum - 1,
@@ -106,9 +105,7 @@ export default class CatsList extends Component {
                             : !!(
                                 !this.state.attackmode && this.state.healingmode
                               )
-                              ? () => {
-                                  console.log(item.userId);
-                                }
+                              ? () => {}
                               : null
                         }
                       >
@@ -173,8 +170,7 @@ export default class CatsList extends Component {
                           borderColor="#ef6f6f"
                           height={40}
                           onPress={() => {
-                            this.setState({ attackmode: false, blinkcount: 0 });
-                            console.log("공격 모드");
+                            this.setState({ attackmode: false });
                           }}
                         >
                           <Text style={styles.punchtext}>
@@ -198,7 +194,6 @@ export default class CatsList extends Component {
                               attackmode: true,
                               healingmode: false
                             });
-                            console.log("공격 모드 해제");
                           }}
                         >
                           <Text style={styles.attacktext}>
