@@ -25,10 +25,10 @@ export default class CatsList extends Component {
       attackmode: false,
       healingmode: false,
       myattacknum: 5,
-      animatePress: new Animated.Value(1)
+      animatePress: new Animated.Value(1),
+      showText: true
     };
   }
-
   animateIn = () => {
     Animated.spring(this.state.animatePress, {
       toValue: 0.8
@@ -173,7 +173,7 @@ export default class CatsList extends Component {
                           borderColor="#ef6f6f"
                           height={40}
                           onPress={() => {
-                            this.setState({ attackmode: false });
+                            this.setState({ attackmode: false, blinkcount: 0 });
                             console.log("공격 모드");
                           }}
                         >
