@@ -6,9 +6,9 @@ import {
   Dimensions,
   Image,
   TouchableOpacity,
-  Vibration,
   TouchableWithoutFeedback,
-  Animated
+  Animated,
+  Vibration
 } from "react-native";
 import Images from "../../assets/img/catindex";
 import Store from "../store";
