@@ -43,7 +43,8 @@ export default class AppPresenter extends React.Component {
     // <--------------          socket           --------------> //
 
     this._socket = SocketIOClient("https://catadmin.gq", {
-      query: this.props.token
+      query: this.props.token,
+      transports: ["websocket"]
     });
 
     this._socket.on("info", myInfo => {

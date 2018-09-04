@@ -173,8 +173,7 @@ export default class CatsList extends Component {
                           borderColor="#ef6f6f"
                           height={40}
                           onPress={() => {
-                            this.setState({ attackmode: false, blinkcount: 0 });
-                            console.log("공격 모드");
+                            this.setState({ attackmode: false });
                           }}
                         >
                           <Text style={styles.punchtext}>
