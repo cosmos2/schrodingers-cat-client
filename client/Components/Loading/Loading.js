@@ -4,40 +4,54 @@ import Store from "../store";
 
 export default class Loading extends Component {
   state = {
-    latitude: 0,
-    longitude: 0
+    latitude: null,
+    longitude: null,
+    loaded: false
   };
   static navigationOptions = {
     header: null
   };
-  async componentDidMount() {
-    try {
-      await navigator.geolocation.getCurrentPosition(position => {
-        var lat = parseFloat(position.coords.latitude);
-        var long = parseFloat(position.coords.longitude);
-        this.setState({
-          latitude: lat,
-          longitude: long
-        });
-      });
-      this.timeoutHandle = await setTimeout(() => {
-        const { latitude, longitude } = this.state;
-        socket.emit("findRoom", { latitude, longitude });
-        this.props.navigation.navigate("ChatRoomScreen");
-      }, 2500);
-    } catch (err) {
-      console.log(err);
+  componentDidMount() {
+    if (!this.state.loaded) {
+      navigator.geolocation.getCurrentPosition(
+        position => {
+          this.setState({
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude,
+            loaded: true
+          });
+        },
+        error => this.setState({ error: error.message }),
+        { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
+      );
     }
   }
-
-  componentWillUnmount() {
-    clearTimeout(this.timeoutHandle); // This is just necessary in the case that the screen is closed before the timeout fires, otherwise it would cause a memory leak that would trigger the transition regardless, breaking the user experience.
+  async componentDidUpdate() {
+    if (this.state.loaded) {
+      const { latitude, longitude } = this.state;
+      await this.setState({ latitude: null, longitude: null, loaded: false });
+      await socket.emit("findRoom", { latitude, longitude });
+      await this.props.navigation.navigate("ChatRoomScreen");
+    }
   }
-
   render() {
-    return (
+    const { latitude, longitude } = this.state;
+    return latitude === null && longitude === null ? (
       <View style={styles.container}>
         <Text style={styles.title}>주변 고양이를 찾는중!!</Text>
+        <Store.Consumer>
+          {store => {
+            socket = store.socket;
+          }}
+        </Store.Consumer>
+        <Image
+          style={{ width: 250, height: 250 }}
+          source={require("../../assets/img/loading.gif")}
+        />
+      </View>
+    ) : (
+      <View style={styles.container}>
+        <Text style={styles.title}>찾았다옹!!</Text>
         <Store.Consumer>
           {store => {
             socket = store.socket;

@@ -6,9 +6,9 @@ import {
   Dimensions,
   Image,
   TouchableOpacity,
-  Vibration,
   TouchableWithoutFeedback,
-  Animated
+  Animated,
+  Vibration
 } from "react-native";
 import Images from "../../assets/img/catindex";
 import Store from "../store";
@@ -91,7 +91,6 @@ export default class CatsList extends Component {
                           !!(this.state.attackmode && !this.state.healingmode)
                             ? () => {
                                 Vibration.vibrate(100);
-                                console.log(item.userId);
                                 store.socket.emit("hit", item.socketId);
                                 this.setState({
                                   myattacknum: this.state.myattacknum - 1,
@@ -106,9 +105,7 @@ export default class CatsList extends Component {
                             : !!(
                                 !this.state.attackmode && this.state.healingmode
                               )
-                              ? () => {
-                                  console.log(item.userId);
-                                }
+                              ? () => {}
                               : null
                         }
                       >
@@ -197,7 +194,6 @@ export default class CatsList extends Component {
                               attackmode: true,
                               healingmode: false
                             });
-                            console.log("공격 모드 해제");
                           }}
                         >
                           <Text style={styles.attacktext}>
