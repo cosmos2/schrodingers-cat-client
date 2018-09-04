@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "cat in the box",
+    "name": "슈뢰딩거의 고양이",
     "description": "chat with cats in the world",
     "version": "1.0.0",
     "slug": "Schrodingers-cat",
@@ -10,7 +10,12 @@
     "icon": "./assets/img/icon.png",
     "sdkVersion": "27.0.0",
     "ios": {
-      "bundleIdentifier": "com.catinthebox.catinthebox"
+      "bundleIdentifier": "com.catinthebox.catinthebox",
+      "buildNumber": "1.0.1",
+      "icon": "./assets/img/icon.png",
+      "infoPlist": {
+        "NSLocationWhenInUseUsageDescription": "Allow Schrodinger's cat to use your location"
+      }
     },
     "android": {
       "package": "com.catinthebox.catinthebox",
