@@ -194,15 +194,9 @@ export default class AppPresenter extends React.Component {
           this.setState({
             muteornot: true
           });
-          if (this.state.mutepushcount < 1) {
-            this.setState({
-              mutepushcount: 1
-            });
-          }
           setTimeout(() => {
             this.setState({
-              muteornot: false,
-              mutepushcount: 0
+              muteornot: false
             });
             this._socket.emit("fill", socketId);
           }, 10000);
@@ -221,7 +215,6 @@ export default class AppPresenter extends React.Component {
       muteornot: false,
       mutecontrol: this._muteControl,
       test: this._test,
-      mutepushcount: 0,
       disconnectornot: false,
       disconnectcontrol: this._disconnectControl,
       chatOver: false,

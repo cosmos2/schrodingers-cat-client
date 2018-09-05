@@ -80,7 +80,8 @@ export default class ChatRoom extends React.Component {
       }
     };
   };
-  componentWillUpdate() {
+  componentDidUpdate() {
+    console.log(context.muteornot, "hihihi");
     context.muteornot
       ? this.props.navigation.navigate("MuteScreen")
       : this.props.navigation.navigate("ChatRoomScreen");
@@ -114,6 +115,7 @@ export default class ChatRoom extends React.Component {
   }
 
   render() {
+    console.log("render");
     return (
       <View style={styles.container}>
         <View style={styles.chatroom}>
