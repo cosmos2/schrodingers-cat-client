@@ -64,7 +64,7 @@ export default class ChatInput extends React.Component {
                   onPress={() => {
                     {
                       store.muteornot
-                        ? Alert.alert("1분간 채팅 금지")
+                        ? Alert.alert("잠시 쉬라옹")
                         : this._sendMessage(store.socket, this.state.message);
                     }
                   }}

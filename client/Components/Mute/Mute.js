@@ -7,7 +7,7 @@ class test extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.title}>혼자 있을 시간이 필요한고양</Text>
+        <Text style={styles.title}>10초만 조용히 있어보는고양</Text>
       </View>
     );
   }

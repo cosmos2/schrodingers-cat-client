@@ -32,9 +32,7 @@ export default class ChatRoom extends React.Component {
     return {
       headerTitle: (
         <View style={{ alignItems: "center", flex: 1 }}>
-          <Text style={{ fontFamily: "Goyang", fontSize: 17, color: "white" }}>
-            반갑다옹
-          </Text>
+          <Text style={{ fontFamily: "Goyang", fontSize: 17, color: "white" }}>반갑다옹</Text>
         </View>
       ),
       headerStyle: {
@@ -80,7 +78,7 @@ export default class ChatRoom extends React.Component {
       }
     };
   };
-  componentWillUpdate() {
+  componentDidUpdate() {
     context.muteornot
       ? this.props.navigation.navigate("MuteScreen")
       : this.props.navigation.navigate("ChatRoomScreen");
@@ -96,10 +94,7 @@ export default class ChatRoom extends React.Component {
       exitChat: this._exitChat,
       explodeChatRoom: this._explodeChatRoom
     });
-    this.keyboardDidShowListener = Keyboard.addListener(
-      "keyboardDidShow",
-      this._keyboardDidShow
-    );
+    this.keyboardDidShowListener = Keyboard.addListener("keyboardDidShow", this._keyboardDidShow);
   }
 
   _keyboardDidShow = () => {
@@ -178,10 +173,7 @@ export default class ChatRoom extends React.Component {
 
   // 앱이 백그라운드에서 다시 돌아왔을 때 실행
   _handleAppStateChange = nextAppState => {
-    if (
-      this.state.appState.match(/inactive|background/) &&
-      nextAppState === "active"
-    ) {
+    if (this.state.appState.match(/inactive|background/) && nextAppState === "active") {
       context.socket.emit("leftTime");
     }
     this.setState({ appState: nextAppState });
