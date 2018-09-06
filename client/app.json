@@ -2,7 +2,7 @@
   "expo": {
     "name": "슈뢰딩거의 고양이",
     "description": "chat with cats in the world",
-    "version": "1.0.3",
+    "version": "1.0.4",
     "slug": "Schrodingers-cat",
     "platforms": ["ios", "android"],
     "privacy": "public",
@@ -14,10 +14,10 @@
     },
     "ios": {
       "bundleIdentifier": "com.catinthebox.catinthebox",
-      "buildNumber": "1.0.3",
+      "buildNumber": "1.0.4",
       "icon": "./assets/img/icon.png",
       "infoPlist": {
-        "NSLocationWhenInUseUsageDescription": "Turn on location services to find a chat rooms around you."
+        "NSLocationWhenInUseUsageDescription": "Please turn on location services to find a chat rooms around you."
       }
     },
     "android": {
