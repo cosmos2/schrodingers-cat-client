@@ -6,8 +6,7 @@ import {
   Alert,
   Dimensions,
   AsyncStorage,
-  AppState,
-  Keyboard
+  AppState
 } from "react-native";
 import { Icon } from "react-native-elements";
 import Timer from "../Timer";
@@ -23,8 +22,7 @@ export default class ChatRoom extends React.Component {
       myuserid: 10,
       mycatid: 0,
       mynickname: "",
-      appState: AppState.currentState,
-      chatting: false
+      appState: AppState.currentState
     };
   }
   static navigationOptions = ({ navigation }) => {
@@ -80,7 +78,7 @@ export default class ChatRoom extends React.Component {
       }
     };
   };
-  componentWillUpdate() {
+  componentDidUpdate() {
     context.muteornot
       ? this.props.navigation.navigate("MuteScreen")
       : this.props.navigation.navigate("ChatRoomScreen");
@@ -96,28 +94,17 @@ export default class ChatRoom extends React.Component {
       exitChat: this._exitChat,
       explodeChatRoom: this._explodeChatRoom
     });
-    this.keyboardDidShowListener = Keyboard.addListener(
-      "keyboardDidShow",
-      this._keyboardDidShow
-    );
   }
-
-  _keyboardDidShow = () => {
-    this.setState({
-      chatting: true
-    });
-  };
 
   componentWillUnmount() {
     AppState.removeEventListener("change", this._handleAppStateChange);
-    this.keyboardDidShowListener.remove();
   }
 
   render() {
     return (
       <View style={styles.container}>
         <View style={styles.chatroom}>
-          <Chat chatting={this._chatting} />
+          <Chat />
         </View>
         <View style={styles.options}>
           <View style={styles.catsstate}>
@@ -162,18 +149,6 @@ export default class ChatRoom extends React.Component {
   // Timer 에서 쓰임. 타임아웃되면 화면 전환
   _explodeChatRoom = () => {
     this.props.navigation.navigate("OpenBoxScreen");
-  };
-
-  _chatting = e => {
-    if (e) {
-      this.setState({
-        chatting: false
-      });
-    } else {
-      this.setState({
-        chatting: true
-      });
-    }
   };
 
   // 앱이 백그라운드에서 다시 돌아왔을 때 실행

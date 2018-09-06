@@ -41,7 +41,6 @@ export default class ChatInput extends React.Component {
                   multiline={false}
                   value={!this.state.clearInput ? this.state.message : null}
                   onChangeText={message => {
-                    this.props.chatting();
                     this.setState({ message: message, clearInput: false });
                     if (this.state.message.length !== 0) {
                       store.socket.emit("typing", {
@@ -49,7 +48,6 @@ export default class ChatInput extends React.Component {
                       });
                     }
                   }}
-                  onBlur={() => this.props.chatting(1)}
                   returnKeyType="done"
                   autoCorrect={false}
                   onSubmitEditing={() => {}}
@@ -64,7 +62,7 @@ export default class ChatInput extends React.Component {
                   onPress={() => {
                     {
                       store.muteornot
-                        ? Alert.alert("1분간 채팅 금지")
+                        ? Alert.alert("잠시 쉬라옹")
                         : this._sendMessage(store.socket, this.state.message);
                     }
                   }}
