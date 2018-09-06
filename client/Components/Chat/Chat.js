@@ -73,7 +73,7 @@ export default class ChatRoom extends React.Component {
           }}
         </Store.Consumer>
         <View style={styles.chatinput}>
-          <ChatInput chatting={this.props.chatting} />
+          <ChatInput />
         </View>
       </View>
     );

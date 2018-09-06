@@ -13,7 +13,7 @@ export default class Landing extends Component {
   componentDidMount() {
     this.timeoutHandle = setTimeout(() => {
       this._userInfo();
-    }, 3000);
+    }, 2500);
   }
 
   componentWillUnmount() {
