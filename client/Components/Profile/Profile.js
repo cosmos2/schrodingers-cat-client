@@ -1,14 +1,18 @@
 import React from "react";
-import { Text, View, Image, Dimensions } from "react-native";
+import { Text, View, Image, Dimensions, TouchableOpacity } from "react-native";
 import Store from "../store";
 import { Icon } from "react-native-elements";
 import styles from "./styles";
 import ElevatedView from "react-native-elevated-view";
 import images from "../../assets/img/catindex";
+import Request from "../Request/Request";
 
-const { width, height } = Dimensions.get("window");
+const { height } = Dimensions.get("window");
 
 class Profile extends React.Component {
+  state = {
+    requestopen: false
+  };
   static navigationOptions = ({ navigation }) => {
     const { params = {} } = navigation.state;
     return {
@@ -62,6 +66,7 @@ class Profile extends React.Component {
   render() {
     return (
       <View style={styles.container}>
+        {this.state.requestopen ? <Request request={true} /> : null}
         <Store.Consumer>
           {store => {
             return (
@@ -89,6 +94,20 @@ class Profile extends React.Component {
                     뮤트된 횟수 : {store.myInfo._muteCount}
                   </Text>
                 </ElevatedView>
+                <TouchableOpacity
+                  onPress={() => {
+                    this.setState({
+                      requestopen: true
+                    });
+                  }}
+                >
+                  <View style={{ marginTop: 60 }}>
+                    <Image
+                      style={{ width: 50, height: 50 }}
+                      source={require("../../assets/img/postbox.png")}
+                    />
+                  </View>
+                </TouchableOpacity>
               </View>
             );
           }}
