@@ -13,13 +13,14 @@ export default (styles = StyleSheet.create({
     flexDirection: "row",
     width: width * 0.2,
     height: height * 0.05,
-    // backgroundColor: "pink",
     borderRadius: 10,
     alignItems: "center",
-    justifyContent: "space-around"
+    justifyContent: "space-between",
+    paddingLeft: 10,
+    paddingRight: 10
   },
   text: {
-    // fontWeight: "bold",
-    fontSize: 18
+    fontSize: 18,
+    fontFamily: "Goyang"
   }
 }));
