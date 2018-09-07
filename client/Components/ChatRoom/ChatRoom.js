@@ -65,7 +65,6 @@ class ChatRoom extends React.Component {
       }
     };
   };
-
   _myuserinfo = async () => {
     var myuserid = await AsyncStorage.getItem("myUserId");
     myuserid = JSON.parse(myuserid);
