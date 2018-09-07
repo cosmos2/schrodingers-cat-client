@@ -1,8 +1,9 @@
 import React, { Component } from "react";
-import { View, Text, Image, StyleSheet, Alert } from "react-native";
+import { View, Text, Image } from "react-native";
 import Store from "../store";
+import styles from "./styles";
 
-export default class Loading extends Component {
+class Loading extends Component {
   state = {
     latitude: null,
     longitude: null,
@@ -35,23 +36,9 @@ export default class Loading extends Component {
     }
   }
   render() {
-    const { latitude, longitude } = this.state;
-    return latitude === null && longitude === null ? (
+    return (
       <View style={styles.container}>
         <Text style={styles.title}>주변 고양이를 찾는중!!</Text>
-        <Store.Consumer>
-          {store => {
-            socket = store.socket;
-          }}
-        </Store.Consumer>
-        <Image
-          style={{ width: 250, height: 250 }}
-          source={require("../../assets/img/loading.gif")}
-        />
-      </View>
-    ) : (
-      <View style={styles.container}>
-        <Text style={styles.title}>찾았다옹!!</Text>
         <Store.Consumer>
           {store => {
             socket = store.socket;
@@ -66,19 +53,4 @@ export default class Loading extends Component {
   }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#f4da6c",
-    alignItems: "center",
-    justifyContent: "center"
-  },
-  title: {
-    color: "white",
-    fontSize: 30,
-    marginTop: 10,
-    fontWeight: "700",
-    marginBottom: 10,
-    fontFamily: "Goyang"
-  }
-});
+export default Loading;

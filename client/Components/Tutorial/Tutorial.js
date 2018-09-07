@@ -4,20 +4,41 @@ import {
   View,
   AsyncStorage,
   Dimensions,
-  StyleSheet,
   TouchableOpacity,
   Image
 } from "react-native";
 import Modal from "react-native-modal";
 import Swiper from "react-native-swiper";
-import Images from "../assets/img/catindex";
+import Images from "../../assets/img/catindex";
+import styles from "../Tutorial/styles";
 
 const { width, height } = Dimensions.get("window");
 
-export default class SelectCat extends Component {
+class Tutorial extends Component {
   state = {
     firstornot: false
   };
+
+  _isFirstTime = async () => {
+    const first = await AsyncStorage.getItem("firstTime");
+    if (first || this.props.tutorial) {
+      this.setState({
+        firstornot: true
+      });
+    }
+  };
+  _closeTutorial = () => {
+    this.setState({ firstornot: false });
+    if (this.props.toggleTutorial) {
+      this._handleTimeout();
+    }
+  };
+  _handleTimeout = () => {
+    setTimeout(() => {
+      this.props.toggleTutorial(1);
+    }, 1100);
+  };
+
   componentDidMount() {
     this._isFirstTime();
   }
@@ -49,7 +70,7 @@ export default class SelectCat extends Component {
             >
               <Image
                 style={{ margin: 15, width: 25, height: 25 }}
-                source={require("../assets/img/cancel.png")}
+                source={require("../../assets/img/cancel.png")}
               />
             </TouchableOpacity>
           </View>
@@ -112,52 +133,6 @@ export default class SelectCat extends Component {
       </View>
     );
   }
-
-  _isFirstTime = async () => {
-    const first = await AsyncStorage.getItem("firstTime");
-    if (first || this.props.tutorial) {
-      this.setState({
-        firstornot: true
-      });
-    }
-  };
-  _closeTutorial = () => {
-    this.setState({ firstornot: false });
-    if (this.props.toggleTutorial) {
-      this._handleTimeout();
-    }
-  };
-  _handleTimeout = () => {
-    setTimeout(() => {
-      this.props.toggleTutorial(1);
-    }, 1100);
-  };
 }
 
-const styles = StyleSheet.create({
-  modalContent: {
-    backgroundColor: "white",
-    //justifyContent: "center",
-    marginTop: 100,
-    marginBottom: 50,
-    //alignItems: "center",
-    borderRadius: 20,
-    borderColor: "black"
-    // width: width * 0.7,
-    // height: height * 0.7
-  },
-  title: {
-    fontFamily: "Goyang",
-    fontSize: 30
-  },
-  wrapper: {
-    justifyContent: "center",
-    alignItems: "center"
-    // backgroundColor: "red"
-  },
-  text: {
-    color: "#fff",
-    fontSize: 30,
-    fontWeight: "bold"
-  }
-});
+export default Tutorial;

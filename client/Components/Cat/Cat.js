@@ -1,28 +1,14 @@
 import React, { Component } from "react";
-import {
-  View,
-  TouchableWithoutFeedback,
-  Image,
-  Animated,
-  StyleSheet
-} from "react-native";
+import { View, TouchableWithoutFeedback, Image, Animated } from "react-native";
 import Store from "../store";
+import images from "../../assets/img/catindex";
 
-export default class Cat extends Component {
+class Cat extends Component {
   constructor(props) {
     super(props);
     this.state = {
       catId: this.props.id,
       animatePress: new Animated.Value(1)
-    };
-    this.images = {
-      1: require("../../assets/img/cat1.png"),
-      2: require("../../assets/img/cat2.png"),
-      3: require("../../assets/img/cat3.png"),
-      4: require("../../assets/img/cat4.png"),
-      5: require("../../assets/img/cat5.png"),
-      6: require("../../assets/img/cat6.png"),
-      7: require("../../assets/img/cat7.png")
     };
   }
 
@@ -67,7 +53,7 @@ export default class Cat extends Component {
                 onPressIn={() => this.animateIn()}
                 onPressOut={() => this.animateOut(catId, store)}
               >
-                <View style={styles.container}>
+                <View>
                   <Animated.View
                     style={{
                       transform: [
@@ -85,7 +71,7 @@ export default class Cat extends Component {
                     }}
                   >
                     <Image
-                      source={this.images[catId]}
+                      source={images[catId]}
                       style={{ width: 42, height: 42 }}
                     />
                   </Animated.View>
@@ -99,6 +85,4 @@ export default class Cat extends Component {
   }
 }
 
-const styles = StyleSheet.create({
-  container: {}
-});
+export default Cat;

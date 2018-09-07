@@ -78,8 +78,7 @@ export default class CatsList extends Component {
                                 this.props.myuserid === item.userId ||
                                 this.state.myattacknum <= 0
                               )
-                              ? // && (this.props.myuserid === item.userId && item.hp <= 0)
-                                true
+                              ? true
                               : !!(
                                   this.state.attackmode ||
                                   this.state.healingmode
@@ -139,7 +138,6 @@ export default class CatsList extends Component {
                       </TouchableWithoutFeedback>
                       <View style={{ flexDirection: "column" }}>
                         <Text style={styles.nickname}>{item.nickname}</Text>
-                        {/* <Text style={styles.subtitle}>ID : {item.userId}</Text> */}
                         <View style={{ flexDirection: "row", marginTop: 3 }}>
                           <Text style={styles.subtitle}>HP : </Text>
                           <Image

@@ -15,11 +15,11 @@ import CatsList from "../CatsList/CatsList";
 import Chat from "../Chat/Chat";
 
 const { width, height } = Dimensions.get("window");
-export default class ChatRoom extends React.Component {
+class ChatRoom extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      myuserid: 10,
+      myuserid: 0,
       mycatid: 0,
       mynickname: "",
       appState: AppState.currentState
@@ -40,21 +40,7 @@ export default class ChatRoom extends React.Component {
         height: height * 0.07
       },
       headerLeftContainerStyle: { marginLeft: 10 },
-      headerLeft: (
-        <Store.Consumer>
-          {store => {
-            return (
-              <Timer
-                resetchat={store.resetchat}
-                socket={store.socket}
-                leftTime={store.leftTime}
-                organizedTime={store.organizedTime}
-                explodeChatRoom={params.explodeChatRoom}
-              />
-            );
-          }}
-        </Store.Consumer>
-      ),
+      headerLeft: <Timer explodeChatRoom={params.explodeChatRoom} />,
       headerRightContainerStyle: { marginRight: 15 },
       headerRight: (
         <Store.Consumer>
@@ -78,44 +64,6 @@ export default class ChatRoom extends React.Component {
       }
     };
   };
-  componentDidUpdate() {
-    context.muteornot
-      ? this.props.navigation.navigate("MuteScreen")
-      : this.props.navigation.navigate("ChatRoomScreen");
-  }
-
-  componentWillMount() {
-    this._myuserinfo();
-  }
-
-  componentDidMount() {
-    AppState.addEventListener("change", this._handleAppStateChange);
-    this.props.navigation.setParams({
-      exitChat: this._exitChat,
-      explodeChatRoom: this._explodeChatRoom
-    });
-  }
-
-  componentWillUnmount() {
-    AppState.removeEventListener("change", this._handleAppStateChange);
-  }
-
-  render() {
-    return (
-      <View style={styles.container}>
-        <View style={styles.chatroom}>
-          <Chat />
-        </View>
-        <View style={styles.options}>
-          <View style={styles.catsstate}>
-            <View style={styles.statespace}>
-              <CatsList myuserid={this.state.myuserid} />
-            </View>
-          </View>
-        </View>
-      </View>
-    );
-  }
 
   _myuserinfo = async () => {
     var myuserid = await AsyncStorage.getItem("myUserId");
@@ -152,15 +100,58 @@ export default class ChatRoom extends React.Component {
   };
 
   // 앱이 백그라운드에서 다시 돌아왔을 때 실행
-  _handleAppStateChange = nextAppState => {
-    if (
-      this.state.appState.match(/inactive|background/) &&
-      nextAppState === "active"
-    ) {
-      context.socket.emit("leftTime");
-    }
-    this.setState({ appState: nextAppState });
-  };
+  // _handleAppStateChange = nextAppState => {
+  //   if (
+  //     this.state.appState.match(/inactive|background/) &&
+  //     nextAppState === "active"
+  //   ) {
+  //     context.socket.emit("leftTime");
+  //   }
+  //   this.setState({ appState: nextAppState });
+  // };
+
+  shouldComponentUpdate(nextProps, nextState) {
+    return this.state !== nextState;
+  }
+  componentDidUpdate(prevProps, prevState) {
+    // console.log("CDU");
+    context.muteornot
+      ? this.props.navigation.navigate("MuteScreen")
+      : this.props.navigation.navigate("ChatRoomScreen");
+  }
+
+  componentDidMount() {
+    // console.log("CDM");
+    this._myuserinfo();
+    // AppState.addEventListener("change", this._handleAppStateChange);
+    this.props.navigation.setParams({
+      exitChat: this._exitChat,
+      explodeChatRoom: this._explodeChatRoom
+    });
+  }
+
+  componentWillUnmount() {
+    // console.log("CWM");
+    // AppState.removeEventListener("change", this._handleAppStateChange);
+  }
+
+  render() {
+    // console.log("chatRoom");
+    return (
+      <View style={styles.container}>
+        <View style={styles.chatroom}>
+          <Chat />
+        </View>
+        <View style={styles.options}>
+          <View style={styles.catsstate}>
+            <View style={styles.statespace}>
+              <CatsList myuserid={this.state.myuserid} />
+            </View>
+          </View>
+        </View>
+      </View>
+    );
+  }
 }
 
 const styles = StyleSheet.create({
@@ -194,3 +185,5 @@ const styles = StyleSheet.create({
     // backgroundColor: "green"
   }
 });
+
+export default ChatRoom;
