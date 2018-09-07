@@ -62,7 +62,7 @@ class EditProfile extends React.Component {
             </View>
             <Store.Consumer>
               {store => {
-                return store.myInfo._enterCount > 40 ? (
+                return store.myInfo._enterCount > 100 ? (
                   <View style={styles.cats}>
                     <Cat key={7} id={7} sendCatInfom={this._sendCatInfom} />
                   </View>
