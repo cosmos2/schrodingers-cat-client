@@ -1,6 +1,5 @@
 import React from "react";
 import {
-  StyleSheet,
   View,
   Image,
   TouchableOpacity,
@@ -11,36 +10,16 @@ import {
 } from "react-native";
 import Store from "../store";
 import { Icon } from "react-native-elements";
-import Tutorial from "../Tutorial";
+import Tutorial from "../Tutorial/Tutorial";
+import styles from "./styles";
 
 const { width, height } = Dimensions.get("window");
 
-export default class OpenBox extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      latitude: 0,
-      longitude: 0,
-      tutorial: false
-    };
-
-    this._handlePressIn = this._handlePressIn.bind(this);
-    this._handlePressOut = this._handlePressOut.bind(this);
-  }
-
-  _handlePressIn() {
-    Animated.spring(this.animatedValue, {
-      toValue: 0.5
-    }).start();
-  }
-  _handlePressOut() {
-    Animated.spring(this.animatedValue, {
-      toValue: 1,
-      friction: 3,
-      tension: 40
-    }).start();
-  }
+class OpenBox extends React.Component {
+  state = {
+    tutorial: false,
+    animatedValue: new Animated.Value(1)
+  };
 
   static navigationOptions = ({ navigation }) => {
     const { params = {} } = navigation.state;
@@ -99,67 +78,9 @@ export default class OpenBox extends React.Component {
       )
     };
   };
-  componentDidMount() {
-    this.props.navigation.setParams({
-      openProfile: this._openProfile
-    });
-    this.props.navigation.setParams({
-      toggleTutorial: this._toggleTutorial
-    });
-  }
-  componentWillMount() {
-    this.animatedValue = new Animated.Value(1);
-  }
-  componentWillUnmount() {
-    clearTimeout(this.timeoutHandler);
-  }
-  render() {
-    const animatedStyle = {
-      transform: [{ scale: this.animatedValue }]
-    };
-    return (
-      <View style={styles.container}>
-        {this.state.tutorial ? (
-          <Tutorial
-            tutorial={this.state.tutorial}
-            toggleTutorial={this._toggleTutorial}
-          />
-        ) : null}
-        <Text style={styles.text}>상자속에 고양이들이 있을 것 같다옹</Text>
-        <Store.Consumer>
-          {store => {
-            return (
-              <TouchableWithoutFeedback
-                onPressIn={this._handlePressIn}
-                // onPressOut={}
-                onPressOut={() => {
-                  this._handlePressOut();
-                  setTimeout(() => {
-                    this._findRoom(store.socket);
-                  }, 500);
-                }}
-              >
-                <Animated.View style={animatedStyle}>
-                  <Image
-                    style={{ width: 250, height: 250 }}
-                    source={require("../../assets/img/openBox.gif")}
-                  />
-                </Animated.View>
-              </TouchableWithoutFeedback>
-            );
-          }}
-        </Store.Consumer>
-      </View>
-    );
-  }
-  _findRoom = async socket => {
-    // const { latitude, longitude } = this.state;
-    try {
-      // await socket.emit("findRoom", { latitude, longitude });
-      await this.props.navigation.navigate("LoadingScreen");
-    } catch (err) {
-      console.log(err);
-    }
+
+  _findRoom = () => {
+    this.props.navigation.navigate("LoadingScreen");
   };
   _openProfile = async socket => {
     try {
@@ -176,17 +97,65 @@ export default class OpenBox extends React.Component {
       this.setState({ tutorial: true });
     }
   };
+  _handlePressIn = () => {
+    Animated.spring(this.state.animatedValue, {
+      toValue: 0.8
+    }).start();
+  };
+  _handlePressOut = () => {
+    Animated.spring(this.state.animatedValue, {
+      toValue: 1,
+      friction: 3,
+      tension: 60
+    }).start();
+  };
+
+  componentDidMount() {
+    this.props.navigation.setParams({
+      openProfile: this._openProfile
+    });
+    this.props.navigation.setParams({
+      toggleTutorial: this._toggleTutorial
+    });
+  }
+
+  render() {
+    return (
+      <View style={styles.container}>
+        {this.state.tutorial ? (
+          <Tutorial
+            tutorial={this.state.tutorial}
+            toggleTutorial={this._toggleTutorial}
+          />
+        ) : null}
+        <Text style={styles.text}>상자속에 고양이들이 있을 것 같다옹</Text>
+        <TouchableWithoutFeedback
+          onPressIn={this._handlePressIn}
+          onPressOut={() => {
+            this._handlePressOut();
+            setTimeout(() => {
+              this._findRoom();
+            }, 500);
+          }}
+        >
+          <Animated.View
+            style={{
+              transform: [
+                {
+                  scale: this.state.animatedValue
+                }
+              ]
+            }}
+          >
+            <Image
+              style={{ width: 250, height: 250 }}
+              source={require("../../assets/img/openBox.gif")}
+            />
+          </Animated.View>
+        </TouchableWithoutFeedback>
+      </View>
+    );
+  }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#FCFCFC",
-    alignItems: "center",
-    justifyContent: "center"
-  },
-  text: {
-    fontFamily: "Goyang",
-    fontSize: 20
-  }
-});
+export default OpenBox;

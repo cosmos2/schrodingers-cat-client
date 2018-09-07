@@ -4,22 +4,11 @@ import Store from "../store";
 import { Icon } from "react-native-elements";
 import styles from "./styles";
 import ElevatedView from "react-native-elevated-view";
+import images from "../../assets/img/catindex";
 
 const { width, height } = Dimensions.get("window");
 
-export default class Profile extends React.Component {
-  constructor(props) {
-    super(props);
-    this.images = {
-      1: require("../../assets/img/cat1.png"),
-      2: require("../../assets/img/cat2.png"),
-      3: require("../../assets/img/cat3.png"),
-      4: require("../../assets/img/cat4.png"),
-      5: require("../../assets/img/cat5.png"),
-      6: require("../../assets/img/cat6.png"),
-      7: require("../../assets/img/cat7.png")
-    };
-  }
+class Profile extends React.Component {
   static navigationOptions = ({ navigation }) => {
     const { params = {} } = navigation.state;
     return {
@@ -79,7 +68,7 @@ export default class Profile extends React.Component {
               <View style={styles.card}>
                 <View style={styles.profilecat}>
                   <Image
-                    source={this.images[store.myInfo.catImage]}
+                    source={images[store.myInfo.catImage]}
                     style={{ width: 42, height: 42 }}
                   />
                 </View>
@@ -108,3 +97,5 @@ export default class Profile extends React.Component {
     );
   }
 }
+
+export default Profile;

@@ -1,25 +1,26 @@
 import React from "react";
 import {
-  StyleSheet,
   Text,
   View,
   Alert,
-  Dimensions,
   AsyncStorage,
-  AppState
+  AppState,
+  Dimensions
 } from "react-native";
 import { Icon } from "react-native-elements";
 import Timer from "../Timer";
 import Store from "../store";
 import CatsList from "../CatsList/CatsList";
 import Chat from "../Chat/Chat";
+import styles from "./styles";
 
-const { width, height } = Dimensions.get("window");
-export default class ChatRoom extends React.Component {
+const { height } = Dimensions.get("window");
+
+class ChatRoom extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      myuserid: 10,
+      myuserid: 0,
       mycatid: 0,
       mynickname: "",
       appState: AppState.currentState
@@ -40,21 +41,7 @@ export default class ChatRoom extends React.Component {
         height: height * 0.07
       },
       headerLeftContainerStyle: { marginLeft: 10 },
-      headerLeft: (
-        <Store.Consumer>
-          {store => {
-            return (
-              <Timer
-                resetchat={store.resetchat}
-                socket={store.socket}
-                leftTime={store.leftTime}
-                organizedTime={store.organizedTime}
-                explodeChatRoom={params.explodeChatRoom}
-              />
-            );
-          }}
-        </Store.Consumer>
-      ),
+      headerLeft: <Timer explodeChatRoom={params.explodeChatRoom} />,
       headerRightContainerStyle: { marginRight: 15 },
       headerRight: (
         <Store.Consumer>
@@ -78,44 +65,6 @@ export default class ChatRoom extends React.Component {
       }
     };
   };
-  componentDidUpdate() {
-    context.muteornot
-      ? this.props.navigation.navigate("MuteScreen")
-      : this.props.navigation.navigate("ChatRoomScreen");
-  }
-
-  componentWillMount() {
-    this._myuserinfo();
-  }
-
-  componentDidMount() {
-    AppState.addEventListener("change", this._handleAppStateChange);
-    this.props.navigation.setParams({
-      exitChat: this._exitChat,
-      explodeChatRoom: this._explodeChatRoom
-    });
-  }
-
-  componentWillUnmount() {
-    AppState.removeEventListener("change", this._handleAppStateChange);
-  }
-
-  render() {
-    return (
-      <View style={styles.container}>
-        <View style={styles.chatroom}>
-          <Chat />
-        </View>
-        <View style={styles.options}>
-          <View style={styles.catsstate}>
-            <View style={styles.statespace}>
-              <CatsList myuserid={this.state.myuserid} />
-            </View>
-          </View>
-        </View>
-      </View>
-    );
-  }
 
   _myuserinfo = async () => {
     var myuserid = await AsyncStorage.getItem("myUserId");
@@ -150,47 +99,34 @@ export default class ChatRoom extends React.Component {
   _explodeChatRoom = () => {
     this.props.navigation.navigate("OpenBoxScreen");
   };
-
-  // 앱이 백그라운드에서 다시 돌아왔을 때 실행
-  _handleAppStateChange = nextAppState => {
-    if (
-      this.state.appState.match(/inactive|background/) &&
-      nextAppState === "active"
-    ) {
-      context.socket.emit("leftTime");
-    }
-    this.setState({ appState: nextAppState });
-  };
+  componentDidUpdate(prevProps, prevState) {
+    context.muteornot
+      ? this.props.navigation.navigate("MuteScreen")
+      : this.props.navigation.navigate("ChatRoomScreen");
+  }
+  componentDidMount() {
+    this._myuserinfo();
+    this.props.navigation.setParams({
+      exitChat: this._exitChat,
+      explodeChatRoom: this._explodeChatRoom
+    });
+  }
+  render() {
+    return (
+      <View style={styles.container}>
+        <View style={styles.chatroom}>
+          <Chat />
+        </View>
+        <View style={styles.options}>
+          <View style={styles.catsstate}>
+            <View style={styles.statespace}>
+              <CatsList myuserid={this.state.myuserid} />
+            </View>
+          </View>
+        </View>
+      </View>
+    );
+  }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fcfcfc",
-    alignItems: "center",
-    justifyContent: "center"
-  },
-  catsstate: {
-    flex: 1,
-    width: width * 0.9,
-    alignItems: "center"
-  },
-  statespace: {
-    width: width * 0.96,
-    flex: 1
-    //margin: 5
-  },
-  chatroom: {
-    flex: 1,
-    width: width,
-    margin: 5
-    //backgroundColor: "green"
-  },
-  options: {
-    flex: 0.7,
-    width: width * 0.9,
-    justifyContent: "center",
-    alignItems: "center"
-    // backgroundColor: "green"
-  }
-});
+export default ChatRoom;

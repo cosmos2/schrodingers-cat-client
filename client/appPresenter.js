@@ -36,35 +36,37 @@ const AppNavigator = createStackNavigator(
   }
 );
 const thisroomcats = "";
-export default class AppPresenter extends React.Component {
+class AppPresenter extends React.Component {
   constructor(props) {
     super(props);
 
-    // <--------------          socket           --------------> //
+    // <--------------          socket start          --------------> //
 
+    // 소켓 연결
     this._socket = SocketIOClient("https://catadmin.gq", {
       query: this.props.token,
       transports: ["websocket"]
     });
 
+    // 프로필에 들어갈 때 유저 정보를 받아올 때 사용
     this._socket.on("info", myInfo => {
-      // console.log(myInfo, "    this is myInfo");
       this.setState({
         myInfo
       });
     });
 
+    // 채팅방 입장할 때 채팅방의 정보를 받아옴
     this._socket.on("findRoom", (users, leftTime) => {
       const time = 100 + leftTime - Math.floor(new Date().getTime() / 1000);
       this.setState({
         roomusers: JSON.parse(users),
         organizedTime: time,
         leftTime,
-        chatOver: false,
         typing: ""
       });
     });
 
+    // 소켓과의 연결이 끝어졌을 때 채팅 관련 정보를 지움
     this._socket.on("disconnect", async () => {
       await this.setState({
         disconnectornot: true
@@ -88,23 +90,12 @@ export default class AppPresenter extends React.Component {
       });
     });
 
+    // 고양이 아이디와 함께 info 이밴트 발생시 유저 정보를 받아온다
     this._socket.on("selectCat", userInfo => {
       this._getUserInfo(userInfo);
     });
 
-    this._socket.on("fill", data => {
-      var arr = this.state.roomusers.slice();
-      var arr2 = [...arr];
-      for (var i = 0; i < arr2.length; i++) {
-        if (data === arr2[i].socketId) {
-          arr2[i].hp = 7;
-        }
-      }
-      this.setState({
-        roomusers: arr2
-      });
-    });
-
+    // 펀치를 날렸을 때 발생
     this._socket.on("hit", data => {
       var arr = this.state.roomusers.slice();
       var arr2 = [...arr];
@@ -123,23 +114,42 @@ export default class AppPresenter extends React.Component {
       });
     });
 
+    // 채팅방 시간이 다 되었을 때 발생
     this._socket.on("timeOut", () => {
       this.setState({
         chatOver: true
       });
     });
 
+    // 누군가 타이핑을 하고 있을 때 발생
     this._socket.on("typing", data => {
       this.setState({
         typing: data.nickname + "is typing"
       });
     });
 
-    this._socket.on("leftTime", leftTime => {
-      this.setState({ leftTime });
+    // 뮤트 이후에 hp 회복
+    this._socket.on("fill", data => {
+      var arr = this.state.roomusers.slice();
+      var arr2 = [...arr];
+      for (var i = 0; i < arr2.length; i++) {
+        if (data === arr2[i].socketId) {
+          arr2[i].hp = 7;
+        }
+      }
+      this.setState({
+        roomusers: arr2
+      });
     });
 
-    // <-------------------           socket            -------------------> //
+    // 채팅중에 앱이 inactive 였다가 다시 active 되었을 때 남은 시간을 받아옴
+    // this._socket.on("leftTime", leftTime => {
+    //   this.setState({ leftTime });
+    // });
+
+    // <-------------------           socket end           -------------------> //
+
+    // <-------------------           function start           -------------------> //
 
     //새로 들어온 채팅을 추가해 messages라는 state에 저장하기 위함
     this._storemessage = chat => {
@@ -210,22 +220,23 @@ export default class AppPresenter extends React.Component {
       }
     };
 
+    // <-------------------           function end           -------------------> //
+
     this.state = {
       fontLoaded: false,
       socket: this._socket,
       roomusers: [],
       myInfo: {},
       messages: [],
-      leftTime: 600,
+      leftTime: "",
       resetchat: this._resetchat,
       muteornot: false,
-      mutecontrol: this._muteControl,
-      test: this._test,
       mutepushcount: 0,
       disconnectornot: false,
       disconnectcontrol: this._disconnectControl,
       chatOver: false,
-      typing: thisroomcats
+      typing: thisroomcats,
+      organizedTime: ""
     };
   }
 
@@ -248,3 +259,5 @@ export default class AppPresenter extends React.Component {
     ) : null;
   }
 }
+
+export default AppPresenter;

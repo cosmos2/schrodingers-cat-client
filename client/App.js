@@ -3,7 +3,7 @@ import { AsyncStorage } from "react-native";
 import AppPresenter from "./appPresenter";
 import axios from "axios";
 
-export default class Index extends React.Component {
+class Index extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -11,6 +11,13 @@ export default class Index extends React.Component {
       myUserId: 0
     };
   }
+  _checkUser = async () => {
+    const response = await axios.post("https://catadmin.gq/init/1");
+    await AsyncStorage.setItem("token", JSON.stringify(response.data));
+    await AsyncStorage.setItem("firstTime", "firstTime");
+    const token = response.data.query;
+    this.setState({ token, firstStart: true });
+  };
   async componentDidMount() {
     try {
       // await AsyncStorage.removeItem("token");
@@ -21,17 +28,15 @@ export default class Index extends React.Component {
         this.setState({
           myUserId: JSON.parse(myUserId).userId
         });
+      } else if (myUserId === null && getToken) {
+        this._checkUser();
       }
       if (getToken !== null) {
         const token = JSON.parse(getToken).query;
         this.setState({ token });
       } else {
         // when run at the first time
-        const response = await axios.post("https://catadmin.gq/init/1");
-        await AsyncStorage.setItem("token", JSON.stringify(response.data));
-        await AsyncStorage.setItem("firstTime", "firstTime");
-        const token = response.data.query;
-        this.setState({ token, firstStart: true });
+        this._checkUser();
       }
     } catch (err) {
       console.log(err);
@@ -47,3 +52,5 @@ export default class Index extends React.Component {
     );
   }
 }
+
+export default Index;

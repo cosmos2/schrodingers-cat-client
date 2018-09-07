@@ -3,7 +3,7 @@ import { View, Text } from "react-native";
 import styles from "./styles";
 import { Icon } from "react-native-elements";
 
-export default class TimePicker extends Component {
+class TimePicker extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -13,10 +13,14 @@ export default class TimePicker extends Component {
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
+    // console.log(nextProps.time, "내려받는 시간");
     if (nextProps.time < prevState.timeLimit) {
       return { timeOver: true };
     }
     return null;
+  }
+  shouldComponentUpdate(nextProps, nextState) {
+    return this.props.time !== nextProps.time;
   }
   componentDidUpdate(prevProps, prevState) {
     if (prevState.timeOver !== this.state.timeOver) {
@@ -33,3 +37,5 @@ export default class TimePicker extends Component {
     );
   }
 }
+
+export default TimePicker;

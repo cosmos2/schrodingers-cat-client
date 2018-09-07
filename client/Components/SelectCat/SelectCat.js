@@ -1,23 +1,12 @@
 import React, { Component } from "react";
-import {
-  Text,
-  View,
-  AsyncStorage,
-  Dimensions,
-  StyleSheet,
-  TouchableOpacity,
-  Image
-} from "react-native";
+import { Text, View, AsyncStorage, Dimensions } from "react-native";
 import Cat from "../Cat/Cat";
 import styles from "./styles";
-import Modal from "react-native-modal";
-import Tutorial from "../Tutorial";
+import Tutorial from "../Tutorial/Tutorial";
 
 const { width, height } = Dimensions.get("window");
-export default class SelectCat extends Component {
-  state = {
-    firstornot: false
-  };
+
+class SelectCat extends Component {
   static navigationOptions = {
     headerTitle: (
       <View style={{ alignItems: "center", flex: 1 }}>
@@ -32,9 +21,18 @@ export default class SelectCat extends Component {
     },
     headerLeft: null
   };
-  componentWillMount() {
-    this._isFirstTime();
-  }
+
+  // 고양이를 누르면 고양이 정보를 보내주고 화면을 넘김
+  _sendCatInfom = async (catId, store) => {
+    try {
+      await store.socket.emit("info", catId);
+      await AsyncStorage.removeItem("firstTime");
+      await this.props.navigation.navigate("OpenBoxScreen");
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   render() {
     const upperCats = [1, 2, 3];
     const lowerCats = [4, 5, 6];
@@ -61,24 +59,6 @@ export default class SelectCat extends Component {
       </View>
     );
   }
-
-  // 고양이를 누르면 고양이 정보를 보내주고 화면을 넘김
-  _sendCatInfom = async (catId, store) => {
-    try {
-      await store.socket.emit("info", catId);
-      await AsyncStorage.removeItem("firstTime");
-      await this.props.navigation.navigate("OpenBoxScreen");
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  _isFirstTime = async () => {
-    const first = await AsyncStorage.getItem("firstTime");
-    if (first) {
-      this.setState({
-        firstornot: true
-      });
-    }
-  };
 }
+
+export default SelectCat;

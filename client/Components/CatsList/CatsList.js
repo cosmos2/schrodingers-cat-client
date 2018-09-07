@@ -1,11 +1,8 @@
 import React, { Component } from "react";
 import {
-  StyleSheet,
   Text,
   View,
-  Dimensions,
   Image,
-  TouchableOpacity,
   TouchableWithoutFeedback,
   Animated,
   Vibration
@@ -13,11 +10,9 @@ import {
 import Images from "../../assets/img/catindex";
 import Store from "../store";
 import AwesomeButtonRick from "react-native-really-awesome-button/src/themes/rick";
-import Modal from "react-native-modal";
+import styles from "./styles";
 
-const { width, height } = Dimensions.get("window");
-
-export default class CatsList extends Component {
+class CatsList extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -78,8 +73,7 @@ export default class CatsList extends Component {
                                 this.props.myuserid === item.userId ||
                                 this.state.myattacknum <= 0
                               )
-                              ? // && (this.props.myuserid === item.userId && item.hp <= 0)
-                                true
+                              ? true
                               : !!(
                                   this.state.attackmode ||
                                   this.state.healingmode
@@ -139,7 +133,6 @@ export default class CatsList extends Component {
                       </TouchableWithoutFeedback>
                       <View style={{ flexDirection: "column" }}>
                         <Text style={styles.nickname}>{item.nickname}</Text>
-                        {/* <Text style={styles.subtitle}>ID : {item.userId}</Text> */}
                         <View style={{ flexDirection: "row", marginTop: 3 }}>
                           <Text style={styles.subtitle}>HP : </Text>
                           <Image
@@ -218,7 +211,7 @@ export default class CatsList extends Component {
                   )
                 ) : (
                   <View style={styles.attack}>
-                    <Text>뮤트 시 공격 불가</Text>
+                    <Text>조용히 있으라옹</Text>
                   </View>
                 )}
               </View>
@@ -230,116 +223,4 @@ export default class CatsList extends Component {
   }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center"
-  },
-  state: {
-    flex: 1,
-    width: width * 0.99,
-    flexDirection: "row",
-    borderRadius: 10,
-    flexWrap: "wrap"
-  },
-  attackspace: {
-    flex: 0.25,
-    width: width
-    //backgroundColor: "#f4da6c"
-  },
-  eachcat: {
-    width: "50%",
-    height: "50%",
-    // borderColor: "black",
-    // borderWidth: 0.5,
-    // borderRadius: 40,
-    flexDirection: "row",
-    alignItems: "center"
-  },
-  attacktext: {
-    color: "#ef6f6f",
-    fontSize: 15,
-    fontWeight: "500",
-    fontFamily: "Goyang"
-  },
-  punchtext: {
-    color: "white",
-    fontSize: 15,
-    fontWeight: "500",
-    fontFamily: "Goyang"
-  },
-  noenergytext: {
-    color: "black",
-    fontSize: 15,
-    fontWeight: "500",
-    fontFamily: "Goyang"
-  },
-  subtitle: {
-    color: "black",
-    fontSize: 13,
-    marginTop: 5,
-    marginLeft: 1,
-    fontWeight: "500",
-    fontWeight: "bold",
-    fontFamily: "Goyang"
-  },
-  catImage: {
-    // marginTop: 6,
-    // marginLeft: 10,
-    width: 50,
-    height: 50,
-    shadowColor: "black",
-    shadowOffset: { height: 2 },
-    shadowOpacity: 0.3
-  },
-  catBorder: {
-    borderColor: "#6dd3fe",
-    borderRadius: 40,
-    borderWidth: 5,
-    width: 80,
-    height: 80,
-    justifyContent: "center",
-    alignItems: "center"
-  },
-  mycatBorder: {
-    borderColor: "#f4da6c",
-    borderRadius: 40,
-    borderWidth: 5,
-    width: 80,
-    height: 80,
-    justifyContent: "center",
-    alignItems: "center"
-  },
-  nickname: {
-    color: "black",
-    fontSize: 13,
-    marginTop: 5,
-    marginLeft: 2,
-    fontWeight: "500",
-    fontWeight: "bold"
-    //fontFamily: "Goyang"
-  },
-  attack: {
-    justifyContent: "center",
-    alignItems: "center",
-    flexDirection: "row",
-    flex: 1,
-    backgroundColor: "#f4da6c",
-    borderColor: "#f4da6c",
-    borderRadius: 40,
-    borderWidth: 3,
-    marginLeft: 50,
-    marginRight: 50,
-    marginBottom: 10
-  },
-  attackBtn: {
-    justifyContent: "center",
-    alignItems: "center",
-    flexDirection: "row",
-    flex: 1,
-    marginLeft: 50,
-    marginRight: 50,
-    marginBottom: 5
-  }
-});
+export default CatsList;

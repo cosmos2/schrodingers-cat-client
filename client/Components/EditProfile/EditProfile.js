@@ -6,18 +6,9 @@ import styles from "./styles";
 
 const { height } = Dimensions.get("window");
 
-export default class EditProfile extends React.Component {
+class EditProfile extends React.Component {
   constructor(props) {
     super(props);
-    this.images = {
-      1: require("../../assets/img/cat1.png"),
-      2: require("../../assets/img/cat2.png"),
-      3: require("../../assets/img/cat3.png"),
-      4: require("../../assets/img/cat4.png"),
-      5: require("../../assets/img/cat5.png"),
-      6: require("../../assets/img/cat6.png"),
-      7: require("../../assets/img/cat7.png")
-    };
     this.state = {
       socket: this.props.navigation.state.params.socket
     };
@@ -39,6 +30,16 @@ export default class EditProfile extends React.Component {
       fontWeight: "bold"
     }
   };
+
+  _sendCatInfom = async (catId, store) => {
+    try {
+      await store.socket.emit("info", catId);
+      await this.props.navigation.navigate("OpenBoxScreen");
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   render() {
     const upperCats = [1, 2, 3];
     const lowerCats = [4, 5, 6];
@@ -61,7 +62,7 @@ export default class EditProfile extends React.Component {
             </View>
             <Store.Consumer>
               {store => {
-                return store.myInfo._enterCount > 40 ? (
+                return store.myInfo._enterCount > 100 ? (
                   <View style={styles.cats}>
                     <Cat key={7} id={7} sendCatInfom={this._sendCatInfom} />
                   </View>
@@ -73,12 +74,6 @@ export default class EditProfile extends React.Component {
       </View>
     );
   }
-  _sendCatInfom = async (catId, store) => {
-    try {
-      await store.socket.emit("info", catId);
-      await this.props.navigation.navigate("OpenBoxScreen");
-    } catch (err) {
-      console.log(err);
-    }
-  };
 }
+
+export default EditProfile;

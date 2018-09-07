@@ -1,14 +1,28 @@
 import React, { Component } from "react";
 import { View, Text, Image, StyleSheet, AppState } from "react-native";
 import Store from "../store";
+import styles from "./styles";
 
-class test extends Component {
-  static navigationOptions = {
-    header: null
-  };
+class Disconnect extends Component {
   state = {
     appState: AppState.currentState
   };
+  static navigationOptions = {
+    header: null
+  };
+
+  _handleAppStateChange = nextAppState => {
+    if (
+      this.state.appState.match(/inactive|background/) &&
+      nextAppState === "active"
+    ) {
+      this.timeoutHandle = setTimeout(() => {
+        context.disconnectcontrol();
+      }, 1500);
+    }
+    this.setState({ appState: nextAppState });
+  };
+
   componentDidMount() {
     AppState.addEventListener("change", this._handleAppStateChange);
     if (this.state.appState === "active") {
@@ -22,18 +36,6 @@ class test extends Component {
     AppState.removeEventListener("change", this._handleAppStateChange);
     clearTimeout(this.timeoutHandle);
   }
-
-  _handleAppStateChange = nextAppState => {
-    if (
-      this.state.appState.match(/inactive|background/) &&
-      nextAppState === "active"
-    ) {
-      this.timeoutHandle = setTimeout(() => {
-        context.disconnectcontrol();
-      }, 1500);
-    }
-    this.setState({ appState: nextAppState });
-  };
 
   render() {
     return (
@@ -49,20 +51,4 @@ class test extends Component {
   }
 }
 
-export default test;
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#FCFCFC",
-    alignItems: "center",
-    justifyContent: "center"
-  },
-  title: {
-    color: "#FFAA0E",
-    fontFamily: "Goyang",
-    fontSize: 35,
-    marginTop: 10,
-    fontWeight: "900",
-    marginBottom: 10
-  }
-});
+export default Disconnect;

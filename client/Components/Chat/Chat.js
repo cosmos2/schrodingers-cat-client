@@ -1,19 +1,12 @@
 import React from "react";
-import {
-  StyleSheet,
-  Text,
-  View,
-  Image,
-  Dimensions,
-  AsyncStorage
-} from "react-native";
+import { Text, View, Image, AsyncStorage } from "react-native";
 import AutoScroll from "react-native-auto-scroll";
 import Images from "../../assets/img/catindex";
 import Store from "../store";
 import ChatInput from "../ChatInput/ChatInput";
+import styles from "./styles";
 
-const { width } = Dimensions.get("window");
-export default class ChatRoom extends React.Component {
+class ChatRoom extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -26,7 +19,7 @@ export default class ChatRoom extends React.Component {
     };
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this._myuserinfo();
   }
   render() {
@@ -90,61 +83,4 @@ export default class ChatRoom extends React.Component {
   };
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fcfcfc",
-    alignItems: "center",
-    justifyContent: "center"
-  },
-  statetext: {
-    color: "black",
-    fontSize: 15,
-    marginBottom: 5,
-    fontWeight: "500",
-    fontFamily: "Goyang"
-  },
-  mychat: {
-    alignItems: "flex-end"
-    //backgroundColor: "red"
-  },
-  chatfont: {
-    fontSize: 15,
-    fontWeight: "500",
-    fontFamily: "Goyang"
-  },
-  eachmychat: {
-    //width: width * 0.7,
-    borderRadius: 10,
-    margin: 5,
-    padding: 8,
-    justifyContent: "flex-end",
-    backgroundColor: "#F4E39D",
-    flexDirection: "row"
-    //backgroundColor: "red"
-  },
-  eachotherschat: {
-    margin: 5,
-    padding: 8,
-    //width: width * 0.7,
-    borderRadius: 10,
-    backgroundColor: "#C4E1DE",
-    flexDirection: "row"
-  },
-  chats: {
-    flex: 1,
-    marginBottom: 5,
-    width: width
-  },
-  chatinput: {
-    flex: 0.15,
-    flexDirection: "row"
-  },
-  subtitle: {
-    color: "black",
-    fontSize: 20,
-    marginTop: 20,
-    fontWeight: "500",
-    fontWeight: "bold"
-  }
-});
+export default ChatRoom;
