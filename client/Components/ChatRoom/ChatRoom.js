@@ -65,61 +65,6 @@ class ChatRoom extends React.Component {
       }
     };
   };
-<<<<<<< HEAD
-=======
-  componentDidUpdate() {
-    console.log(context.muteornot, "hihihi");
-    context.muteornot
-      ? this.props.navigation.navigate("MuteScreen")
-      : this.props.navigation.navigate("ChatRoomScreen");
-  }
-
-  componentWillMount() {
-    this._myuserinfo();
-  }
-
-  componentDidMount() {
-    AppState.addEventListener("change", this._handleAppStateChange);
-    this.props.navigation.setParams({
-      exitChat: this._exitChat,
-      explodeChatRoom: this._explodeChatRoom
-    });
-    this.keyboardDidShowListener = Keyboard.addListener(
-      "keyboardDidShow",
-      this._keyboardDidShow
-    );
-  }
-
-  _keyboardDidShow = () => {
-    this.setState({
-      chatting: true
-    });
-  };
-
-  componentWillUnmount() {
-    AppState.removeEventListener("change", this._handleAppStateChange);
-    this.keyboardDidShowListener.remove();
-  }
-
-  render() {
-    console.log("render");
-    return (
-      <View style={styles.container}>
-        <View style={styles.chatroom}>
-          <Chat chatting={this._chatting} />
-        </View>
-        <View style={styles.options}>
-          <View style={styles.catsstate}>
-            <View style={styles.statespace}>
-              <CatsList myuserid={this.state.myuserid} />
-            </View>
-          </View>
-        </View>
-      </View>
-    );
-  }
->>>>>>> 50290e501120e88f19f3dba34bf4b1b7aab1837f
-
   _myuserinfo = async () => {
     var myuserid = await AsyncStorage.getItem("myUserId");
     myuserid = JSON.parse(myuserid);

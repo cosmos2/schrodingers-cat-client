@@ -45,15 +45,12 @@ class Request extends Component {
         content: this.state.msg,
         category: this.state.value
       })
-      .then(response => {
-        console.log(response.data);
-      })
       .catch(error => {
         console.log(error);
       });
     Alert.alert(
-      "쪽지주셔서 감사합니다!",
-      "빠르게 조치를 취하도록 하겠습니다.",
+      " ",
+      "조취가 취해지면 알려드릴게요.",
       [
         {
           text: "확인",
@@ -111,7 +108,7 @@ class Request extends Component {
             >
               <Image
                 style={{ margin: 15, width: 25, height: 25 }}
-                source={require("../assets/img/cancel.png")}
+                source={require("../../assets/img/cancel.png")}
               />
             </TouchableOpacity>
           </View>
@@ -136,19 +133,19 @@ class Request extends Component {
                 style={{
                   marginTop: 20,
                   marginBottom: 20,
-                  fontSize: 20,
+                  fontSize: 15,
                   fontFamily: "Goyang"
                 }}
               >
                 이 메 일 주 소
               </Text>
               <TextInput
-                placeholder="  답장 받으실 이메일 주소를 입력해 주세요. "
+                placeholder="  이메일 주소를 써주세요. "
                 style={{
                   height: 30,
                   borderWidth: 1,
                   borderRadius: 10,
-                  fontSize: 20,
+                  fontSize: 15,
                   fontFamily: "Goyang"
                 }}
                 onChangeText={email => {
@@ -172,13 +169,12 @@ class Request extends Component {
                 </Text>
                 <TextInput
                   multiline={true}
-                  placeholder="  불편을 드려 죄송합니다. "
                   numberOfLines={5}
                   style={{
                     height: 60,
                     borderWidth: 1,
                     borderRadius: 10,
-                    fontSize: 20,
+                    fontSize: 15,
                     fontFamily: "Goyang"
                   }}
                   onChangeText={req => {

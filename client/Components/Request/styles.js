@@ -10,7 +10,7 @@ export default (styles = StyleSheet.create({
   },
   title: {
     fontFamily: "Goyang",
-    fontSize: 30
+    fontSize: 20
   },
   wrapper: {
     justifyContent: "center",
