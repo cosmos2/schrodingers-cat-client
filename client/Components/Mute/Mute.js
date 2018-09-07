@@ -1,6 +1,8 @@
 import React, { Component } from "react";
-import { View, Text, Image, StyleSheet } from "react-native";
-class test extends Component {
+import { View, Text } from "react-native";
+import styles from "./styles";
+
+class Mute extends Component {
   static navigationOptions = {
     header: null
   };
@@ -13,20 +15,4 @@ class test extends Component {
   }
 }
 
-export default test;
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#f4da6c",
-    alignItems: "center",
-    justifyContent: "center"
-  },
-  title: {
-    color: "white",
-    fontFamily: "Goyang",
-    fontSize: 25,
-    marginTop: 10,
-    fontWeight: "900",
-    marginBottom: 10
-  }
-});
+export default Mute;

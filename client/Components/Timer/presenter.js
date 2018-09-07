@@ -13,7 +13,7 @@ class TimePicker extends Component {
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
-    console.log(nextProps.time, "내려받는 시간");
+    // console.log(nextProps.time, "내려받는 시간");
     if (nextProps.time < prevState.timeLimit) {
       return { timeOver: true };
     }

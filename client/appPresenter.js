@@ -128,6 +128,20 @@ class AppPresenter extends React.Component {
       });
     });
 
+    // 뮤트 이후에 hp 회복
+    this._socket.on("fill", data => {
+      var arr = this.state.roomusers.slice();
+      var arr2 = [...arr];
+      for (var i = 0; i < arr2.length; i++) {
+        if (data === arr2[i].socketId) {
+          arr2[i].hp = 7;
+        }
+      }
+      this.setState({
+        roomusers: arr2
+      });
+    });
+
     // 채팅중에 앱이 inactive 였다가 다시 active 되었을 때 남은 시간을 받아옴
     // this._socket.on("leftTime", leftTime => {
     //   this.setState({ leftTime });
@@ -217,7 +231,6 @@ class AppPresenter extends React.Component {
       leftTime: "",
       resetchat: this._resetchat,
       muteornot: false,
-      mutecontrol: this._muteControl,
       mutepushcount: 0,
       disconnectornot: false,
       disconnectcontrol: this._disconnectControl,

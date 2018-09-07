@@ -1,20 +1,21 @@
 import React from "react";
 import {
-  StyleSheet,
   Text,
   View,
   Alert,
-  Dimensions,
   AsyncStorage,
-  AppState
+  AppState,
+  Dimensions
 } from "react-native";
 import { Icon } from "react-native-elements";
 import Timer from "../Timer";
 import Store from "../store";
 import CatsList from "../CatsList/CatsList";
 import Chat from "../Chat/Chat";
+import styles from "./styles";
 
-const { width, height } = Dimensions.get("window");
+const { height } = Dimensions.get("window");
+
 class ChatRoom extends React.Component {
   constructor(props) {
     super(props);
@@ -98,45 +99,19 @@ class ChatRoom extends React.Component {
   _explodeChatRoom = () => {
     this.props.navigation.navigate("OpenBoxScreen");
   };
-
-  // 앱이 백그라운드에서 다시 돌아왔을 때 실행
-  // _handleAppStateChange = nextAppState => {
-  //   if (
-  //     this.state.appState.match(/inactive|background/) &&
-  //     nextAppState === "active"
-  //   ) {
-  //     context.socket.emit("leftTime");
-  //   }
-  //   this.setState({ appState: nextAppState });
-  // };
-
-  shouldComponentUpdate(nextProps, nextState) {
-    return this.state !== nextState;
-  }
   componentDidUpdate(prevProps, prevState) {
-    // console.log("CDU");
     context.muteornot
       ? this.props.navigation.navigate("MuteScreen")
       : this.props.navigation.navigate("ChatRoomScreen");
   }
-
   componentDidMount() {
-    // console.log("CDM");
     this._myuserinfo();
-    // AppState.addEventListener("change", this._handleAppStateChange);
     this.props.navigation.setParams({
       exitChat: this._exitChat,
       explodeChatRoom: this._explodeChatRoom
     });
   }
-
-  componentWillUnmount() {
-    // console.log("CWM");
-    // AppState.removeEventListener("change", this._handleAppStateChange);
-  }
-
   render() {
-    // console.log("chatRoom");
     return (
       <View style={styles.container}>
         <View style={styles.chatroom}>
@@ -153,37 +128,5 @@ class ChatRoom extends React.Component {
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fcfcfc",
-    alignItems: "center",
-    justifyContent: "center"
-  },
-  catsstate: {
-    flex: 1,
-    width: width * 0.9,
-    alignItems: "center"
-  },
-  statespace: {
-    width: width * 0.96,
-    flex: 1
-    //margin: 5
-  },
-  chatroom: {
-    flex: 1,
-    width: width,
-    margin: 5
-    //backgroundColor: "green"
-  },
-  options: {
-    flex: 0.7,
-    width: width * 0.9,
-    justifyContent: "center",
-    alignItems: "center"
-    // backgroundColor: "green"
-  }
-});
 
 export default ChatRoom;

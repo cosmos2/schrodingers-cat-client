@@ -9,9 +9,10 @@ export default (styles = StyleSheet.create({
   },
   title: {
     color: "white",
-    fontSize: 30,
+    fontFamily: "Goyang",
+    fontSize: 25,
     marginTop: 10,
-    marginBottom: 10,
-    fontFamily: "Goyang"
+    fontWeight: "900",
+    marginBottom: 10
   }
 }));

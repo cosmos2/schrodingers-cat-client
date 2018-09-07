@@ -38,7 +38,7 @@ class Timer extends Component {
     return this.state.time !== nextState.time;
   }
   componentDidMount() {
-    console.log("타이머가 마운트가 됐습니다요");
+    // console.log("타이머가 마운트가 됐습니다요");
     const timer = setInterval(() => {
       const time =
         100 +
@@ -52,11 +52,11 @@ class Timer extends Component {
     this._clearInterval();
   }
   componentDidUpdate() {
-    console.log("timer CDU");
+    // console.log("timer CDU");
   }
 
   render() {
-    console.log("랜더가 된다");
+    // console.log("랜더가 된다");
     return <TimePicker time={this.state.time} stopTimer={this._stopTimer} />;
   }
 }
@@ -64,7 +64,7 @@ class Timer extends Component {
 export default props => (
   <Store.Consumer>
     {store => {
-      console.log("store");
+      // console.log("store");
       return <Timer {...props} store={store} />;
     }}
   </Store.Consumer>
