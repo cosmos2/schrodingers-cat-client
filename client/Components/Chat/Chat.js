@@ -6,7 +6,7 @@ import Store from "../store";
 import ChatInput from "../ChatInput/ChatInput";
 import styles from "./styles";
 
-class ChatRoom extends React.Component {
+class Chat extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -83,4 +83,4 @@ class ChatRoom extends React.Component {
   };
 }
 
-export default ChatRoom;
+export default Chat;

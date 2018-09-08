@@ -103,6 +103,9 @@ class ChatRoom extends React.Component {
       ? this.props.navigation.navigate("MuteScreen")
       : this.props.navigation.navigate("ChatRoomScreen");
   }
+  shouldComponentUpdate(nextProps, nextState) {
+    return this.state !== nextState;
+  }
   componentDidMount() {
     this._myuserinfo();
     this.props.navigation.setParams({
