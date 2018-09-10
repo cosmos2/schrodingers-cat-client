@@ -23,7 +23,8 @@ class ChatRoom extends React.Component {
       myuserid: 0,
       mycatid: 0,
       mynickname: "",
-      appState: AppState.currentState
+      appState: AppState.currentState,
+      muteornot: false
     };
   }
   static navigationOptions = ({ navigation }) => {
@@ -44,20 +45,13 @@ class ChatRoom extends React.Component {
       headerLeft: <Timer explodeChatRoom={params.explodeChatRoom} />,
       headerRightContainerStyle: { marginRight: 15 },
       headerRight: (
-        <Store.Consumer>
-          {store => {
-            context = store;
-            return (
-              <Icon
-                onPress={() => params.exitChat(store)}
-                type="ionicon"
-                name="md-exit"
-                color="white"
-                iconStyle={{ paddingLeft: 10 }}
-              />
-            );
-          }}
-        </Store.Consumer>
+        <Icon
+          onPress={() => params.exitChat(context)}
+          type="ionicon"
+          name="md-exit"
+          color="white"
+          iconStyle={{ paddingLeft: 10 }}
+        />
       ),
       headerTintColor: "white",
       headerTitleStyle: {
@@ -98,7 +92,9 @@ class ChatRoom extends React.Component {
   _explodeChatRoom = () => {
     this.props.navigation.navigate("OpenBoxScreen");
   };
+
   componentDidUpdate(prevProps, prevState) {
+    console.log("CDU");
     context.muteornot
       ? this.props.navigation.navigate("MuteScreen")
       : this.props.navigation.navigate("ChatRoomScreen");
@@ -107,6 +103,7 @@ class ChatRoom extends React.Component {
     return this.state !== nextState;
   }
   componentDidMount() {
+    console.log(context.myuserid, "myuserid");
     this._myuserinfo();
     this.props.navigation.setParams({
       exitChat: this._exitChat,
@@ -114,19 +111,27 @@ class ChatRoom extends React.Component {
     });
   }
   render() {
+    console.log("render");
     return (
-      <View style={styles.container}>
-        <View style={styles.chatroom}>
-          <Chat />
-        </View>
-        <View style={styles.options}>
-          <View style={styles.catsstate}>
-            <View style={styles.statespace}>
-              <CatsList myuserid={this.state.myuserid} />
+      <Store.Consumer>
+        {store => {
+          context = store;
+          return (
+            <View style={styles.container}>
+              <View style={styles.chatroom}>
+                <Chat store={store} />
+              </View>
+              <View style={styles.options}>
+                <View style={styles.catsstate}>
+                  <View style={styles.statespace}>
+                    <CatsList myuserid={store.myuserid} />
+                  </View>
+                </View>
+              </View>
             </View>
-          </View>
-        </View>
-      </View>
+          );
+        }}
+      </Store.Consumer>
     );
   }
 }

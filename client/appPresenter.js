@@ -214,6 +214,16 @@ class AppPresenter extends React.Component {
       }
     };
 
+    this._myuserinfo = async () => {
+      var myuserid = await AsyncStorage.getItem("myUserId");
+      myuserid = JSON.parse(myuserid);
+      this.setState({
+        myuserid: myuserid["userId"],
+        mycatid: myuserid["catId"],
+        mynickname: myuserid["nickname"]
+      });
+    };
+
     // <-------------------           function end           -------------------> //
 
     this.state = {
@@ -230,11 +240,13 @@ class AppPresenter extends React.Component {
       disconnectcontrol: this._disconnectControl,
       chatOver: false,
       typing: thisroomcats,
-      organizedTime: ""
+      organizedTime: "",
+      myuserid: 0
     };
   }
 
   async componentDidMount() {
+    await this._myuserinfo();
     await Font.loadAsync({
       Goyang: require("./assets/fonts/Goyang.otf")
     });
