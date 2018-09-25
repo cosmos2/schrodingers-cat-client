@@ -6,7 +6,7 @@ const images = {
   5: require("./cat5.png"),
   6: require("./cat6.png"),
   7: require("./cat7.png"),
-  8: require("./mask.png"),
+  8: require("./cat8.png"),
   9: require("./mask.png"),
   punch: require("./oopss.png"),
   b1: require("./hpBar1.png"),

@@ -35,7 +35,7 @@ class SelectCat extends Component {
 
   render() {
     const upperCats = [1, 2, 3];
-    const lowerCats = [4, 5, 6];
+    const lowerCats = [4, 5, 6, 8];
     return (
       <View style={styles.body}>
         <Tutorial />
